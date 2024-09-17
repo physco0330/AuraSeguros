@@ -1,0 +1,25 @@
+/* Estilos para los campos no editables */
+.non-editable {
+  background-color: #f0f0f0; /* Color de fondo para diferenciar campos no editables */
+  color: #6c757d; /* Color de texto para campos no editables */
+  border: 1px solid #ced4da; /* Borde más suave para campos no editables */
+  cursor: not-allowed; /* Cambia el cursor para mostrar que el campo no es editable */
+}
+
+.main-content {
+  padding: 1rem;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  margin-top: 1rem;
+}
+
+.alert-warning {
+  margin-top: 1rem;
+}

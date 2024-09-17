@@ -1,0 +1,135 @@
+<div class="incendio">
+  <!-- Contenedor principal del componente Incendio -->
+  <div class="header-container mb-4">
+    <!-- Título del componente -->
+    <h2 class="text-center">Incendio</h2>
+    <div class="button-container">
+      <!-- Botón para volver al módulo anterior -->
+      <button class="btn btn-primary volver-btn" (click)="volverAModulo()">Volver a Módulo</button>
+      <!-- Botón para mostrar el formulario de agregar un bien -->
+      <button class="btn btn-primary btn-add" (click)="mostrarFormularioAgregar()">
+        <span class="icon">+</span> Agregar
+      </button>
+    </div>
+  </div>
+
+  <!-- Formulario de agregar un bien, visible solo cuando mostrarFormulario es verdadero -->
+  <form *ngIf="mostrarFormulario" [formGroup]="formBien" (ngSubmit)="agregarBien()" class="mb-4">
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let field of formFields">
+        <label [for]="field.name" class="form-label">{{ field.label }}</label>
+        <input
+          [type]="field.type"
+          class="form-control"
+          [id]="field.name"
+          [formControlName]="field.name"
+          [placeholder]="field.placeholder" />
+        <!-- Mensaje de error si el campo es inválido y ha sido tocado -->
+        <div *ngIf="formBien.get(field.name)?.invalid && formBien.get(field.name)?.touched">
+          <small *ngIf="formBien.get(field.name)?.errors?.['required']">Este campo es obligatorio.</small>
+        </div>
+      </div>
+    </div>
+    <!-- Botones de guardar y cancelar -->
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <button type="button" (click)="mostrarFormularioAgregar()" class="btn btn-secondary">Cancelar</button>
+  </form>
+
+  <!-- Campo de filtro para buscar en múltiples campos -->
+  <input type="text" class="form-control my-3 search-input" placeholder="Buscar..." (input)="filtrarArticulos($event)" />
+
+  <!-- Tarjeta contenedora de la tabla -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="table-responsive">
+        <!-- Tabla de bienes con cabecera fija -->
+        <table class="table table-striped table-hover table-bordered">
+          <thead class="thead-light fixed-header">
+            <tr>
+              <!-- Encabezados de la tabla -->
+              <th class="text-center">Acciones</th>
+              <th class="text-center">Código</th>
+              <th class="text-center">Artículo</th>
+              <th class="text-center">Proceso</th>
+              <th class="text-center">Cantidad</th>
+              <th class="text-center">Descripción Artículo</th>
+              <th class="text-center">Descripción Movimiento</th>
+              <th class="text-center">Estado</th>
+              <th class="text-center">Riesgo</th>
+              <th class="text-center">Fecha Ingreso</th>
+              <th class="text-center">Fecha Modificación</th>
+              <th class="text-center">Vr Unitario 2023</th>
+              <th class="text-center">Vr Asegurado</th>
+              <th class="text-center">Porcentaje IVA</th>
+              <th class="text-center">IVA Variable</th>
+              <th class="text-center">Vr Asegurable</th>
+              <th class="text-center">Tasa General</th>
+              <th class="text-center">Prima</th>
+              <th class="text-center">Tasa IVA</th>
+              <th class="text-center">Prima IVA Anual</th>
+              <th class="text-center">Prima Anual Total</th>
+              <th class="text-center">Beneficiario Adicional</th>
+              <th class="text-center">Número Endoso</th>
+              <th class="text-center">Valor Endoso</th>
+              <th class="text-center">Vigencia Endoso</th>
+              <th class="text-center">Banco</th>
+              <th class="text-center">NIT Banco</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Directiva *ngFor para iterar sobre la lista 'bienesFiltrados' -->
+            <tr *ngFor="let bien of bienesFiltrados">
+              <!-- Columna para los botones de acción -->
+              <td class="text-center">
+                <!-- Botón de eliminar -->
+                <button class="btn btn-sm btn-danger btn-icon" title="Eliminar" (click)="eliminarBien(bien.codigo)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+
+                <!-- Botón de editar -->
+                <button class="btn btn-sm btn-info btn-icon" title="Editar" (click)="editarBien(bien.codigo)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                
+  <!-- Columna para el código con enlace interactivo -->
+<td class="text-center">
+  <!-- Hipervínculo para ver detalles -->
+  <a [routerLink]="['/visualizar-bien', bien.codigo]" title="Ver detalles">
+    {{ bien.codigo }}
+  </a>
+</td>
+
+
+              <!-- Resto de las columnas con los datos del bien -->
+              <td class="text-center">{{ bien.articuloBienes }}</td>
+              <td class="text-center">{{ bien.procesoEstaciones }}</td>
+              <td class="text-center">{{ bien.cantidad }}</td>
+              <td class="text-center">{{ bien.descripcionArticulo }}</td>
+              <td class="text-center">{{ bien.descripcionMovimiento }}</td>
+              <td class="text-center">{{ bien.estado }}</td>
+              <td class="text-center">{{ bien.riesgo }}</td>
+              <td class="text-center">{{ bien.fechaIngreso }}</td>
+              <td class="text-center">{{ bien.fechaModificacion }}</td>
+              <td class="text-center">{{ bien.vrUnitario2023 }}</td>
+              <td class="text-center">{{ bien.vrAsegurado }}</td>
+              <td class="text-center">{{ bien.porcentajeIva }}</td>
+              <td class="text-center">{{ bien.ivaVariable }}</td>
+              <td class="text-center">{{ bien.vrAsegurable }}</td>
+              <td class="text-center">{{ bien.tasaGeneral }}</td>
+              <td class="text-center">{{ bien.prima }}</td>
+              <td class="text-center">{{ bien.tasaIva }}</td>
+              <td class="text-center">{{ bien.primaIvaAnual }}</td>
+              <td class="text-center">{{ bien.primaAnualTotal }}</td>
+              <td class="text-center">{{ bien.beneficiarioAdicional }}</td>
+              <td class="text-center">{{ bien.numeroEndoso }}</td>
+              <td class="text-center">{{ bien.valorEndoso }}</td>
+              <td class="text-center">{{ bien.vigenciaEndoso }}</td>
+              <td class="text-center">{{ bien.banco }}</td>
+              <td class="text-center">{{ bien.nitBanco }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

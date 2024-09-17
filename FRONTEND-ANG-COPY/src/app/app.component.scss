@@ -1,0 +1,19 @@
+/* Archivo: app.component.scss */
+
+/* Estilos globales para la aplicación */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilo principal para el contenido */
+.main-content {
+  margin-left: 250px; /* Ajusta según el ancho del sidebar */
+  padding: 20px;
+  transition: margin-left 0.3s ease-in-out;
+
+  .sidebar.collapsed ~ & {
+    margin-left: 70px; /* Ajusta según el ancho del sidebar colapsado */
+  }
+}

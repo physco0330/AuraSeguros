@@ -1,0 +1,62 @@
+<div class="container">
+  <form class="password-form" (ngSubmit)="onSubmit()" #passwordForm="ngForm">
+    <h2>Cambiar Contraseña</h2>
+
+    <!-- Contraseña actual -->
+    <div class="form-group">
+      <label for="current-password">Contraseña Actual</label>
+      <div class="password-wrapper">
+        <input
+          type="{{ showCurrentPassword ? 'text' : 'password' }}"
+          id="current-password"
+          name="currentPassword"
+          ngModel
+          required
+        />
+        <button type="button" (click)="togglePasswordVisibility('current')">
+          <mat-icon>{{ showCurrentPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Nueva contraseña -->
+    <div class="form-group">
+      <label for="new-password">Nueva Contraseña</label>
+      <div class="password-wrapper">
+        <input
+          type="{{ showNewPassword ? 'text' : 'password' }}"
+          id="new-password"
+          name="newPassword"
+          ngModel
+          required
+          minlength="8"
+          pattern="(?=.*[A-Z])(?=.*\W).+"
+        />
+        <button type="button" (click)="togglePasswordVisibility('new')">
+          <mat-icon>{{ showNewPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+      </div>
+      <small *ngIf="passwordForm.form.controls['newPassword']?.errors?.['pattern']">
+        La contraseña debe tener al menos una mayúscula y un carácter especial.
+      </small>
+    </div>
+    <div class="form-group">
+    <label for="confirm-password">Confirmar Nueva Contraseña</label>
+    <div class="password-wrapper">
+      <input
+        type="{{ showConfirmPassword ? 'text' : 'password' }}"
+        id="confirm-password"
+        name="confirmPassword"
+        ngModel
+        required
+        [pattern]="newPasswordPattern"
+      />
+        <button type="button" (click)="togglePasswordVisibility('confirm')">
+          <mat-icon>{{ showConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" >Cambiar Contraseña</button>
+  </form>
+</div>

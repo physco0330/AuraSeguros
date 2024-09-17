@@ -1,0 +1,188 @@
+.incendio {
+  /* Estilo para el contenido principal */
+  .main-content {
+    position: fixed; /* Fija el main en la ventana */
+    top: 80px; /* Alinea con el header */
+    left: 250px; /* Alinea con el sidebar */
+    right: 0; /* Alinea al borde derecho */
+    bottom: 0; /* Alinea al borde inferior */
+    padding: 20px;
+    background-color: #f4f4f4;
+    overflow-y: auto; /* Permite el desplazamiento vertical del contenido */
+    box-sizing: border-box;
+  }
+
+
+  }
+
+  /* Estilo para el encabezado fijo en la parte superior */
+  .header-fixed {
+    position: sticky;
+    top: 0;
+    background-color: #f4f4f4;
+    z-index: 1000;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-fixed h2 {
+    margin: 0;
+  }
+
+  /* Contenedor de los botones para alinearlos en la misma fila */
+  .button-container {
+    display: flex;
+    justify-content: space-between; /* Espacio entre los botones */
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    margin-top: 10px;
+  }
+
+  .volver-btn {
+    align-self: flex-start;
+  }
+
+  .btn-add {
+    background-color: #007bff; /* Color de fondo azul */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición para el efecto hover */
+  }
+
+  .btn-add:hover {
+    background-color: #0056b3; /* Cambio de color al pasar el cursor */
+  }
+
+  .btn-add .icon {
+    font-size: 16px;
+    margin-right: 5px;
+  }
+
+  /* Estilos para la cabecera de la tabla */
+  .table thead th {
+    font-size: 12px; /* Tamaño de letra ajustado a 12px */
+    font-weight: 600; /* Peso de letra semi-negrita para un aspecto más profesional */
+    text-align: center; /* Centrar el texto en los encabezados */
+    background-color: #8ed1fc; /* Color de fondo azul claro */
+    color: #000000; /* Color de texto negro */
+    padding: 1rem; /* Espaciado interno aumentado para mayor comodidad */
+    border-bottom: 2px solid #dee2e6; /* Línea inferior delgada para una separación clara */
+    font-family: 'Arial', sans-serif; /* Fuente alternativa si Broadway no está disponible */
+  }
+
+  /* Estilos para el cuerpo de la tabla */
+  .table tbody td {
+    font-size: 0.875rem; /* Tamaño de letra más pequeño para las celdas */
+    vertical-align: middle; /* Alinear verticalmente el texto en el centro */
+    padding: 0.75rem; /* Espaciado interno para las celdas */
+    word-wrap: break-word; /* Ajustar el texto largo dentro de la celda */
+    white-space: normal; /* Permitir el ajuste de línea */
+  }
+
+  /* Opcional: Mejorar la sombra y borde de la tarjeta */
+  .card {
+    border-radius: 0.375rem; /* Esquinas redondeadas */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Sombra ligera */
+  }
+
+  /* Estilo para columnas con texto largo */
+  .table td, .table th {
+    min-width: 120px; /* Ancho mínimo de las columnas para mejorar la visibilidad */
+  }
+
+     /* Estilo para el campo de búsqueda */
+     .search-input {
+      width: 200px; /* Ajusta el ancho según tus necesidades */
+      max-width: 100%; /* Asegúrate de que el ancho no exceda el contenedor */
+      /*margin: 0 auto; /* Centra el campo si es necesario */
+    }
+
+    /* Estilos base para los botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem; /* Tamaño pequeño del texto */
+  font-weight: 400; /* Peso del texto */
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 0.25rem; /* Bordes redondeados */
+  padding: 0.375rem 0.75rem; /* Espaciado interno */
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+/* Tamaño pequeño del botón */
+.btn-sm {
+  font-size: 0.75rem; /* Tamaño de fuente más pequeño */
+  padding: 0.25rem 0.5rem; /* Espaciado interno reducido */
+}
+
+/* Espaciado entre botones */
+.btn-spacing {
+  margin-right: 0.50rem; /* Espacio entre botones */
+}
+
+/* Estilo del botón de editar */
+.btn-warning {
+  background-color: #ffc107; /* Color de fondo amarillo */
+  color: #212529; /* Color del texto */
+  border-color: #ffc107; /* Color del borde */
+  margin-left: 0.10rem; 
+}
+
+.btn-warning:hover {
+  background-color: #e0a800; /* Color de fondo en hover */
+  border-color: #d39e00; /* Color del borde en hover */
+}
+
+/* Estilo del botón de eliminar */
+.btn-danger {
+  background-color: #dc3545; /* Color de fondo rojo */
+  color: #fff; /* Color del texto */
+  border-color: #dc3545; /* Color del borde */
+  margin-left: 0.30rem;
+}
+
+.btn-danger:hover {
+  background-color: #c82333; /* Color de fondo en hover */
+  border-color: #bd2130; /* Color del borde en hover */
+}
+
+/* Estilo del botón de ocultar */
+.btn-secondary {
+  background-color: #6c757d; /* Color de fondo gris */
+  color: #fff; /* Color del texto */
+  border-color: #6c757d; /* Color del borde */
+  margin-left: 0.5rem; /* Espacio a la izquierda */
+  margin-top: 0.2rem; /* Margen superior para ajustar la posición vertical */
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Color de fondo en hover */
+  border-color: #545b62; /* Color del borde en hover */
+}
+
+/* Estilo para el icono dentro del botón */
+.btn-icon mat-icon {
+  font-size: 1.25rem; /* Tamaño del icono */
+}
+
+a {
+  color: #007bff; /* Color azul para el hipervínculo */
+  text-decoration: none; /* Sin subrayado */
+}
+
+a:hover {
+  text-decoration: underline; /* Subrayado al pasar el cursor */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el enlace */
+}

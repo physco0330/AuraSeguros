@@ -1,0 +1,61 @@
+/* Estilos existentes */
+.modulo {
+  display: flex;
+  background: rgba(0, 0, 0, 0.34) url('/assets/FONDO.webp') no-repeat center center / cover;
+  background-color: rgba(0, 0, 0, 0.137);
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.main-content {
+  width: calc(100% - 350px);
+  padding: 2rem;
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  top: 60px;
+  left: 350px;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.info-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin-top: 20px;
+}
+
+.info-card {
+  width: clamp(250px, 20%, 300px);
+  height: clamp(150px, 15%, 200px);
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  color: white;
+  text-align: center; /* Alinear el texto al centro */
+}
+
+.info-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.info-card:nth-child(1) {
+  background-color: #91dd0f;
+}
+
+/* Nuevo estilo para el logo */
+.logo {
+  margin-top: 10px; /* Espacio entre el título y el logo */
+  max-width: 100px; /* Ajustar el tamaño máximo del logo */
+  height: auto; /* Mantener la proporción del logo */
+}

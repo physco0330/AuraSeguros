@@ -1,0 +1,70 @@
+
+.container{
+  .main-content {
+    position: fixed; /* Fija el main en la ventana */
+    top: 80px; /* Alinea con el header */
+    left: 250px; /* Alinea con el sidebar */
+    right: 0; /* Alinea al borde derecho */
+    bottom: 0; /* Alinea al borde inferior */
+    padding: 20px;
+    background-color: #f4f4f4;
+    overflow-y: auto; /* Permite el desplazamiento vertical del contenido */
+    box-sizing: border-box;
+  }
+}
+  .info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+
+  .info-card {
+    width: calc(25% - 40px);
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    color: white;
+  }
+
+  .info-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .info-card:nth-child(1) {
+    background-color: #1E90FF;
+  }
+
+  .info-card:nth-child(2) {
+    background-color: #32CD32;
+  }
+
+  .info-card:nth-child(3) {
+    background-color: #FFA500;
+  }
+
+  .info-card:nth-child(4) {
+    background-color: #FF4500;
+  }
+
+  .info-card:nth-child(5) {
+    background-color: #6A5ACD;
+  }
+
+  .historial-link {
+    cursor: pointer; /* Cambia el cursor a una mano cuando se pase sobre el texto */
+    color: #007bff; /* Opcional: cambia el color del texto para que se parezca a un hipervínculo */
+    text-decoration: underline; /* Opcional: añade un subrayado al texto */
+    
+    /* Agrega estilo adicional si es necesario */
+    font-weight: bold;
+    transition: color 0.3s; /* Opcional: transición suave del color */
+  }
+  
+  .historial-link:hover {
+    color: #0056b3; /* Opcional: cambia el color cuando se pase sobre el texto */
+  }

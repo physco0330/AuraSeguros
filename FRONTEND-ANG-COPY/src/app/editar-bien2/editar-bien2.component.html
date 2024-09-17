@@ -1,0 +1,151 @@
+<div class="container">
+  <main class="main-content">
+    <h2 class="mb-4">Editando el Bien</h2>
+    <form [formGroup]="bienForm" (ngSubmit)="onSubmit()">
+<!-- Botón para regresar a la ruta de 'incendio' -->
+<button type="button" class="btn btn-secondary mt-3" (click)="goToIncendio()">Regresar a Incendio</button>
+      <div class="card p-3">
+        <div class="row mb-3">
+          <!-- Columna 1 -->
+          <div class="col-md-6">
+            <!-- Campo ID -->
+            <div class="mb-2">
+              <label for="idBien"><strong>ID:</strong></label>
+              <input
+                id="idBien"
+                type="text"
+                formControlName="idBien"
+                class="form-control non-editable"
+                readonly
+              />
+            </div>
+ 
+            <!-- Campo Código -->
+            <div class="mb-2">
+              <label for="codigo"><strong>Código:</strong></label>
+              <input
+                id="codigo"
+                type="text"
+                formControlName="codigo"
+                class="form-control non-editable"
+                readonly
+              />
+            </div>
+
+            <!-- Otros campos del formulario -->
+            <div class="mb-2">
+              <label for="articuloBienes"><strong>Artículo:</strong></label>
+              <input id="articuloBienes" formControlName="articuloBienes" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="procesoEstaciones"><strong>Proceso:</strong></label>
+              <input id="procesoEstaciones" formControlName="procesoEstaciones" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="cantidad"><strong>Cantidad:</strong></label>
+              <input id="cantidad" formControlName="cantidad" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="descripcionArticulo"><strong>Descripción Artículo:</strong></label>
+              <input id="descripcionArticulo" formControlName="descripcionArticulo" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="descripcionMovimiento"><strong>Descripción Movimiento:</strong></label>
+              <input id="descripcionMovimiento" formControlName="descripcionMovimiento" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="estado"><strong>Estado:</strong></label>
+              <input id="estado" formControlName="estado" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="riesgo"><strong>Riesgo:</strong></label>
+              <input id="riesgo" formControlName="riesgo" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="fechaIngreso"><strong>Fecha Ingreso:</strong></label>
+              <input id="fechaIngreso" formControlName="fechaIngreso" type="date" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="fechaModificacion"><strong>Fecha Modificación:</strong></label>
+              <input id="fechaModificacion" formControlName="fechaModificacion" type="date" class="form-control" />
+            </div>
+          </div>
+
+          <!-- Columna 2 -->
+          <div class="col-md-6">
+            <div class="mb-2">
+              <label for="vrUnitario2023"><strong>Vr Unitario 2023:</strong></label>
+              <input id="vrUnitario2023" formControlName="vrUnitario2023" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="vrAsegurado"><strong>Vr Asegurado:</strong></label>
+              <input id="vrAsegurado" formControlName="vrAsegurado" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="porcentajeIva"><strong>Porcentaje IVA:</strong></label>
+              <input id="porcentajeIva" formControlName="porcentajeIva" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="ivaVariable"><strong>IVA Variable:</strong></label>
+              <input id="ivaVariable" formControlName="ivaVariable" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="vrAsegurable"><strong>Vr Asegurable:</strong></label>
+              <input id="vrAsegurable" formControlName="vrAsegurable" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="tasaGeneral"><strong>Tasa General:</strong></label>
+              <input id="tasaGeneral" formControlName="tasaGeneral" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="prima"><strong>Prima:</strong></label>
+              <input id="prima" formControlName="prima" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="tasaIva"><strong>Tasa IVA:</strong></label>
+              <input id="tasaIva" formControlName="tasaIva" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="primaIvaAnual"><strong>Prima IVA Anual:</strong></label>
+              <input id="primaIvaAnual" formControlName="primaIvaAnual" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="primaAnualTotal"><strong>Prima Anual Total:</strong></label>
+              <input id="primaAnualTotal" formControlName="primaAnualTotal" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="beneficiarioAdicional"><strong>Beneficiario Adicional:</strong></label>
+              <input id="beneficiarioAdicional" formControlName="beneficiarioAdicional" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="numeroEndoso"><strong>Número Endoso:</strong></label>
+              <input id="numeroEndoso" formControlName="numeroEndoso" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="valorEndoso"><strong>Valor Endoso:</strong></label>
+              <input id="valorEndoso" formControlName="valorEndoso" type="number" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="vigenciaEndoso"><strong>Vigencia Endoso:</strong></label>
+              <input id="vigenciaEndoso" formControlName="vigenciaEndoso" type="date" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="banco"><strong>Banco:</strong></label>
+              <input id="banco" formControlName="banco" class="form-control" />
+            </div>
+            <div class="mb-2">
+              <label for="nitBanco"><strong>NIT Banco:</strong></label>
+              <input id="nitBanco" formControlName="nitBanco" class="form-control" />
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+      </div>
+    </form>
+    <ng-template #noData>
+      <div class="alert alert-warning mt-4" role="alert">
+        No se encontraron detalles para el bien con código {{ codigo }}.
+      </div>
+    </ng-template>
+  </main>
+</div>

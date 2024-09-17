@@ -1,0 +1,133 @@
+/* Estilo principal para el header */
+.header {
+  position: fixed; // Cambiado de auto a fixed
+  top: 0; // Añadido para fijar en la parte superior
+  left: 0; // Añadido para asegurar que comienza desde el borde izquierdo
+  width: 100%;
+  height: 80px; // Aumentado de 60px a 80px para dar más altura
+  background-color: rgb(255, 255, 255); /* Fondo blanco con ligera transparencia */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.295);
+  z-index: 1000;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilo para el contenedor del logo */
+.logo {
+  display: flex; // Añadido para alinear los elementos horizontalmente
+  align-items: center; // Centra verticalmente los elementos
+  width: auto; // Cambiado para ajustarse al contenido
+  height: auto;
+
+  img {
+    height: 50px; // Asumiendo que ya tienes este estilo para la imagen
+    width: auto;
+    margin-right: 10px; // Añade espacio entre la imagen y el texto
+  }
+
+  h1 {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 3s steps(60) infinite;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    text-size-adjust: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    padding-bottom: 10px;
+    line-height: 1em;
+    font-weight: 500;
+    box-sizing: border-box;
+
+    span:first-child {
+      color: #388dac;
+    }
+
+    span:last-child {
+      color: #ffffff;
+      text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+    }
+  }
+
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; } // Cambiado para que ocupe todo el ancho disponible
+  }
+}
+
+/* Estilo para la imagen del logo */
+.logo img {
+  height: 60px; /* Ajusta la altura del logo */
+  width: auto; /* Mantiene la proporción de la imagen */
+  transition: transform 0.4s ease; /* Transición suave solo para la transformación */
+  background-color: transparent; /* Fondo transparente */
+  /* Animación de rotación */
+  &:hover {
+    transform: rotate(360deg) scale(1.1); /* Rota 360 grados y aumenta el tamaño */
+  }
+}
+
+/* Estilo para las iniciales del usuario */
+.user-initials {
+  background-color: #007bff; /* Color de fondo azul */
+  color: #fff; /* Color del texto blanco */
+  width: 60px; // Añadido para establecer un tamaño fijo
+  height: 60px; // Añadido para establecer un tamaño fijo
+  padding: 0; // Cambiado de 10px a 0
+  border-radius: 50%; /* Forma circular */
+  font-weight: bold; /* Texto en negrita */
+  font-size: 16px; /* Tamaño de la fuente */
+  display: flex; /* Usa flexbox para alinear el contenido */
+  align-items: center; /* Alinea verticalmente el contenido */
+  justify-content: center; /* Alinea horizontalmente el contenido */
+  cursor: pointer; // Añadido para indicar que es interactivo
+  transition: background-color 0.3s ease; // Añadido para una transición suave
+  border: 2px solid #464444; // Añadido: borde blanco de 2px
+  box-sizing: border-box; // Añadido: para incluir el borde en el tamaño total
+
+  &:hover {
+    background-color: #0f0f0f; // Añadido para efecto hover
+    border-color: #0f0f0f; // Añadido: cambia el color del borde al hacer hover
+  }
+}
+
+/* Estilo para el menú desplegable del usuario */
+.dropdown-menu {
+  border-radius: 1rem; /* Bordes redondeados para el menú */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para el menú desplegable */
+  padding: 0.5rem 0; // Añadido para dar espacio interno
+  min-width: 150px; // Añadido para establecer un ancho mínimo
+
+  .dropdown-item {
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease, border-radius 0.2s ease; // Añadido transición para el borde
+    border-radius: 0.25rem; // Añadido borde redondeado
+
+    &:hover {
+      background-color: #388dac;
+      border-radius: 0.5rem; // Aumentado el radio del borde en hover
+    }
+  }
+}
+
+/* Estilo para el divisor SVG */
+.header-divider {
+  position: absolute;
+  top: 0; // Cambiado de bottom a top
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: -1; // Añadido para colocar el divisor detrás del contenido del header
+}
+
+.header-divider img {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 60px;
+  transform: none; // Añadido para voltear la imagen verticalmente
+}

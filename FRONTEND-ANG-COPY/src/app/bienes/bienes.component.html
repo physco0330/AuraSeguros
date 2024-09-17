@@ -1,0 +1,66 @@
+<main class="main-content">
+  <h2>Esta es la base de datos de bienes.</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+
+        <!-- Encabezados de las columnas de la tabla -->
+        <th>ID</th> <!-- Identificador único del bien -->
+        <th>Código</th> <!-- Código único del bien -->
+        <th>Artículo</th> <!-- Nombre del artículo del bien -->
+        <th>Cantidad</th> <!-- Cantidad del bien -->
+        <th>Descripción</th> <!-- Descripción del bien -->
+        <th>Estado</th> <!-- Estado del bien (e.g., activo, inactivo) -->
+        <th>Riesgo</th> <!-- Nivel de riesgo asociado al bien -->
+        <th>Fecha Ingreso</th> <!-- Fecha en la que el bien fue ingresado en el sistema -->
+        <th>Fecha Modificación</th> <!-- Fecha en la que el bien fue modificado por última vez -->
+        <th>Vr Unitario 2023</th> <!-- Valor unitario del bien para el año 2023 -->
+        <th>Vr Asegurado</th> <!-- Valor asegurado del bien -->
+        <th>Porcentaje IVA</th> <!-- Porcentaje de IVA aplicado al bien -->
+        <th>IVA Variable</th> <!-- Valor variable del IVA del bien -->
+        <th>Vr Asegurable</th> <!-- Valor asegurado del bien -->
+        <th>Tasa General</th> <!-- Tasa general aplicada al bien -->
+        <th>Prima</th> <!-- Prima del seguro del bien -->
+        <th>Tasa IVA</th> <!-- Tasa de IVA aplicada al bien -->
+        <th>Prima IVA Anual</th> <!-- Prima anual del IVA del bien -->
+        <th>Prima Anual Total</th> <!-- Prima total anual del bien -->
+        <th>Beneficiario Adicional</th> <!-- Beneficiario adicional asociado al bien -->
+        <th>Número Endoso</th> <!-- Número de endoso del bien -->
+        <th>Valor Endoso</th> <!-- Valor del endoso del bien -->
+        <th>Vigencia Endoso</th> <!-- Vigencia del endoso del bien -->
+        <th>Banco</th> <!-- Banco relacionado con el bien -->
+        <th>NIT Banco</th> <!-- Número de Identificación Tributaria del banco -->
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Itera sobre la lista de bienes y muestra cada bien en una fila de la tabla -->
+      <tr *ngFor="let bien of bienes">
+        <td>{{ bien.idBien }}</td> <!-- Muestra el ID del bien -->
+        <td>{{ bien.codigo }}</td> <!-- Muestra el código del bien -->
+        <td>{{ bien.articuloBienes }}</td> <!-- Muestra el artículo del bien -->
+        <td>{{ bien.cantidad }}</td> <!-- Muestra la cantidad del bien -->
+        <td>{{ bien.descripcionArticulo }}</td> <!-- Muestra la descripción del bien -->
+        <td>{{ bien.estado }}</td> <!-- Muestra el estado del bien -->
+        <td>{{ bien.riesgo }}</td> <!-- Muestra el riesgo del bien -->
+        <td>{{ bien.fechaIngreso }}</td> <!-- Muestra la fecha de ingreso del bien -->
+        <td>{{ bien.fechaModificacion }}</td> <!-- Muestra la fecha de modificación del bien -->
+        <td>{{ bien.vrUnitario2023 }}</td> <!-- Muestra el valor unitario 2023 del bien -->
+        <td>{{ bien.vrAsegurado }}</td> <!-- Muestra el valor asegurado del bien -->
+        <td>{{ bien.porcentajeIva }}</td> <!-- Muestra el porcentaje de IVA del bien -->
+        <td>{{ bien.ivaVariable }}</td> <!-- Muestra el IVA variable del bien -->
+        <td>{{ bien.vrAsegurable }}</td> <!-- Muestra el valor asegurado del bien -->
+        <td>{{ bien.tasaGeneral }}</td> <!-- Muestra la tasa general del bien -->
+        <td>{{ bien.prima }}</td> <!-- Muestra la prima del bien -->
+        <td>{{ bien.tasaIva }}</td> <!-- Muestra la tasa de IVA del bien -->
+        <td>{{ bien.primaIvaAnual }}</td> <!-- Muestra la prima anual del IVA del bien -->
+        <td>{{ bien.primaAnualTotal }}</td> <!-- Muestra la prima anual total del bien -->
+        <td>{{ bien.beneficiarioAdicional }}</td> <!-- Muestra el beneficiario adicional del bien -->
+        <td>{{ bien.numeroEndoso }}</td> <!-- Muestra el número de endoso del bien -->
+        <td>{{ bien.valorEndoso }}</td> <!-- Muestra el valor del endoso del bien -->
+        <td>{{ bien.vigenciaEndoso }}</td> <!-- Muestra la vigencia del endoso del bien -->
+        <td>{{ bien.banco }}</td> <!-- Muestra el banco relacionado con el bien -->
+        <td>{{ bien.nitBanco }}</td> <!-- Muestra el NIT del banco -->
+      </tr>
+    </tbody>
+  </table>
+</main>

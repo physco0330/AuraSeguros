@@ -1,0 +1,75 @@
+/* Estilos para el contenedor */
+.container {
+  max-width: 100%; /* El contenedor ocupa todo el ancho disponible */
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 70px; /* Ajusta este valor según la altura de tu header */
+}
+
+/* Estilos para el título */
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilos para el contenido principal */
+.main-content {
+  margin-left: 250px; /* Ajustado para alinearse con el sidebar */
+  padding: 20px;
+  background-color: #f4f4f4; /* Color de fondo opcional para distinguir del sidebar */
+  min-height: calc(100vh - 80px); /* Altura mínima para ocupar el resto de la ventana menos el header */
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  overflow-x: auto; /* Permite el scroll horizontal si el contenido sobrepasa el ancho */
+  margin-top: 80px; /* Ajusta este valor según la altura de tu header */
+}
+
+/* Estilos para la tabla */
+.table {
+  width: calc(100% - 40px); /* Ajusta el ancho de la tabla para que respete el padding del contenedor */
+  margin: 20px 0; /* Agrega margen superior e inferior */
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #dddddd;
+}
+
+.table th {
+  background-color: #007bff;
+  font-weight: bold;
+  color: white;
+}
+
+.table td {
+  color: #555;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+.table-striped tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+.table tbody tr td:last-child {
+  border-right: none;
+}
+
+.table thead th {
+  font-size: 14px;
+}
+
+.table th:first-child, .table td:first-child {
+  border-left: none;
+}
+
+.table th:last-child, .table td:last-child {
+  border-right: none;
+}
