@@ -3,27 +3,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Bien } from '../modelos/bien.model';
-import { Historial } from '../modelos/historial.model'; // Asegúrate de que la ruta es correcta
-import { HistorialService } from './historial.service'; // Importa el servicio de historial
+import { Historial } from '../modelos/historial.model';
+
+ // Asegúrate de importar el modelo Historial
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' // El servicio está disponible en toda la aplicación
 })
 export class BienesService {
 
+  // URL base del backend para acceder a los servicios relacionados con bienes
   private baseUrl = 'http://localhost:8080/bien';
 
-  constructor(
-    private http: HttpClient,
-    private historialService: HistorialService
-  ) { }
+  constructor(private http: HttpClient) {}
 
   // Método para obtener bienes por código
   getBienPorCodigo(codigo: string): Observable<Bien[]> {
+    // Realiza una solicitud GET al endpoint específico para obtener bienes por su código
     return this.http.get<Bien[]>(`${this.baseUrl}/codigo/${codigo}`).pipe(
-      catchError(error => {
+      catchError((error) => {
+        // Manejo de errores en la solicitud GET
         console.error('Error obteniendo el bien por código:', error);
         return throwError(() => new Error('Error obteniendo el bien por código'));
       })
@@ -33,7 +34,8 @@ export class BienesService {
   // Método para obtener todos los bienes
   getBienes(): Observable<Bien[]> {
     return this.http.get<Bien[]>(`${this.baseUrl}/all`).pipe(
-      catchError(error => {
+      catchError((error) => {
+        // Manejo de errores en la solicitud GET
         console.error('Error obteniendo todos los bienes:', error);
         return throwError(() => new Error('Error obteniendo todos los bienes'));
       })
@@ -43,7 +45,8 @@ export class BienesService {
   // Método para buscar bienes por artículo e idriesgo
   buscarBienes(articulo: string, idriesgo: string): Observable<Bien[]> {
     return this.http.get<Bien[]>(`${this.baseUrl}/listaxfecha/${articulo}/${idriesgo}`).pipe(
-      catchError(error => {
+      catchError((error) => {
+        // Manejo de errores en la solicitud GET
         console.error('Error buscando bienes por artículo e idriesgo:', error);
         return throwError(() => new Error('Error buscando bienes por artículo e idriesgo'));
       })
@@ -54,11 +57,8 @@ export class BienesService {
   saveBien(bien: Bien): Observable<Bien> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<Bien>(`${this.baseUrl}/save`, bien, { headers }).pipe(
-      tap(savedBien => {
-        // Llama al método para registrar el historial después de guardar el bien
-        this.registrarHistorial('save', savedBien);
-      }),
-      catchError(error => {
+      catchError((error) => {
+        // Manejo de errores en la solicitud POST
         console.error('Error guardando el bien:', error);
         return throwError(() => new Error('Error guardando el bien'));
       })
@@ -67,29 +67,27 @@ export class BienesService {
 
   // Método para actualizar un bien
   updateBien(bienToUpdate: Bien): Observable<string> {
-    console.log('Updating bien:', bienToUpdate);
-    return this.http.put<{ message: string }>(`${this.baseUrl}/update`, bienToUpdate).pipe(
-      tap(() => {
-        // Llama al método para registrar el historial después de actualizar el bien
-        this.registrarHistorial('update', bienToUpdate);
-      }),
-      map(response => response.message),
-      catchError(error => {
-        console.error('Error updating bien:', error);
-        return throwError(() => new Error('Error updating bien'));
-      })
-    );
+    console.log('Updating bien:', bienToUpdate); // Añade esta línea para depurar
+    return this.http.put<{ message: string }>(`${this.baseUrl}/update`, bienToUpdate)
+      .pipe(
+        map(response => response.message), // Extrae el mensaje de la respuesta
+        catchError(error => {
+          console.error('Error updating bien:', error); // Registra el objeto de error
+          return throwError(error);
+        })
+      );
   }
 
   // Método para eliminar un bien por su código
   deleteBien(codigo: string): Observable<void> {
+    // Envía una solicitud DELETE al backend para eliminar el bien con el código especificado
     return this.http.delete<void>(`${this.baseUrl}/deletePorCodigo/${codigo}`).pipe(
-      tap(() => {
-        // Llama al método para registrar el historial después de eliminar el bien
-        this.registrarHistorial('delete', { codigo });
-      }),
-      catchError(error => {
+      // Manejo de errores en caso de que la solicitud falle
+      catchError((error) => {
+        // Muestra un mensaje de error en la consola
         console.error('Error eliminando el bien:', error);
+
+        // Retorna un error observable para que el componente que hizo la llamada pueda manejarlo
         return throwError(() => new Error('Error eliminando el bien'));
       })
     );
@@ -97,38 +95,31 @@ export class BienesService {
 
   // Método para agregar un nuevo bien
   agregarBien(nuevoBien: Bien): Observable<Bien> {
+    // Configura los encabezados de la solicitud HTTP, especificando el tipo de contenido como JSON
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // Envía una solicitud POST al backend para agregar el nuevo bien
     return this.http.post<Bien>(`${this.baseUrl}/add`, nuevoBien, { headers }).pipe(
-      tap(() => {
-        // Llama al método para registrar el historial después de agregar el bien
-        this.registrarHistorial('add', nuevoBien);
-      }),
-      catchError(error => {
+      // Manejo de errores en caso de que la solicitud falle
+      catchError((error) => {
+        // Muestra un mensaje de error en la consola
         console.error('Error agregando el bien:', error);
+
+        // Retorna un error observable para que el componente que hizo la llamada pueda manejarlo
         return throwError(() => new Error('Error agregando el bien'));
       })
     );
   }
 
-  // Método para registrar la acción en el historial
-  private registrarHistorial(accion: string, bien: Bien | { codigo: string }): void {
-    // Prepara los datos del historial
-    const historialData: Historial = {
-      id: Date.now(), // Genera un ID temporal (ajusta según tu lógica de ID)
-      tabla_afectada: 'bien',
-      id_registro: 'id' in bien ? bien.id : undefined, // Si es un objeto de tipo Bien, usa su ID
-      campo_editado: accion,
-      valor_anterior: '', // Asigna una cadena vacía si no tienes valor anterior
-      valor_nuevo: JSON.stringify(bien), // Convierte el objeto en una cadena JSON
-      usuario: 'admin', // Reemplázalo con el usuario actual si es necesario
-      fecha_edicion: new Date()
-    };
-
-    // Llama al servicio de historial para registrar la acción
-    this.historialService.agregarHistorial(historialData).subscribe({
-      error: (error) => {
-        console.error('Error registrando en el historial:', error);
-      }
-    });
+  // Método para obtener el historial por código
+  getHistorialByCodigo(codigo: string): Observable<Historial[]> {
+    // Asumiendo que tu endpoint para obtener historial es `/historial/${codigo}`
+    return this.http.get<Historial[]>(`http://localhost:8080/bien/historial/${codigo}`).pipe(
+      catchError((error) => {
+        // Manejo de errores en la solicitud GET
+        console.error('Error obteniendo el historial por código:', error);
+        return throwError(() => new Error('Error obteniendo el historial por código'));
+      })
+    );
   }
 }

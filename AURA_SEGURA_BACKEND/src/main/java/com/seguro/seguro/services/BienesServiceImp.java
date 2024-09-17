@@ -8,6 +8,8 @@ public interface BienesServiceImp {
 
     List<BienesEntity> getAllBienes();
 
+    void updateBien(BienesEntity bien);
+
     BienesEntity getBienById(Long id);
 
     List<BienesEntity> getBienesPorCodigo(String codigo);
@@ -15,6 +17,7 @@ public interface BienesServiceImp {
     BienesEntity saveBien(BienesEntity bien);
 
     void deleteBien(Long id);
-
+    // Agrega este método
+    void deleteBienPorCodigo(String codigo);
     List<BienesEntity> buscarlistaxfecha(String articulo, String idRiesgo);
 }

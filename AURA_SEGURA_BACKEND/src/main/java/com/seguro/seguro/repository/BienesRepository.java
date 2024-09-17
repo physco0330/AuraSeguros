@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 
 import java.util.List;
 
@@ -18,4 +20,10 @@ public interface BienesRepository extends JpaRepository<BienesEntity, Long> {
 
  // Método para encontrar bienes por código
  List<BienesEntity> findByCodigo(String codigo);
+
+ // Método para eliminar bienes por código
+ @Modifying
+ @Transactional
+ @Query("DELETE FROM BienesEntity b WHERE b.codigo = :codigo")
+ void deleteByCodigo(@Param("codigo") String codigo);
 }

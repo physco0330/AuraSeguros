@@ -1,8 +1,10 @@
-// BienesController.java
 package com.seguro.seguro.controller;
 
+import com.seguro.seguro.dto.GenericResponseDto;
 import com.seguro.seguro.model.BienesEntity;
+import com.seguro.seguro.model.HistorialEntity;
 import com.seguro.seguro.services.BienesService;
+import com.seguro.seguro.services.HistorialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ public class BienesController {
 
     @Autowired
     private BienesService bienesService;
+
+    @Autowired
+    private HistorialService historialService;
 
     // Endpoint para obtener todos los bienes
     @GetMapping("/all")
@@ -47,10 +52,25 @@ public class BienesController {
         return new ResponseEntity<>(savedBien, HttpStatus.CREATED);
     }
 
-    // Endpoint para eliminar un bien por su ID
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteBien(@PathVariable Long id) {
-        bienesService.deleteBien(id);
+    // Endpoint para actualizar un bien
+    @PutMapping("/update")
+    public ResponseEntity<GenericResponseDto> updateBien(@RequestBody BienesEntity bien) {
+        bienesService.updateBien(bien);
+        GenericResponseDto genericResponseDto = new GenericResponseDto("Update successfully");
+        return new ResponseEntity<>(genericResponseDto, HttpStatus.OK);
+    }
+
+    // Endpoint para eliminar bienes por código
+    @DeleteMapping("/deletePorCodigo/{codigo}")
+    public ResponseEntity<Void> deleteBienPorCodigo(@PathVariable String codigo) {
+        bienesService.deleteBienPorCodigo(codigo);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // Endpoint para obtener el historial de un bien por su código
+    @GetMapping("/historial/{codigo}")
+    public ResponseEntity<List<HistorialEntity>> getHistorialPorCodigo(@PathVariable String codigo) {
+        List<HistorialEntity> historial = historialService.getHistorialPorCodigo(codigo);
+        return new ResponseEntity<>(historial, HttpStatus.OK);
     }
 }

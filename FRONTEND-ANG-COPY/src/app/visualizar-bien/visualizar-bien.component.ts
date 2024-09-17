@@ -1,19 +1,22 @@
+// src/app/componentes/visualizar-bien/visualizar-bien.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BienesService } from '../servicios/bienes.service';
 import { Bien } from '../modelos/bien.model';
+import { Historial } from '../modelos/historial.model'; // Importa el modelo de Historial
 import { CommonModule } from '@angular/common';
-
 
 @Component({
   selector: 'app-visualizar-bien',
   standalone: true,
-  imports: [CommonModule,],
+  imports: [CommonModule],
   templateUrl: './visualizar-bien.component.html',
   styleUrls: ['./visualizar-bien.component.scss']
 })
 export class VisualizarBienComponent implements OnInit {
   bienes: Bien[] = []; // Lista de bienes relacionados con el código
+  historial: Historial[] = []; // Lista de historial relacionado con el código
   codigo: string | null = ''; // Código del bien recibido desde la ruta
 
   constructor(
@@ -40,6 +43,19 @@ export class VisualizarBienComponent implements OnInit {
           console.error('Error al obtener el bien:', error);
         }
       );
+
+      // Llama al servicio para obtener el historial de modificaciones del bien por el código
+      this.bienesService.getHistorialByCodigo(this.codigo).subscribe(
+        (data: Historial[]) => {
+          // Asigna el array de historial a la propiedad historial
+          this.historial = data;
+          console.log('Historial recibido:', this.historial);
+        },
+        error => {
+          // Maneja cualquier error ocurrido al obtener el historial
+          console.error('Error al obtener el historial:', error);
+        }
+      );
     }
   }
 
@@ -47,13 +63,4 @@ export class VisualizarBienComponent implements OnInit {
   regresar(): void {
     this.router.navigate(['/incendio']);
   }
-
-  
-  verHistorialEdiciones(): void {
-    if (this.codigo) {
-      this.router.navigate([`/historial-de-ediciones/${this.codigo}`]);
-    } else {
-      console.error('Código no encontrado');
-    }
-  } 
-   }
+}

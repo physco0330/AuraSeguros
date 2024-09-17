@@ -1,12 +1,10 @@
 // src/app/modelos/historial.model.ts
 
 export interface Historial {
-  id: number;
-  tabla_afectada: string;
-  id_registro?: number;
-  campo_editado: string;
-  valor_anterior: string | null; // Permite null además de string
-  valor_nuevo: string; // Asegúrate de que este tipo sea el correcto para tu caso
-  usuario: string;
-  fecha_edicion: Date;
+  id: number;    // Identificador único del historial
+  codigo: string;    // Código del bien relacionado con el historial
+  fechaModificacion: string;    // Fecha de la modificación
+  usuario: string;    // Usuario que realizó la modificación
+  descripcionModificacion: string;    // Descripción de la modificación
+  cambios: string;    // Cambios en formato JSON o texto
 }
