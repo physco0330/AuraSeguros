@@ -16,27 +16,25 @@ import { FormsModule } from '@angular/forms';
   imports: [SidebarComponent, HeaderComponent, CommonModule, RouterModule, FormsModule]
 })
 export class ModuloComponent implements OnInit {
-  // Título del módulo
   title = 'Modulo';
 
-  // Array para almacenar los bienes
+  // Variables para los bienes
   bienes: Bien[] = [];
 
-  // Variables para el modal
-  isModalOpen = false; // Controla si el modal está abierto o cerrado
-  nombreEmpresa: string = ''; // Almacena el nombre de la empresa
-  nombreTabla: string = ''; // Almacena el nombre de la tabla
-  logoEmpresa: File | null = null; // Almacena el archivo del logo
-  colorCard: string = '#ffffff'; // Almacena el color seleccionado para la tarjeta
+  // Variables para el modal de agregar empresa
+  isModalOpen = false;
+  nombreEmpresa: string = '';
+  nombreTabla: string = '';
+  logoEmpresa: File | null = null;
+  colorCard: string = '#ffffff';
 
   constructor(
-    private bienesService: BienesService, // Servicio para obtener los bienes
-    private router: Router // Servicio para la navegación
+    private bienesService: BienesService, // Servicio para manejar bienes y empresas
+    private router: Router
   ) {}
 
-  // Inicialización del componente
   ngOnInit(): void {
-    // Llama al servicio para obtener bienes
+    // Carga los bienes al inicializar el componente
     this.bienesService.getBienes().subscribe((data: Bien[]) => {
       this.bienes = data;
     });
@@ -57,12 +55,26 @@ export class ModuloComponent implements OnInit {
     this.isModalOpen = false;
   }
 
-  // Guarda los datos de la nueva empresa
+  // Guardar la nueva empresa
   guardarEmpresa(): void {
     if (this.nombreEmpresa && this.nombreTabla && this.logoEmpresa && this.colorCard) {
-      // Aquí puedes manejar la lógica para guardar la empresa
-      console.log('Empresa guardada:', this.nombreEmpresa, this.nombreTabla, this.logoEmpresa, this.colorCard);
-      this.closeModal(); // Cierra el modal después de guardar
+      const nuevaEmpresa = {
+        nombre: this.nombreEmpresa,
+        tabla: this.nombreTabla,
+        logo: this.logoEmpresa, // Puede ser necesario convertir esto a base64 en el backend
+        color: this.colorCard
+      };
+
+      // Llamada al servicio para guardar la empresa
+      this.bienesService.saveEmpresa(nuevaEmpresa).subscribe({
+        next: (response) => {
+          console.log('Empresa guardada exitosamente', response);
+          this.closeModal(); // Cierra el modal después de guardar
+        },
+        error: (error) => {
+          console.error('Error guardando la empresa:', error);
+        }
+      });
     } else {
       alert('Todos los campos son obligatorios');
     }
