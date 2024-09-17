@@ -19,9 +19,4 @@ export class HeaderComponent {
   goToConfiguraciones() {
     this.router.navigate(['/ajustes']);
   }
-
-  // Método para confirmar el cierre de sesión y redirigir al link
-  confirmLogout() {
-    window.location.href = 'https://aurasseguros.com'; // Redirigir al enlace de cierre de sesión
-  }
 }
