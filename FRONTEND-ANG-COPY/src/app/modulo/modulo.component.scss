@@ -100,6 +100,14 @@
   justify-content: space-between;
 }
 
+/* Estilo del título del modal */
+.modal-title {
+  color: #388dac; /* Color del texto */
+  text-align: center; /* Centrar el texto */
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .form-group {
   margin-bottom: 15px;
   display: flex;
@@ -188,6 +196,18 @@
     max-height: 90%;
   }
 }
+
+/* estilo del texto  */
 .welcome-text {
   color: #388dac;
+}
+
+/* Nuevo estilo para Bienvenido a Modulos
+*/
+.logo {
+  display: block; /* Asegura que la imagen sea tratada como un bloque */
+  margin: 0 auto; /* Centra horizontalmente el logo */
+  max-width: 100px; /* Ajustar el tamaño máximo del logo */
+  height: auto; /* Mantener la proporción del logo */
+  margin-top: 10px; /* Espacio entre el título y el logo */
 }

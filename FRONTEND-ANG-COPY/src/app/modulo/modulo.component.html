@@ -2,7 +2,6 @@
   <main class="main-content">
     <div class="welcome-message">
       <h2 class="welcome-text">Bienvenido a Modulos</h2>
-
     </div>
     <section class="info-cards">
       <!-- Tarjeta clicable sin el botón -->
@@ -18,7 +17,9 @@
     <!-- Modal para agregar empresa -->
     <div *ngIf="isModalOpen" class="modal">
       <div class="modal-content">
-        <h2>Agregar Nueva Empresa</h2>
+        <!-- Título centrado y con el color #388dac -->
+        <h2 class="modal-title">Agregar Nueva Empresa</h2>
+        <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
 
         <!-- Formulario del modal -->
         <form (ngSubmit)="guardarEmpresa()">
