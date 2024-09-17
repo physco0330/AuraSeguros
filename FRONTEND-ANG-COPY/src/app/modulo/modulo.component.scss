@@ -29,6 +29,7 @@
   flex-wrap: wrap;
   justify-content: left;
   margin-top: 20px;
+  gap: 30px; /* Aumentar la separación entre las tarjetas */
 }
 
 .info-card {
@@ -58,4 +59,132 @@
   margin-top: 10px; /* Espacio entre el título y el logo */
   max-width: 100px; /* Ajustar el tamaño máximo del logo */
   height: auto; /* Mantener la proporción del logo */
+}
+
+/* Botón azul para agregar empresa */
+.btn-add {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: fixed;
+  top: 120px; /* Mover el botón más abajo */
+  right: 20px;
+}
+
+/* Estilos para el modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 500px;
+  height: 600px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between; /* Espacio entre los botones */
+}
+
+/* Estilo del botón "Cancelar" */
+.modal-buttons .cancel {
+  background-color: #dc3545; /* Rojo para cancelar */
+  color: white;
+  padding: 10px 20px; /* Aumentar el área clicable */
+  border: none;
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Estilo del botón "Guardar" */
+.modal-buttons .save {
+  background-color: #007bff; /* Azul para guardar */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Efecto hover para ambos botones */
+.modal-buttons .cancel:hover,
+.modal-buttons .save:hover {
+  opacity: 0.9; /* Ligeramente más oscuro al pasar el ratón */
+}
+
+/* Estilos para la paleta de colores */
+.palette-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-label {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.palette-colors {
+  display: flex;
+  gap: 15px; /* Aumentar el espacio entre los colores */
+}
+
+.palette-colors .color-option {
+  width: 40px; /* Hacer los colores más grandes */
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ccc;
+}
+
+.palette-colors .color-option:hover {
+  border: 2px solid #007bff;
+}
+
+/* Extra: Ajustar para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    height: auto;
+    max-height: 90%;
+  }
 }

@@ -6,10 +6,52 @@
     <section class="info-cards">
       <!-- Tarjeta clicable sin el botón -->
       <div class="info-card" [routerLink]="['/incendio']" routerLinkActive="active">
-      
         <!-- Logo de la empresa -->
         <img src="assets/logo-Vitelsa-nuevo.png" alt="Logo" class="img-fluid">
       </div>
     </section>
+
+    <!-- Botón azul "Agregar Empresa" -->
+    <button class="btn-add" (click)="openModal()">Agregar Empresa</button>
+
+    <!-- Modal para agregar empresa -->
+    <div *ngIf="isModalOpen" class="modal">
+      <div class="modal-content">
+        <h2>Agregar Nueva Empresa</h2>
+
+        <!-- Formulario del modal -->
+        <form (ngSubmit)="guardarEmpresa()">
+          <!-- Nombre de la empresa -->
+          <div class="form-group">
+            <label for="nombreEmpresa">Nombre de la empresa</label>
+            <input type="text" id="nombreEmpresa" [(ngModel)]="nombreEmpresa" name="nombreEmpresa" required />
+          </div>
+
+          <!-- Nombre de la tabla -->
+          <div class="form-group">
+            <label for="nombreTabla">Nombre de la tabla</label>
+            <input type="text" id="nombreTabla" placeholder="Nombre para su tabla" [(ngModel)]="nombreTabla" name="nombreTabla" required />
+          </div>
+
+          <!-- Subir logo -->
+          <div class="form-group">
+            <label for="logoEmpresa"> Logo de Empresa</label>
+            <input type="file" id="logoEmpresa" (change)="onLogoSelected($event)" required />
+          </div>
+
+          <!-- Paleta de colores -->
+          <div class="form-group">
+            <label for="colorCard">card</label>
+            <input type="color" id="colorCard" [(ngModel)]="colorCard" name="colorCard" required />
+          </div>
+
+          <!-- Botones de Cancelar y Guardar -->
+          <div class="modal-buttons">
+            <button type="button" (click)="closeModal()">Cancelar</button>
+            <button type="submit">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
 </div>
