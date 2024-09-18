@@ -9,6 +9,10 @@
         <!-- Logo de la empresa -->
         <img src="assets/logo-Vitelsa-nuevo.png" alt="Logo" class="img-fluid">
       </div>
+      <!-- Aquí se agregarán dinámicamente las tarjetas de empresas -->
+      <div *ngFor="let empresa of empresas" class="info-card">
+        <img [src]="'assets/' + empresa.logo_empresa" alt="Logo" class="img-fluid">
+      </div>
     </section>
 
     <!-- Botón azul "Agregar Empresa" -->
@@ -37,13 +41,13 @@
 
           <!-- Subir logo -->
           <div class="form-group">
-            <label for="logoEmpresa"> Logo de Empresa</label>
+            <label for="logoEmpresa">Logo de Empresa</label>
             <input type="file" id="logoEmpresa" (change)="onLogoSelected($event)" required />
           </div>
 
           <!-- Paleta de colores -->
           <div class="form-group">
-            <label for="colorCard">card</label>
+            <label for="colorCard">Color de tarjeta</label>
             <input type="color" id="colorCard" [(ngModel)]="colorCard" name="colorCard" required />
           </div>
 

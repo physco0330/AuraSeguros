@@ -1,67 +1,86 @@
+// src/app/modulo/modulo.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { SidebarComponent } from "../sidebar/sidebar.component";
-import { HeaderComponent } from "../header/header.component";
+import { Router, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Empresa } from '../modelos/empresa.model';
+import { EmpresasService } from '../servicios/empresas.service'; // Servicio actualizado
+
+// Importar los componentes y módulos necesarios
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';  // Agregar FormsModule
-import { Bien } from '../modelos/bien.model';
-import { BienesService } from '../servicios/bienes.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-modulo',
   standalone: true,
   templateUrl: './modulo.component.html',
   styleUrls: ['./modulo.component.scss'],
-  imports: [SidebarComponent, HeaderComponent, CommonModule, RouterModule, FormsModule]  // Añadir FormsModule aquí
+  imports: [SidebarComponent, HeaderComponent, CommonModule, RouterModule, FormsModule] // Importar los módulos necesarios
 })
 export class ModuloComponent implements OnInit {
-  // Título del módulo
-  title = 'Modulo';
-
-  // Array para almacenar los bienes
-  bienes: Bien[] = [];
-
-  // Variables para el modal
-  isModalOpen = false;
-  nombreEmpresa: string = '';
-  nombreTabla: string = '';
-  logoEmpresa: File | null = null;
-  colorCard: string = '#ffffff';
+  title = 'Modulo'; // Título del módulo
+  empresas: Empresa[] = []; // Lista de empresas
+  isModalOpen = false; // Controla si el modal está abierto o cerrado
+  nombreEmpresa: string = ''; // Nombre de la empresa
+  nombreTabla: string = ''; // Nombre de la tabla
+  logoEmpresa: File | null = null; // Archivo del logo de la empresa
+  colorCard: string = '#ffffff'; // Color de la tarjeta
 
   constructor(
-    private bienesService: BienesService,
-    private router: Router
+    private empresasService: EmpresasService, // Servicio para manejar empresas
+    private router: Router, // Servicio de enrutamiento
+    private http: HttpClient // Servicio HTTP para comunicarse con la API
   ) {}
 
   ngOnInit(): void {
-    this.bienesService.getBienes().subscribe((data: Bien[]) => {
-      this.bienes = data;
-    });
+    // Cargar las empresas al iniciar el componente
+    this.loadEmpresas();
   }
 
+  // Navegar al componente de incendios
   public irAIncendios(): void {
     this.router.navigate(['/incendio']);
   }
 
+  // Abrir el modal para agregar una nueva empresa
   openModal(): void {
     this.isModalOpen = true;
   }
 
+  // Cerrar el modal
   closeModal(): void {
     this.isModalOpen = false;
   }
 
+  // Manejar la selección del archivo de logo
+  onLogoSelected(event: any): void {
+    this.logoEmpresa = event.target.files[0];
+  }
+
+  // Guardar una nueva empresa en la base de datos
   guardarEmpresa(): void {
     if (this.nombreEmpresa && this.nombreTabla && this.logoEmpresa && this.colorCard) {
-      console.log('Empresa guardada:', this.nombreEmpresa, this.nombreTabla, this.logoEmpresa, this.colorCard);
-      this.closeModal();
+      const formData = new FormData();
+      formData.append('nombre_empresa', this.nombreEmpresa);
+      formData.append('nombre_tabla', this.nombreTabla);
+      formData.append('color_palette', this.colorCard);
+      formData.append('logo_empresa', this.logoEmpresa, this.logoEmpresa.name);
+
+      this.empresasService.saveEmpresa(formData).subscribe(response => {
+        console.log('Empresa guardada', response);
+        this.closeModal(); // Cierra el modal después de guardar
+        this.loadEmpresas(); // Actualiza la lista de empresas
+      });
     } else {
       alert('Todos los campos son obligatorios');
     }
   }
 
-  onLogoSelected(event: any): void {
-    this.logoEmpresa = event.target.files[0];
+  // Cargar la lista de empresas desde la API
+  loadEmpresas() {
+    this.empresasService.getEmpresas().subscribe(data => {
+      this.empresas = data; // Actualiza la lista de empresas
+    });
   }
 }
