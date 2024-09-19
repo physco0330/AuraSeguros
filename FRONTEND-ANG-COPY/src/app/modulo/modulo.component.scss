@@ -211,3 +211,100 @@
   height: auto; /* Mantener la proporción del logo */
   margin-top: 10px; /* Espacio entre el título y el logo */
 }
+
+/* Wrapper para las tarjetas con grid */
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Máximo 4 columnas */
+  grid-gap: 30px; /* Espacio entre tarjetas */
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+/* Estilos de la tarjeta */
+.info-card {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  text-align: center;
+  background-color: #fff;
+  position: relative;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Estilo del nombre de la empresa debajo de la tarjeta */
+.empresa-nombre {
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  margin-top: 10px; /* Espacio entre la tarjeta y el nombre */
+  text-align: center; /* Centrado del texto */
+}
+
+/* Logo dentro de la tarjeta */
+.logo {
+  margin-top: 10px;
+  max-width: 80px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Estilo para los botones de acción en la parte superior */
+.action-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between; /* Empuja los botones a los bordes */
+  width: calc(100% - 20px); /* Ancho total menos margen */
+}
+
+/* Estilo del botón con íconos */
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+/* Estilo para el botón de eliminar */
+.btn-danger {
+  color: white;
+  border: none;
+  background-color: #dc3545; /* Color de fondo por defecto */
+  margin-right: auto; /* Asegura que se empuje a la izquierda */
+
+  &:hover {
+    background-color: #c82333; /* Cambia a un tono más oscuro al pasar el ratón */
+  }
+}
+
+/* Estilo para el botón de editar */
+.btn-editar {
+  background-color: #007bff;
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: #138496; /* Cambia a un tono más oscuro al pasar el ratón */
+  }
+}
+
+/* Ajustes responsivos para que las tarjetas se vean bien en pantallas más pequeñas */
+@media (max-width: 1024px) {
+  .info-cards {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Cambiar el ancho mínimo en pantallas pequeñas */
+  }
+}

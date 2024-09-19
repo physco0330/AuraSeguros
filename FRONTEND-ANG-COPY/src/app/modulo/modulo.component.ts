@@ -1,10 +1,9 @@
-// src/app/modulo/modulo.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Empresa } from '../modelos/empresa.model';
 import { EmpresasService } from '../servicios/empresas.service'; // Servicio actualizado
-
+import { MatIcon } from '@angular/material/icon';
 // Importar los componentes y módulos necesarios
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
@@ -16,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   templateUrl: './modulo.component.html',
   styleUrls: ['./modulo.component.scss'],
-  imports: [SidebarComponent, HeaderComponent, CommonModule, RouterModule, FormsModule] // Importar los módulos necesarios
+  imports: [SidebarComponent, HeaderComponent, CommonModule, RouterModule, FormsModule, MatIcon] // Importar los módulos necesarios
 })
 export class ModuloComponent implements OnInit {
   title = 'Modulo'; // Título del módulo
@@ -26,6 +25,7 @@ export class ModuloComponent implements OnInit {
   nombreTabla: string = ''; // Nombre de la tabla
   logoEmpresa: File | null = null; // Archivo del logo de la empresa
   colorCard: string = '#ffffff'; // Color de la tarjeta
+  searchTerm: string = ''; // Término de búsqueda
 
   constructor(
     private empresasService: EmpresasService, // Servicio para manejar empresas
@@ -84,5 +84,15 @@ export class ModuloComponent implements OnInit {
     this.empresasService.getEmpresas().subscribe(data => {
       this.empresas = data; // Actualiza la lista de empresas
     });
+  }
+
+  // Método para filtrar las empresas
+  filteredEmpresas(): Empresa[] {
+    if (!this.searchTerm) {
+      return this.empresas; // Si no hay término de búsqueda, devuelve todas las empresas
+    }
+    return this.empresas.filter(empresa =>
+      empresa.nombre_empresa.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 }

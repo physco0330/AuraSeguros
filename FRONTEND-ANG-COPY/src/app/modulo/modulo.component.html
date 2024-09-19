@@ -6,6 +6,11 @@
       <h2 class="welcome-text">Bienvenido a Módulos</h2>
     </div>
 
+    <!-- Campo de búsqueda -->
+    <div class="search-container">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar empresa..." />
+    </div>
+
     <!-- Sección de tarjetas de empresas -->
     <section class="info-cards">
       <!-- Tarjeta fija para 'incendio' -->
@@ -14,15 +19,31 @@
         <p>Incendio</p>
       </div>
 
-      <!-- Tarjetas dinámicas de empresas -->
-      <div class="info-card" *ngFor="let empresa of empresas"
-     [routerLink]="['/tabla', empresa.nombre_tabla]"
-     routerLinkActive="active"
-     [ngStyle]="{'background-color': empresa.color_palette}">
-  <img *ngIf="empresa.logo_empresa" [src]="empresa.logo_empresa" alt="Logo" class="img-fluid">
-  <p>{{ empresa.nombre_empresa }}</p>
-</div>
+      <!-- Tarjetas dinámicas de empresas con filtro -->
+      <div *ngFor="let empresa of filteredEmpresas()" class="info-wrapper">
+        <div class="info-card"
+             [routerLink]="['/tabla', empresa.nombre_tabla]"
+             routerLinkActive="active"
+             [ngStyle]="{'background-color': empresa.color_palette}">
 
+          <!-- Logo de la empresa -->
+          <img *ngIf="empresa.logo_empresa" [src]="empresa.logo_empresa" alt="Logo" class="img-fluid logo">
+
+          <!-- Botones de acción -->
+          <div class="action-buttons">
+            <button class="btn btn-sm btn-danger btn-icon" title="Eliminar">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+            <button class="btn btn-sm btn-edit btn-icon" title="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Nombre de la empresa, debajo de la tarjeta -->
+        <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
+      </div>
     </section>
 
     <!-- Botón azul para abrir modal de "Agregar Empresa" -->
