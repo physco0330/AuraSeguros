@@ -1,7 +1,7 @@
 package com.seguro.seguro.controller;
 
 import com.seguro.seguro.model.Empresa;
-import com.seguro.seguro.service.EmpresaService;
+import com.seguro.seguro.services.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

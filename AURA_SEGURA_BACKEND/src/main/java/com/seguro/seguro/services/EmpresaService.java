@@ -1,4 +1,4 @@
-package com.seguro.seguro.service;
+package com.seguro.seguro.services;
 
 import com.seguro.seguro.model.Empresa;
 import com.seguro.seguro.repository.EmpresaRepository;
