@@ -1,14 +1,4 @@
 import {
-<<<<<<< HEAD
-  DomSanitizer
-} from "./chunk-T6ZOHZS7.js";
-import {
-  HttpClient
-} from "./chunk-S2QF4VYA.js";
-import {
-  MatCommonModule
-} from "./chunk-64CZW2YI.js";
-=======
   MatCommonModule
 } from "./chunk-WWYVGESQ.js";
 import {
@@ -17,7 +7,6 @@ import {
 import {
   HttpClient
 } from "./chunk-S2QF4VYA.js";
->>>>>>> cd4e0af10889b21311d6e969302180ef98fd67fd
 import {
   DOCUMENT
 } from "./chunk-MY2H2M3T.js";
@@ -54,17 +43,10 @@ import {
   ɵɵprojection,
   ɵɵprojectionDef
 } from "./chunk-KISQQRCA.js";
-<<<<<<< HEAD
-import "./chunk-OXNQPEDM.js";
-import {
-  forkJoin
-} from "./chunk-TA35YPAB.js";
-=======
 import {
   forkJoin
 } from "./chunk-TA35YPAB.js";
 import "./chunk-OXNQPEDM.js";
->>>>>>> cd4e0af10889b21311d6e969302180ef98fd67fd
 import {
   Subscription,
   catchError,
