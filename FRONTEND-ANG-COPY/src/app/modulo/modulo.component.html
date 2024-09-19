@@ -15,10 +15,14 @@
       </div>
 
       <!-- Tarjetas dinámicas de empresas -->
-      <div class="info-card" *ngFor="let empresa of empresas" [routerLink]="['/tabla', empresa.nombre_tabla]" routerLinkActive="active">
-        <img [src]="'assets/' + empresa.logo_empresa" alt="Logo" class="img-fluid">
-        <p>{{ empresa.nombre_empresa }}</p>
-      </div>
+      <div class="info-card" *ngFor="let empresa of empresas"
+     [routerLink]="['/tabla', empresa.nombre_tabla]"
+     routerLinkActive="active"
+     [ngStyle]="{'background-color': empresa.color_palette}">
+  <img *ngIf="empresa.logo_empresa" [src]="empresa.logo_empresa" alt="Logo" class="img-fluid">
+  <p>{{ empresa.nombre_empresa }}</p>
+</div>
+
     </section>
 
     <!-- Botón azul para abrir modal de "Agregar Empresa" -->
