@@ -60,17 +60,19 @@ export class ModuloComponent implements OnInit {
 
   // Guardar una nueva empresa en la base de datos
   guardarEmpresa(): void {
-    if (this.nombreEmpresa && this.nombreTabla && this.logoEmpresa && this.colorCard) {
-      const formData = new FormData();
-      formData.append('nombre_empresa', this.nombreEmpresa);
-      formData.append('nombre_tabla', this.nombreTabla);
-      formData.append('color_palette', this.colorCard);
-      formData.append('logo_empresa', this.logoEmpresa, this.logoEmpresa.name);
+    if (this.nombreEmpresa && this.nombreTabla && this.colorCard) {
+      const nuevaEmpresa: Empresa = {
+        nombre_empresa: this.nombreEmpresa,
+        nombre_tabla: this.nombreTabla,
+        color_palette: this.colorCard
+      };
 
-      this.empresasService.saveEmpresa(formData).subscribe(response => {
+      this.empresasService.saveEmpresa(nuevaEmpresa).subscribe(response => {
         console.log('Empresa guardada', response);
-        this.closeModal(); // Cierra el modal después de guardar
-        this.loadEmpresas(); // Actualiza la lista de empresas
+        this.closeModal();
+        this.loadEmpresas();
+      }, error => {
+        console.error('Error guardando la empresa:', error);
       });
     } else {
       alert('Todos los campos son obligatorios');

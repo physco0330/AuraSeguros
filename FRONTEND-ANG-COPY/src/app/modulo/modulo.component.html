@@ -1,21 +1,27 @@
+<!-- modulo.component.html -->
 <div class="modulo">
   <main class="main-content">
+    <!-- Mensaje de bienvenida -->
     <div class="welcome-message">
-      <h2 class="welcome-text">Bienvenido a Modulos</h2>
+      <h2 class="welcome-text">Bienvenido a Módulos</h2>
     </div>
+
+    <!-- Sección de tarjetas de empresas -->
     <section class="info-cards">
-      <!-- Tarjeta clicable sin el botón -->
+      <!-- Tarjeta fija para 'incendio' -->
       <div class="info-card" [routerLink]="['/incendio']" routerLinkActive="active">
-        <!-- Logo de la empresa -->
         <img src="assets/logo-Vitelsa-nuevo.png" alt="Logo" class="img-fluid">
+        <p>Incendio</p>
       </div>
-      <!-- Aquí se agregarán dinámicamente las tarjetas de empresas -->
-      <div *ngFor="let empresa of empresas" class="info-card">
+
+      <!-- Tarjetas dinámicas de empresas -->
+      <div class="info-card" *ngFor="let empresa of empresas" [routerLink]="['/tabla', empresa.nombre_tabla]" routerLinkActive="active">
         <img [src]="'assets/' + empresa.logo_empresa" alt="Logo" class="img-fluid">
+        <p>{{ empresa.nombre_empresa }}</p>
       </div>
     </section>
 
-    <!-- Botón azul "Agregar Empresa" -->
+    <!-- Botón azul para abrir modal de "Agregar Empresa" -->
     <button class="btn-add" (click)="openModal()">Agregar Empresa</button>
 
     <!-- Modal para agregar empresa -->
