@@ -4,6 +4,7 @@
       <mat-icon>{{ isCollapsed ? 'menu' : 'close' }}</mat-icon>
     </button>
   </div>
+
   <nav class="nav flex-column">
     <ul class="list-unstyled m-0 p-0">
       <li>
@@ -23,12 +24,11 @@
       </li>
     </ul>
   </nav>
+
   <div class="mt-auto">
     <a (click)="onLogout()" class="nav-link d-flex align-items-center logout-link">
       <mat-icon>exit_to_app</mat-icon><span class="nav-text ms-2">Cierre de sesión</span>
     </a>
-    
-    
   </div>
 
   <!-- Modal de confirmación -->

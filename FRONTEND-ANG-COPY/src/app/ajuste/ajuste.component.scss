@@ -1,87 +1,83 @@
 /* home.component.scss */
 .home {
-  display: fixed;
-  background: rgba(0, 0, 0, 0.34) url('/assets/FONDO.webp') no-repeat center center / cover; // Fondo combinado
-  background-color: rgba(0, 0, 0, 0.137);
+  background: rgba(0, 0, 0, 0.34) url('/assets/FONDO.webp') no-repeat center center / cover;
+  background-color: rgba(0, 0, 0, 0.137); // Fondo combinado
   position: fixed;
-  top: 0px; // Ajusta esto según la altura de tu header
+  top: 0; // Ajusta según la altura del header
   left: 0;
   right: 0;
   bottom: 0;
-
+}
 
 .main-content {
-  width: calc(100% - 250px); // Ancho inicial
-  height: calc(100vh - 60px); // Altura total de la ventana menos la altura del encabezado
+  width: calc(100% - 250px); // Ancho cuando el sidebar no está colapsado
+  height: calc(100vh - 60px); // Altura ajustada a la ventana menos el header
   padding: 2rem;
-  transition: all 0.3s ease-in-out;
-  position: fixed; // Cambiado de absolute a fixed
-  top: 60px; // Altura del encabezado
-  left: 250px; // Posición inicial
+  position: fixed;
+  top: 60px; // Altura del header
+  left: 250px; // Posición del main content con sidebar expandido
   right: 0;
   bottom: 0;
   overflow-y: auto;
   box-sizing: border-box;
-  margin: 0;
+  transition: all 0.3s ease-in-out; // Transiciones suaves para todos los ajustes
 }
 
-  // Ajuste cuando el sidebar está colapsado
-  &.sidebar-collapsed .main-content {
-    width: calc(100% - 70px); // Nuevo ancho cuando el sidebar está colapsado
-    margin-left: 70px; // Nueva posición cuando el sidebar está colapsado
-    left: 70px;
-  }
-
-  .info-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 20px;
-  }
-
-  .info-card {
-    width: calc(25% - 40px);
-    margin: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-    color: white;
-  }
-
-  .info-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-
-  .info-card:nth-child(1) {
-    background-color: #1E90FF;
-  }
-
-  .info-card:nth-child(2) {
-    background-color: #32CD32;
-  }
-
-  .info-card:nth-child(3) {
-    background-color: #FFA500;
-  }
-
-  .info-card:nth-child(4) {
-    background-color: #FF4500;
-  }
-
-  .info-card:nth-child(5) {
-    background-color: #6A5ACD;
-  }
+/* Ajustes cuando el sidebar está colapsado */
+.sidebar-collapsed .main-content {
+  width: calc(100% - 70px); // Ancho cuando el sidebar está colapsado
+  left: 70px; // Ajusta el margen cuando el sidebar está colapsado
 }
 
-// Media query para dispositivos móviles
+.info-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.info-card {
+  width: calc(25% - 40px); // Espaciado flexible entre las tarjetas
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra inicial
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  color: white;
+}
+
+/* Animación hover para las tarjetas */
+.info-card:hover {
+  transform: scale(1.05); // Efecto de agrandar
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); // Sombra más profunda
+}
+
+/* Colores individuales para cada tarjeta */
+.info-card:nth-child(1) {
+  background-color: #1E90FF; // Azul para la primera tarjeta
+}
+
+.info-card:nth-child(2) {
+  background-color: #32CD32; // Verde para la segunda tarjeta
+}
+
+.info-card:nth-child(3) {
+  background-color: #FFA500; // Naranja para la tercera tarjeta
+}
+
+.info-card:nth-child(4) {
+  background-color: #FF4500; // Rojo para la cuarta tarjeta
+}
+
+.info-card:nth-child(5) {
+  background-color: #6A5ACD; // Púrpura para la quinta tarjeta
+}
+
+/* Media query para dispositivos móviles */
 @media (max-width: 768px) {
-  .home {
-    .main-content {
-      width: 100%;
-      left: 0;
-    }
+  .main-content {
+    width: 100%; // El contenido ocupa toda la pantalla
+    left: 0; // Sidebar plegado automáticamente en pantallas pequeñas
   }
 }
