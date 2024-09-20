@@ -31,4 +31,24 @@ export class EmpresasService {
       })
     );
   }
+
+  // Método para eliminar una empresa por su ID
+  deleteEmpresa(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`).pipe(
+      catchError((error) => {
+        console.error('Error eliminando la empresa:', error);
+        return throwError(() => new Error('Error eliminando la empresa'));
+      })
+    );
+  }
+
+  // Método para actualizar una empresa
+  updateEmpresa(empresa: Empresa): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${empresa.id_empresa}`, empresa).pipe(
+      catchError((error) => {
+        console.error('Error actualizando la empresa:', error);
+        return throwError(() => new Error('Error actualizando la empresa'));
+      })
+    );
+  }
 }

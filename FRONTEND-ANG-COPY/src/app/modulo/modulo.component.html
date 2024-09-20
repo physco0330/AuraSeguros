@@ -1,4 +1,3 @@
-<!-- modulo.component.html -->
 <div class="modulo">
   <main class="main-content">
     <!-- Mensaje de bienvenida -->
@@ -29,21 +28,24 @@
           <!-- Logo de la empresa -->
           <img *ngIf="empresa.logo_empresa" [src]="empresa.logo_empresa" alt="Logo" class="img-fluid logo">
 
-           <!-- Nombre de la empresa -->
-  <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
+          <!-- Nombre de la empresa -->
+          <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
 
           <!-- Botones de acción -->
           <div class="action-buttons">
-            <button class="btn btn-sm btn-danger btn-icon" title="Eliminar">
+            <!-- Botón de eliminar con función de confirmación -->
+            <button class="btn btn-danger btn-icon" title="Eliminar"
+                    (click)="openConfirmDeleteModal(empresa); $event.stopPropagation()">
               <mat-icon>delete</mat-icon>
             </button>
 
-            <button class="btn btn-sm btn-edit btn-icon" title="Editar">
+            <!-- Botón de editar que abre el modal de edición -->
+            <button class="btn btn-sm btn-edit btn-icon" title="Editar"
+                    (click)="openEditModal(empresa); $event.stopPropagation()">
               <mat-icon>edit</mat-icon>
             </button>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -53,31 +55,26 @@
     <!-- Modal para agregar empresa -->
     <div *ngIf="isModalOpen" class="modal">
       <div class="modal-content">
-        <!-- Título centrado y con el color #388dac -->
         <h2 class="modal-title">Agregar Nueva Empresa</h2>
         <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
 
         <!-- Formulario del modal -->
         <form (ngSubmit)="guardarEmpresa()">
-          <!-- Nombre de la empresa -->
           <div class="form-group">
             <label for="nombreEmpresa">Nombre de la empresa</label>
             <input type="text" id="nombreEmpresa" [(ngModel)]="nombreEmpresa" name="nombreEmpresa" required />
           </div>
 
-          <!-- Nombre de la tabla -->
           <div class="form-group">
             <label for="nombreTabla">Nombre de la tabla</label>
             <input type="text" id="nombreTabla" placeholder="Nombre para su tabla" [(ngModel)]="nombreTabla" name="nombreTabla" required />
           </div>
 
-          <!-- Subir logo -->
           <div class="form-group">
             <label for="logoEmpresa">Logo de Empresa</label>
             <input type="file" id="logoEmpresa" (change)="onLogoSelected($event)" required />
           </div>
 
-          <!-- Paleta de colores -->
           <div class="form-group">
             <label for="colorCard">Color de tarjeta</label>
             <input type="color" id="colorCard" [(ngModel)]="colorCard" name="colorCard" required />
@@ -85,11 +82,56 @@
 
           <!-- Botones de Cancelar y Guardar -->
           <div class="modal-buttons">
-            <button type="button" (click)="closeModal()">Cancelar</button>
-            <button type="submit">Guardar</button>
+            <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
+            <button type="submit" class="btn-save">Guardar</button>
           </div>
         </form>
       </div>
     </div>
-  </main>
+
+  <!-- Modal de confirmación de eliminación -->
+<div *ngIf="isConfirmDeleteModalOpen" class="confirm-delete-modal">
+  <div class="confirm-delete-modal-content">
+    <h2>¿Está seguro de que desea eliminar esta empresa?</h2>
+    <p class="nombre-empresa-modal">{{ empresaAEliminar?.nombre_empresa }}</p>
+    <div class="confirm-delete-modal-buttons">
+      <button class="btn-confirm-delete-cancel" (click)="closeConfirmDeleteModal()">No</button>
+      <button class="btn-confirm-delete-confirm" (click)="confirmDelete()">Sí</button>
+    </div>
+  </div>
+</div>
+
+   <!-- Modal para editar empresa -->
+<div *ngIf="isEditModalOpen" class="modal">
+  <div class="modal-content">
+    <h2 class="modal-title">Editar Empresa</h2>
+    <form (ngSubmit)="guardarEdicion()">
+      <div class="form-group">
+        <label for="editNombreEmpresa">Nombre de la empresa</label>
+        <input type="text" id="editNombreEmpresa" [(ngModel)]="empresaEdicion.nombre_empresa" name="editNombreEmpresa" required />
+      </div>
+
+      <div class="form-group">
+        <label for="editNombreTabla">Nombre de la tabla</label>
+        <input type="text" id="editNombreTabla" [(ngModel)]="empresaEdicion.nombre_tabla" name="editNombreTabla" required />
+      </div>
+
+      <div class="form-group">
+        <label for="editColorCard">Color de tarjeta</label>
+        <input type="color" id="editColorCard" [(ngModel)]="empresaEdicion.color_palette" name="editColorCard" required />
+      </div>
+
+      <!-- Campo para cambiar el logo -->
+      <div class="form-group">
+        <label for="editLogo">Logo de la empresa</label>
+        <input type="file" id="editLogo" (change)="onLogoSelected($event)" accept="image/*" />
+      </div>
+
+      <!-- Botones de Cancelar y Guardar -->
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancel" (click)="closeEditModal()">Cancelar</button>
+        <button type="submit" class="btn-save">Guardar</button>
+      </div>
+    </form>
+  </div>
 </div>

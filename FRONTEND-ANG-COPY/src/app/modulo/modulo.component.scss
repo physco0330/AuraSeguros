@@ -133,31 +133,33 @@
 }
 
 /* Estilo del botón "Cancelar" */
-.modal-buttons .cancel {
+.btn-cancel {
   background-color: #dc3545; /* Rojo para cancelar */
   color: white;
   padding: 10px 20px; /* Aumentar el área clicable */
   border: none;
   border-radius: 5px; /* Bordes redondeados */
-  font-size: 14px;
+  font-size: 16px; /* Ajustar tamaño de fuente */
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.9; /* Ligeramente más oscuro al pasar el ratón */
+  }
 }
 
 /* Estilo del botón "Guardar" */
-.modal-buttons .save {
+.btn-save {
   background-color: #007bff; /* Azul para guardar */
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 16px; /* Ajustar tamaño de fuente */
   cursor: pointer;
-}
 
-/* Efecto hover para ambos botones */
-.modal-buttons .cancel:hover,
-.modal-buttons .save:hover {
-  opacity: 0.9; /* Ligeramente más oscuro al pasar el ratón */
+  &:hover {
+    opacity: 0.9; /* Ligeramente más oscuro al pasar el ratón */
+  }
 }
 
 /* Estilos para la paleta de colores */
@@ -304,4 +306,68 @@
   .info-cards {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Cambiar el ancho mínimo en pantallas pequeñas */
   }
+}
+
+/* Estilos para el modal de confirmación de eliminación */
+.confirm-delete-modal {
+  position: fixed; /* Fija la posición del modal en la pantalla */
+  top: 0; /* Alinea el modal en la parte superior */
+  left: 0; /* Alinea el modal a la izquierda */
+  right: 0; /* Alinea el modal a la derecha */
+  bottom: 0; /* Alinea el modal en la parte inferior */
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  display: flex; /* Utiliza flexbox para centrar el contenido */
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+}
+
+.confirm-delete-modal-content {
+  background-color: white; /* Color de fondo del modal */
+  padding: 30px; /* Espacio interno aumentado para mejor presentación */
+  border-radius: 10px; /* Bordes redondeados para suavizar la apariencia */
+  text-align: center; /* Centra el texto dentro del modal */
+  width: 700px; /* Ancho del modal */
+  height: 700px; /* Altura del modal aumentada para más espacio vertical */
+  overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es demasiado largo */
+}
+
+/* Estilos para los botones en las esquinas */
+.confirm-delete-modal-buttons {
+  display: flex; /* Utiliza flexbox para alinear los botones */
+  justify-content: space-between; /* Espacia los botones a los extremos */
+  margin-top: 260px; /* Espacio entre el texto y los botones */
+}
+
+/* Ajusta el tamaño de los botones */
+.btn-confirm-delete-confirm,
+.btn-confirm-delete-cancel {
+  margin: 0 20px; /* Espacio horizontal entre los botones */
+  padding: 12px 34px; /* Tamaño de los botones */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilo para el botón de confirmación */
+.btn-confirm-delete-confirm {
+  background-color: #d9534f; /* Rojo para "Sí" */
+  color: white; /* Color del texto */
+}
+
+/* Estilo para el botón de cancelación */
+.btn-confirm-delete-cancel {
+  background-color: #5bc0de; /* Azul para "No" */
+  color: white; /* Color del texto */
+}
+
+/* Estilo para el nombre de la empresa dentro del modal */
+.nombre-empresa-modal {
+  font-size: 40px; /* Ajusta el tamaño según sea necesario */
+  color: #010a0d; /* Color deseado */
+  font-weight: bold; /* Hace que el texto sea más prominente */
+  margin-top: 180px; /* Espacio superior para separar del título */
+
+  /* Para bajar el nombre de la empresa en el modal */
+  /* Puedes aumentar este valor para bajar el texto más en el modal */
+  /* margin-top: 40px; */ /* Descomenta esta línea para aumentar la separación */
 }
