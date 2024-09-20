@@ -55,22 +55,44 @@ export class ModuloComponent implements OnInit {
 
   // Manejar la selección del archivo de logo
   onLogoSelected(event: any): void {
-    this.logoEmpresa = event.target.files[0];
+    if (event.target.files.length > 0) {
+      this.logoEmpresa = event.target.files[0];
+    }
   }
 
   // Guardar una nueva empresa en la base de datos
   guardarEmpresa(): void {
     if (this.nombreEmpresa && this.nombreTabla && this.colorCard) {
-      const nuevaEmpresa: Empresa = {
-        nombre_empresa: this.nombreEmpresa,
-        nombre_tabla: this.nombreTabla,
-        color_palette: this.colorCard
-      };
+      // Eliminar todos los espacios del nombre de la empresa
+      const nombreLimpio = this.nombreEmpresa.replace(/\s+/g, '').toLowerCase(); // Remueve todos los espacios y convierte a minúsculas
 
-      this.empresasService.saveEmpresa(nuevaEmpresa).subscribe(response => {
+      // Verificar si ya existe una empresa con el mismo nombre
+      const empresaExistente = this.empresas.find(empresa =>
+        empresa.nombre_empresa.replace(/\s+/g, '').toLowerCase() === nombreLimpio
+      );
+
+      if (empresaExistente) {
+        alert('Ya existe una empresa con ese nombre. Por favor, elige otro nombre.'); // Mensaje de error
+        return; // Detener la ejecución si hay un duplicado
+      }
+
+      // Crear FormData para enviar todos los datos, incluyendo el logo
+      const formData = new FormData();
+      formData.append('nombre_empresa', this.nombreEmpresa.trim()); // Mantener el nombre original (con espacios) al guardar
+      formData.append('nombre_tabla', this.nombreTabla);
+      formData.append('color_palette', this.colorCard);
+
+      // Agregar el archivo de logo si existe
+      if (this.logoEmpresa) {
+        formData.append('logo_empresa', this.logoEmpresa);
+      }
+
+      // Llamar al servicio para guardar la empresa
+      this.empresasService.saveEmpresa(formData).subscribe(response => {
         console.log('Empresa guardada', response);
         this.closeModal();
         this.loadEmpresas();
+        alert('Guardado exitoso'); // Mostrar mensaje de éxito
       }, error => {
         console.error('Error guardando la empresa:', error);
       });

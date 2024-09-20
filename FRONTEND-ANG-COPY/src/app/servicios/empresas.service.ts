@@ -1,4 +1,3 @@
-// src/app/servicios/empresas.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -13,15 +12,16 @@ export class EmpresasService {
 
   constructor(private http: HttpClient) {}
 
-// Método para guardar una nueva empresa (sin usar FormData)
-saveEmpresa(empresa: Empresa): Observable<any> {
-  return this.http.post<any>(this.baseUrl, empresa).pipe(
-    catchError((error) => {
-      console.error('Error guardando la empresa:', error);
-      return throwError(() => new Error('Error guardando la empresa'));
-    })
-  );
-}
+  // Método para guardar una nueva empresa utilizando FormData
+  saveEmpresa(empresa: FormData): Observable<any> {
+    return this.http.post<any>(this.baseUrl, empresa).pipe(
+      catchError((error) => {
+        console.error('Error guardando la empresa:', error);
+        return throwError(() => new Error('Error guardando la empresa'));
+      })
+    );
+  }
+
   // Método para obtener todas las empresas
   getEmpresas(): Observable<Empresa[]> {
     return this.http.get<Empresa[]>(`${this.baseUrl}`).pipe( // Corrige la URL si es necesario

@@ -29,6 +29,9 @@
           <!-- Logo de la empresa -->
           <img *ngIf="empresa.logo_empresa" [src]="empresa.logo_empresa" alt="Logo" class="img-fluid logo">
 
+           <!-- Nombre de la empresa -->
+  <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
+
           <!-- Botones de acción -->
           <div class="action-buttons">
             <button class="btn btn-sm btn-danger btn-icon" title="Eliminar">
@@ -41,8 +44,6 @@
           </div>
         </div>
 
-        <!-- Nombre de la empresa, debajo de la tarjeta -->
-        <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
       </div>
     </section>
 

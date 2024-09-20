@@ -211,7 +211,6 @@
   height: auto; /* Mantener la proporción del logo */
   margin-top: 10px; /* Espacio entre el título y el logo */
 }
-
 /* Wrapper para las tarjetas con grid */
 .info-cards {
   display: grid;
@@ -231,22 +230,20 @@
   text-align: center;
   background-color: #fff;
   position: relative;
-
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
+  display: flex;
+  flex-direction: column; /* Permitir que los elementos se alineen verticalmente */
+  justify-content: space-between; /* Distribuir espacio entre elementos */
 }
 
-/* Estilo del nombre de la empresa debajo de la tarjeta */
+/* Estilo del nombre de la empresa dentro de la tarjeta */
 .empresa-nombre {
-  font-family: 'Arial', sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-  color: black;
-  margin-top: 10px; /* Espacio entre la tarjeta y el nombre */
-  text-align: center; /* Centrado del texto */
+  text-align: center;  /* Centrar el texto */
+  color: black;  /* Color negro para el texto */
+  font-size: 1.2rem;  /* Ajusta el tamaño de la fuente */
+  font-weight: bold;  /* Opción para darle más peso */
+  margin-top:  100px;  /* Espacio entre la tarjeta y el texto */
 }
+
 
 /* Logo dentro de la tarjeta */
 .logo {
