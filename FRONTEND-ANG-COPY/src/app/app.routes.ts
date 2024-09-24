@@ -8,7 +8,7 @@ import { IncendioComponent } from './incendio/incendio.component';
 import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.component';
 import { EditarBienComponent } from './editar-bien2/editar-bien2.component';
 import { VisualizarBienComponent } from './visualizar-bien/visualizar-bien.component';
-
+import { EmpresasComponent } from './empresas/empresas.component';
 
 
 
@@ -38,7 +38,8 @@ export const routes: Routes = [
   // Ruta para el componente CambiarContra
   { path: 'cambiar-contra', component: CambiarContraComponent },
 
-
+// Ruta para la página principal
+{ path: 'empresas', component: EmpresasComponent },
 
   // Ruta por defecto para manejar URLs no encontradas
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },

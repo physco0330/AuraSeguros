@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { EmpresasComponent } from './empresas/empresas.component';
 //import { HistorialDeEdicionesComponent } from './historial-de-ediciones/historial-de-ediciones.component';
 //import { HistorialService } from './servicios/historial.service';
 
@@ -34,6 +35,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatIconModule,
     CambiarContraComponent,
     MatSidenavModule,
+    EmpresasComponent
   // Modulo de ruta
   ],
   providers: [

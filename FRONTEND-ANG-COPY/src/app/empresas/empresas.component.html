@@ -1,0 +1,156 @@
+<div class="modulo-container">
+  <!-- Mensaje de bienvenida -->
+  <div class="welcome-message">
+    <h2 class="welcome-text">Bienvenido a Módulos</h2>
+  </div>
+
+  <!-- Campo de búsqueda -->
+  <div class="search-container">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar empresa..." />
+  </div>
+
+
+
+    <!-- Tarjetas dinámicas de empresas con filtro -->
+    <div *ngFor="let empresa of filteredEmpresas()" class="info-wrapper">
+      <div class="info-card"
+           [routerLink]="['/tabla', empresa.nombre_tabla]"
+           routerLinkActive="active"
+           [ngStyle]="{'background-color': empresa.color_palette}">
+
+        <!-- Nombre de la empresa -->
+        <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
+
+        <!-- Botones de acción -->
+        <div class="action-buttons">
+          <!-- Botón de eliminar con función de confirmación -->
+          <button class="btn btn-danger btn-icon" title="Eliminar"
+                  (click)="openConfirmDeleteModal(empresa); $event.stopPropagation()">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+          <!-- Botón de editar que abre el modal de edición -->
+          <button class="btn btn-sm btn-edit btn-icon" title="Editar"
+                  (click)="openEditModal(empresa); $event.stopPropagation()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+  <!-- Botón azul para abrir modal de "Agregar Empresa" -->
+  <button class="btn-add" (click)="openModal()">Agregar Empresa</button>
+
+  <!-- Modal para agregar empresa -->
+  <div *ngIf="isModalOpen" class="modal">
+    <div class="modal-content">
+      <h2 class="modal-title" style="text-align: center; color: #388dac;">Agregar Nueva Empresa</h2>
+      <form (ngSubmit)="guardarEmpresa()">
+        <div class="form-group">
+          <label for="nombreEmpresa">Nombre de la empresa</label>
+          <input type="text" id="nombreEmpresa" [(ngModel)]="nombreEmpresa" name="nombreEmpresa" required />
+        </div>
+
+        <div class="form-group">
+          <label for="nitEmpresa">NIT de la empresa</label>
+          <input type="text" id="nitEmpresa" [(ngModel)]="nitEmpresa" name="nitEmpresa" required />
+        </div>
+
+        <div class="form-group">
+          <label for="correoEmpresa">Correo empresarial</label>
+          <input type="email" id="correoEmpresa" [(ngModel)]="correoEmpresa" name="correoEmpresa" required />
+        </div>
+
+        <div class="form-group">
+          <label for="contactoEmpresa">Contacto</label>
+          <input type="text" id="contactoEmpresa" [(ngModel)]="contactoEmpresa" name="contactoEmpresa" required />
+        </div>
+
+        <div class="form-group">
+          <label for="numeroPoliza">Número de póliza</label>
+          <input type="text" id="numeroPoliza" [(ngModel)]="numeroPoliza" name="numeroPoliza" required />
+        </div>
+
+        <div class="form-group">
+          <label for="nombreTabla">Nombre de la tabla</label>
+          <input type="text" id="nombreTabla" placeholder="Nombre para su tabla" [(ngModel)]="nombreTabla" name="nombreTabla" required />
+        </div>
+
+        <div class="form-group">
+          <label for="colorCard">Color de tarjeta</label>
+          <input type="color" id="colorCard" [(ngModel)]="colorCard" name="colorCard" required />
+        </div>
+
+        <!-- Botones de Cancelar y Guardar -->
+        <div class="modal-buttons">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-save">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de confirmación de eliminación -->
+  <div *ngIf="isConfirmDeleteModalOpen" class="confirm-delete-modal">
+    <div class="confirm-delete-modal-content">
+      <h2>¿Está seguro de que desea eliminar esta empresa?</h2>
+      <p class="nombre-empresa-modal">{{ empresaAEliminar?.nombre_empresa }}</p>
+      <div class="confirm-delete-modal-buttons">
+        <button class="btn-confirm-delete-cancel" (click)="closeConfirmDeleteModal()">No</button>
+        <button class="btn-confirm-delete-confirm" (click)="confirmDelete()">Sí</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para editar empresa -->
+  <div *ngIf="isEditModalOpen" class="modal">
+    <div class="modal-content">
+      <h2 class="modal-title">Editar Empresa</h2>
+      <form (ngSubmit)="guardarEdicion()">
+        <div class="form-group">
+          <label for="editNombreEmpresa">Nombre de la empresa</label>
+          <input type="text" id="editNombreEmpresa" [(ngModel)]="empresaEdicion.nombre_empresa" name="editNombreEmpresa" required />
+        </div>
+
+        <div class="form-group">
+          <label for="editNitEmpresa">NIT de la empresa</label>
+          <input type="text" id="editNitEmpresa" [(ngModel)]="empresaEdicion.nit_empresa" name="editNitEmpresa" required />
+        </div>
+
+        <div class="form-group">
+          <label for="editCorreoEmpresa">Correo empresarial</label>
+          <input type="email" id="editCorreoEmpresa" [(ngModel)]="empresaEdicion.correo_empresa" name="editCorreoEmpresa" required />
+        </div>
+
+        <div class="form-group">
+          <label for="editContactoEmpresa">Contacto</label>
+          <input type="text" id="editContactoEmpresa" [(ngModel)]="empresaEdicion.contacto_empresa" name="editContactoEmpresa" required />
+        </div>
+
+        <div class="form-group">
+          <label for="editNumeroPoliza">Número de póliza</label>
+          <input type="text" id="editNumeroPoliza" [(ngModel)]="empresaEdicion.numero_poliza" name="editNumeroPoliza" required />
+        </div>
+
+        <div class="form-group">
+          <label for="editNombreTabla">Nombre de la tabla</label>
+          <input type="text" id="editNombreTabla" [(ngModel)]="empresaEdicion.nombre_tabla" name="editNombreTabla" required />
+        </div>
+
+        <div class="form-group">
+          <label for="editColorCard">Color de tarjeta</label>
+          <input type="color" id="editColorCard" [(ngModel)]="empresaEdicion.color_palette" name="editColorCard" required />
+        </div>
+
+
+
+        <!-- Botones de Cancelar y Guardar -->
+        <div class="modal-buttons">
+          <button type="button" class="btn-cancel" (click)="closeEditModal()">Cancelar</button>
+          <button type="submit" class="btn-save">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

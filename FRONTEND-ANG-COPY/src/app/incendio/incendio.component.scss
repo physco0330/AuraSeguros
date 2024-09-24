@@ -44,26 +44,38 @@
     align-self: flex-start;
   }
 
-  .btn-add {
+  .csv-btn {
     background-color: #007bff; /* Color de fondo azul */
     color: white;
     border: none;
     padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    position: absolute; /* Permite mover el botón libremente */
+    top: 50px; /* Ajusta la posición vertical */
+    left: 7px; /* Ajusta la posición horizontal */
+  }
+
+  .btn-add {
+    background-color: #007bff; /* Color de fondo azul para ambos botones */
+    color: white;
+    border: none;
+    padding: 10px 20px;
     border-radius: 20px;
-    display: flex;
-    align-items: center;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Transición para el efecto hover */
-  }
+    margin-bottom: 10px; /* Espacio entre los botones */
+}
 
-  .btn-add:hover {
+.btn-add:hover {
     background-color: #0056b3; /* Cambio de color al pasar el cursor */
-  }
+}
 
-  .btn-add .icon {
+
+.btn-add .icon {
     font-size: 16px;
     margin-right: 5px;
-  }
+}
 
   /* Estilos para la cabecera de la tabla */
   .table thead th {
@@ -137,7 +149,7 @@
   background-color: #ffc107; /* Color de fondo amarillo */
   color: #212529; /* Color del texto */
   border-color: #ffc107; /* Color del borde */
-  margin-left: 0.10rem; 
+  margin-left: 0.10rem;
 }
 
 .btn-warning:hover {

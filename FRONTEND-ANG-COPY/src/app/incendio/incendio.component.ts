@@ -113,6 +113,15 @@ export class IncendioComponent implements OnInit {
     });
   }
 
+  subirArchivo(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      // Aquí puedes agregar la lógica para procesar el archivo CSV
+      console.log(file);
+    }
+  }
+
   // Método para cargar todos los bienes desde el servicio
 // Llama al método 'getBienes' del servicio 'bienesService' para obtener todos los bienes
 // Asigna los datos recibidos tanto a 'bienes' como a 'bienesFiltrados' para mantener una copia original y una filtrada
@@ -200,6 +209,8 @@ export class IncendioComponent implements OnInit {
   }
 
 
+
+
   // Método para redirigir al módulo anterior
   volverAModulo(): void {
     this.router.navigate(['/modulo']);
@@ -239,3 +250,4 @@ export class IncendioComponent implements OnInit {
     );
   }
 }
+

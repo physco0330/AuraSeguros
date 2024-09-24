@@ -6,9 +6,15 @@
     <div class="button-container">
       <!-- Botón para volver al módulo anterior -->
       <button class="btn btn-primary volver-btn" (click)="volverAModulo()">Volver a Módulo</button>
+
+      <div style="position: relative;">
+        <!-- Botón para subir archivo CSV -->
+        <input type="file" accept=".csv" (change)="subirArchivo($event)" style="display: none;" #fileInput>
+        <button class=" csv-btn" (click)="fileInput.click()">Subir CSV</button>
+
       <!-- Botón para mostrar el formulario de agregar un bien -->
       <button class="btn btn-primary btn-add" (click)="mostrarFormularioAgregar()">
-        <span class="icon">+</span> Agregar
+        <span class="icon">+</span> Agregar bien
       </button>
     </div>
   </div>
@@ -90,15 +96,15 @@
                 <button class="btn btn-sm btn-info btn-icon" title="Editar" (click)="editarBien(bien.codigo)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                
-  <!-- Columna para el código con enlace interactivo -->
-<td class="text-center">
-  <!-- Hipervínculo para ver detalles -->
-  <a [routerLink]="['/visualizar-bien', bien.codigo]" title="Ver detalles">
-    {{ bien.codigo }}
-  </a>
-</td>
+              </td>
 
+              <!-- Columna para el código con enlace interactivo -->
+              <td class="text-center">
+                <!-- Hipervínculo para ver detalles -->
+                <a [routerLink]="['/visualizar-bien', bien.codigo]" title="Ver detalles">
+                  {{ bien.codigo }}
+                </a>
+              </td>
 
               <!-- Resto de las columnas con los datos del bien -->
               <td class="text-center">{{ bien.articuloBienes }}</td>
