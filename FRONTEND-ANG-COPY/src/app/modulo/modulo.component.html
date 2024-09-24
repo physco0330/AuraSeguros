@@ -26,7 +26,7 @@
              [ngStyle]="{'background-color': empresa.color_palette}">
 
           <!-- Logo de la empresa -->
-          <img *ngIf="empresa.logo_empresa" [src]="empresa.logo_empresa" alt="Logo" class="img-fluid logo">
+          <img *ngIf="empresa.logo_empresa" [src]="'http://localhost:8080/api/empresas/logos/' + empresa.logo_empresa" alt="Logo" class="img-fluid logo">
 
           <!-- Nombre de la empresa -->
           <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
@@ -55,8 +55,8 @@
     <!-- Modal para agregar empresa -->
     <div *ngIf="isModalOpen" class="modal">
       <div class="modal-content">
-        <h2 class="modal-title">Agregar Nueva Empresa</h2>
-        <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
+        <h2 class="modal-title" style="text-align: center; color: #388dac;">Agregar Nueva Empresa</h2> <!-- Título centrado y con color azul -->
+        <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo modal-logo"> <!-- Imagen del logo -->
 
         <!-- Formulario del modal -->
         <form (ngSubmit)="guardarEmpresa()">

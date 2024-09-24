@@ -25,42 +25,77 @@
 }
 
 .info-cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px; /* Reducción del espacio entre tarjetas */
   margin-top: 20px;
-  gap: 30px; /* Aumentar la separación entre las tarjetas */
+  padding: 0 20px;
 }
 
 .info-card {
-  width: clamp(250px, 20%, 300px);
-  height: clamp(150px, 15%, 200px);
-  margin: 20px;
-  padding: 20px;
-  border-radius: 8px;
+  width: 200px; /* Ancho fijo para hacerla más compacta */
+  height: 300px; /* Altura fija para un mejor control */
+  padding: 0; /* Reduce el padding para un aspecto más compacto */
+  border-radius: 10px; /* Bordes redondeados */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  text-align: center;
+  background-color: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Permite que los elementos se alineen verticalmente */
+  justify-content: space-between; /* Distribuye espacio entre elementos */
+}
+
+.info-card img {
+  max-width: 100%; /* Ajustar el tamaño máximo de la imagen */
+  height: auto; /* Mantener la proporción de la imagen */
+  border-radius: 10px 10px 0 0; /* Bordes redondeados en la parte superior */
+}
+
+.empresa-nombre {
+  text-align: center; /* Centrar el texto */
+  color: black;
+  font-size: 1rem; /* Ajusta el tamaño de la fuente */
+  font-weight: bold;
+  margin: 10px 0; /* Espacio entre la tarjeta y el texto */
+}
+
+/* Estilos para los botones de Editar y Eliminar */
+.card-actions {
+  display: flex;
+  justify-content: space-between; /* Espacio entre botones */
+  margin-top: auto; /* Empuja hacia abajo */
+  padding: 10px; /* Espacio interno */
+}
+
+.btn-edit,
+.btn-delete {
+  background-color: #007bff; /* Azul */
   color: white;
-  text-align: center; /* Alinear el texto al centro */
+  padding: 5px 10px; /* Tamaño más pequeño */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem; /* Tamaño de fuente ajustado */
+  transition: background-color 0.3s;
 }
 
-.info-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.btn-edit:hover,
+.btn-delete:hover {
+  background-color: #0056b3; /* Color más oscuro al pasar el ratón */
 }
 
-.info-card:nth-child(1) {
-  background-color: #91dd0f;
+.btn-delete {
+  background-color: #dc3545; /* Rojo para eliminar */
 }
 
-/* Nuevo estilo para el logo */
-.logo {
-  margin-top: 10px; /* Espacio entre el título y el logo */
-  max-width: 100px; /* Ajustar el tamaño máximo del logo */
-  height: auto; /* Mantener la proporción del logo */
+.btn-delete:hover {
+  background-color: #c82333; /* Color más oscuro al pasar el ratón */
 }
 
+/* Resto de tus estilos... */
 /* Botón azul para agregar empresa */
 .btn-add {
   background-color: #007bff;
@@ -76,89 +111,82 @@
 
 /* Estilos para el modal */
 .modal {
-  position: fixed;
+  display: flex; /* Flexbox para centrar el modal */
+  position: fixed; /* Fijo para mantenerlo en la pantalla */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  width: 100%; /* Cubrir toda la pantalla */
+  height: 100%; /* Cubrir toda la pantalla */
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+  align-items: center; /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
 }
 
 .modal-content {
-  background-color: white;
-  padding: 30px;
-  border-radius: 10px;
-  width: 500px;
-  height: 600px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  background-color: #fff; /* Fondo blanco para el contenido del modal */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 20px; /* Espacio interno */
+  width: 400px; /* Ancho del modal */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  animation: slide-in 0.3s ease; /* Animación de entrada */
 }
 
-/* Estilo del título del modal */
 .modal-title {
-  color: #388dac; /* Color del texto */
-  text-align: center; /* Centrar el texto */
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 24px; /* Tamaño de fuente del título */
+  margin-bottom: 20px; /* Espacio inferior */
 }
 
 .form-group {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 15px; /* Espacio entre los grupos de formulario */
 }
 
 .form-group label {
-  margin-bottom: 5px;
-  font-weight: bold;
+  display: block; /* Hacer que la etiqueta ocupe una línea completa */
+  margin-bottom: 5px; /* Espacio inferior */
 }
 
 .form-group input,
 .form-group select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Espacio interno */
+  border: 1px solid #ccc; /* Borde gris claro */
+  border-radius: 4px; /* Bordes redondeados */
 }
 
 .modal-buttons {
-  display: flex;
-  justify-content: space-between; /* Espacio entre los botones */
+  display: flex; /* Flexbox para los botones */
+  justify-content: space-between; /* Espaciado entre los botones */
+  margin-top: 20px; /* Espacio superior */
 }
 
-/* Estilo del botón "Cancelar" */
 .btn-cancel {
-  background-color: #dc3545; /* Rojo para cancelar */
-  color: white;
-  padding: 10px 20px; /* Aumentar el área clicable */
-  border: none;
-  border-radius: 5px; /* Bordes redondeados */
-  font-size: 16px; /* Ajustar tamaño de fuente */
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.9; /* Ligeramente más oscuro al pasar el ratón */
-  }
+  background-color: #f44336; /* Rojo para cancelar */
+  color: white; /* Texto blanco */
+  padding: 10px 15px; /* Espacio interno para los botones */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar cursor al pasar el ratón */
 }
 
-/* Estilo del botón "Guardar" */
 .btn-save {
-  background-color: #007bff; /* Azul para guardar */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px; /* Ajustar tamaño de fuente */
-  cursor: pointer;
+  background-color: #4CAF50; /* Verde para guardar */
+  color: white; /* Texto blanco */
+  padding: 10px 15px; /* Espacio interno para los botones */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cambiar cursor al pasar el ratón */
+}
 
-  &:hover {
-    opacity: 0.9; /* Ligeramente más oscuro al pasar el ratón */
+/* Animación de entrada del modal */
+@keyframes slide-in {
+  from {
+    opacity: 0; /* Comienza invisible */
+    transform: translateY(-30px); /* Se desplaza desde arriba */
+  }
+  to {
+    opacity: 1; /* Termina visible */
+    transform: translateY(0); /* Se establece en su posición original */
   }
 }
 
@@ -204,110 +232,6 @@
   color: #388dac;
 }
 
-/* Nuevo estilo para Bienvenido a Modulos
-*/
-.logo {
-  display: block; /* Asegura que la imagen sea tratada como un bloque */
-  margin: 0 auto; /* Centra horizontalmente el logo */
-  max-width: 100px; /* Ajustar el tamaño máximo del logo */
-  height: auto; /* Mantener la proporción del logo */
-  margin-top: 10px; /* Espacio entre el título y el logo */
-}
-/* Wrapper para las tarjetas con grid */
-.info-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Máximo 4 columnas */
-  grid-gap: 30px; /* Espacio entre tarjetas */
-  margin-top: 20px;
-  padding: 0 20px;
-}
-
-/* Estilos de la tarjeta */
-.info-card {
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
-  text-align: center;
-  background-color: #fff;
-  position: relative;
-  display: flex;
-  flex-direction: column; /* Permitir que los elementos se alineen verticalmente */
-  justify-content: space-between; /* Distribuir espacio entre elementos */
-}
-
-/* Estilo del nombre de la empresa dentro de la tarjeta */
-.empresa-nombre {
-  text-align: center;  /* Centrar el texto */
-  color: black;  /* Color negro para el texto */
-  font-size: 1.2rem;  /* Ajusta el tamaño de la fuente */
-  font-weight: bold;  /* Opción para darle más peso */
-  margin-top:  100px;  /* Espacio entre la tarjeta y el texto */
-}
-
-
-/* Logo dentro de la tarjeta */
-.logo {
-  margin-top: 10px;
-  max-width: 80px;
-  height: auto;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Estilo para los botones de acción en la parte superior */
-.action-buttons {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  justify-content: space-between; /* Empuja los botones a los bordes */
-  width: calc(100% - 20px); /* Ancho total menos margen */
-}
-
-/* Estilo del botón con íconos */
-.btn-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 5px; /* Bordes redondeados */
-  transition: background-color 0.3s;
-  cursor: pointer;
-}
-
-/* Estilo para el botón de eliminar */
-.btn-danger {
-  color: white;
-  border: none;
-  background-color: #dc3545; /* Color de fondo por defecto */
-  margin-right: auto; /* Asegura que se empuje a la izquierda */
-
-  &:hover {
-    background-color: #c82333; /* Cambia a un tono más oscuro al pasar el ratón */
-  }
-}
-
-/* Estilo para el botón de editar */
-.btn-editar {
-  background-color: #007bff;
-  color: white;
-  border: none;
-
-  &:hover {
-    background-color: #138496; /* Cambia a un tono más oscuro al pasar el ratón */
-  }
-}
-
-/* Ajustes responsivos para que las tarjetas se vean bien en pantallas más pequeñas */
-@media (max-width: 1024px) {
-  .info-cards {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Cambiar el ancho mínimo en pantallas pequeñas */
-  }
-}
-
 /* Estilos para el modal de confirmación de eliminación */
 .confirm-delete-modal {
   position: fixed; /* Fija la posición del modal en la pantalla */
@@ -326,48 +250,65 @@
   padding: 30px; /* Espacio interno aumentado para mejor presentación */
   border-radius: 10px; /* Bordes redondeados para suavizar la apariencia */
   text-align: center; /* Centra el texto dentro del modal */
-  width: 700px; /* Ancho del modal */
-  height: 700px; /* Altura del modal aumentada para más espacio vertical */
-  overflow-y: auto; /* Permite el desplazamiento vertical si el contenido es demasiado largo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade sombra para profundidad */
 }
 
-/* Estilos para los botones en las esquinas */
-.confirm-delete-modal-buttons {
-  display: flex; /* Utiliza flexbox para alinear los botones */
-  justify-content: space-between; /* Espacia los botones a los extremos */
-  margin-top: 260px; /* Espacio entre el texto y los botones */
+.confirm-delete-buttons {
+  margin-top: 20px; /* Espacio superior para los botones */
+  display: flex; /* Utiliza flexbox para los botones */
+  justify-content: space-between; /* Espaciado entre los botones */
 }
 
-/* Ajusta el tamaño de los botones */
-.btn-confirm-delete-confirm,
-.btn-confirm-delete-cancel {
-  margin: 0 20px; /* Espacio horizontal entre los botones */
-  padding: 12px 34px; /* Tamaño de los botones */
+.btn-confirm {
+  background-color: #dc3545; /* Color rojo para el botón de confirmar */
+  color: white; /* Texto blanco */
+  padding: 10px 15px; /* Espacio interno */
   border: none; /* Sin borde */
-  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
   border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón */
 }
 
-/* Estilo para el botón de confirmación */
-.btn-confirm-delete-confirm {
-  background-color: #d9534f; /* Rojo para "Sí" */
-  color: white; /* Color del texto */
+.btn-cancel-confirm {
+  background-color: #6c757d; /* Color gris para el botón de cancelar */
+  color: white; /* Texto blanco */
+  padding: 10px 15px; /* Espacio interno */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón */
 }
 
-/* Estilo para el botón de cancelación */
-.btn-confirm-delete-cancel {
-  background-color: #5bc0de; /* Azul para "No" */
-  color: white; /* Color del texto */
+/* Transiciones para los botones del modal de confirmación */
+.btn-confirm:hover {
+  background-color: #c82333; /* Color más oscuro al pasar el ratón */
 }
 
-/* Estilo para el nombre de la empresa dentro del modal */
-.nombre-empresa-modal {
-  font-size: 40px; /* Ajusta el tamaño según sea necesario */
-  color: #010a0d; /* Color deseado */
-  font-weight: bold; /* Hace que el texto sea más prominente */
-  margin-top: 180px; /* Espacio superior para separar del título */
+.btn-cancel-confirm:hover {
+  background-color: #5a6268; /* Color más oscuro al pasar el ratón */
+}
+.modal-logo {
+  max-width: 30%; /* Ajusta este porcentaje según el tamaño deseado */
+  height: auto; /* Mantiene la proporción de la imagen */
+  margin: 0 auto; /* Centra la imagen en el modal */
+  display: block; /* Asegura que la imagen se comporte como un bloque para el centrado */
+}
 
-  /* Para bajar el nombre de la empresa en el modal */
-  /* Puedes aumentar este valor para bajar el texto más en el modal */
-  /* margin-top: 40px; */ /* Descomenta esta línea para aumentar la separación */
+/* Estilos adicionales para el modal */
+.modal {
+  display: flex; /* Flexbox para centrar el contenido */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  position: fixed; /* Posiciona el modal en la pantalla */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ancho completo */
+  height: 100%; /* Altura completa */
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  z-index: 1000; /* Asegura que el modal esté por encima de otros elementos */
+}
+
+.modal-content {
+  background-color: white; /* Fondo blanco para el contenido del modal */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
