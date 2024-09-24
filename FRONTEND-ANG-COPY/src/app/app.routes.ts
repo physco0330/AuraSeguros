@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ModuloComponent } from './modulo/modulo.component';
 import { BienesComponent } from './bienes/bienes.component';
@@ -13,7 +14,7 @@ import { VisualizarBienComponent } from './visualizar-bien/visualizar-bien.compo
 
 export const routes: Routes = [
   // Ruta para la página principal
-  { path: '', component: HomeComponent },
+  { path: 'inicio', component: HomeComponent },
 
   // Ruta para el componente Modulo
   { path: 'modulo', component: ModuloComponent },
@@ -40,5 +41,12 @@ export const routes: Routes = [
 
 
   // Ruta por defecto para manejar URLs no encontradas
-  { path: '**', redirectTo: '' }
+  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
+  { path: '**', redirectTo: '/inicio' }
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

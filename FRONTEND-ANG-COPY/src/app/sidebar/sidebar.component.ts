@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,11 +14,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class SidebarComponent {
   isCollapsed = false;
   showModal = false;
-
+  @Output() sidebarToggled = new EventEmitter<boolean>();
   constructor(private router: Router) {}
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
+    this.sidebarToggled.emit(this.isCollapsed);
   }
 
   onLogout() {

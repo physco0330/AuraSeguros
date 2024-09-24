@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { BienesComponent } from './bienes/bienes.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -13,11 +14,12 @@ import { EditarBienComponent } from './editar-bien2/editar-bien2.component';
 import { VisualizarBienComponent } from './visualizar-bien/visualizar-bien.component';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-root', 
   templateUrl: './app.component.html',
   standalone: true,
   imports: [
     RouterModule,
+    RouterOutlet,
     BienesComponent,
     HomeComponent, // Agrega HomeComponent aquí, osea que en este array se agregan los componentes nuevod
     HttpClientModule, // Si usas HttpClient, agrega su módulo aquí
@@ -34,4 +36,9 @@ import { VisualizarBienComponent } from './visualizar-bien/visualizar-bien.compo
 })
 export class AppComponent {
   title = 'auraseguro-app';
+  isSidebarCollapsed = false;
+
+  onSidebarToggle(collapsed: boolean) {
+    this.isSidebarCollapsed = collapsed;
+  }
 }

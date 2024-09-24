@@ -12,8 +12,8 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import { HistorialDeEdicionesComponent } from './historial-de-ediciones/historial-de-ediciones.component';
-import { HistorialService } from './servicios/historial.service';
+//import { HistorialDeEdicionesComponent } from './historial-de-ediciones/historial-de-ediciones.component';
+//import { HistorialService } from './servicios/historial.service';
 
 @NgModule({
 
@@ -21,6 +21,10 @@ import { HistorialService } from './servicios/historial.service';
         // No es necesario declarar componentes standalone aquí
   ],
   imports: [
+    NgModule,
+    BienesComponent,
+    HomeComponent,
+    BrowserAnimationsModule,
     AppComponent,
     BrowserModule,
     HeaderComponent,
@@ -30,8 +34,6 @@ import { HistorialService } from './servicios/historial.service';
     MatIconModule,
     CambiarContraComponent,
     MatSidenavModule,
-    HistorialDeEdicionesComponent
-
   // Modulo de ruta
   ],
   providers: [

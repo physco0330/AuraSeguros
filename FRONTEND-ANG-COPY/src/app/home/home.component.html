@@ -1,36 +1,44 @@
-<div class="home">
-  <main class="main-content">
-    <div class="welcome-message d-flex align-items-center">
-      <!-- Imagen del logo -->
-      <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
-      <div class="text-container ms-3">
-        <h1 class="welcome-title">Bienvenido a la aplicación</h1>
-        <p>Explora los diferentes módulos y funcionalidades.</p>
+<div class="home-container">
+  <div class="welcome-message d-flex align-items-center">
+    <!-- Imagen del logo -->
+    <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
+    <div class="text-container ms-3">
+      <h1 class="welcome-title">Bienvenido a la aplicación</h1>
+      <p>Explora los diferentes módulos y funcionalidades.</p>
+    </div>
+  </div>
+  <div class="info-container">
+    <div class="info-section-wrapper" [style.transform]="'translateX(' + (-currentSection * 100) + '%)'">
+      <div class="info-section">
+        <h2>Módulos</h2>
+        <div class="modulo-content">
+          <p>En esta sección puedes gestionar los distintos módulos disponibles.</p>
+          <p>Módulos activos: {{ "modulosActivos" }}</p>
+          <p>Módulos disponibles: {{ "modulosDisponibles" }}</p>
+        </div>
+      </div>
+      
+      <div class="info-section">
+        <h2>Propósito</h2>
+        <div class="proposito-content">
+          <p>Esta página se ha creado para satisfacer las necesidades de nuestros usuarios, permitiéndoles gestionar sus seguros de manera eficiente y personalizada.</p>
+          <p>Usuarios activos: {{ "usuariosActivos" }}</p>
+          <p>Seguros gestionados: {{ "segurosGestionados" }}</p>
+        </div>
+      </div>
+      
+      <div class="info-section">
+        <h2>Ajustes</h2>
+        <div class="ajustes-content">
+          <p>Ajusta las configuraciones de tu cuenta y preferencias.</p>
+          <p>Última actualización: {{ "ultimaActualizacion" | date }}</p>
+          <p>Configuraciones disponibles: {{ "configuracionesDisponibles" }}</p>
+        </div>
       </div>
     </div>
-    <section class="carousel-container">
-      <div class="carousel">
-        <div class="carousel-slide">
-          <div class="info-card">
-            <h2>Módulos</h2>
-            <p>En esta sección puedes gestionar los distintos módulos disponibles.</p>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <div class="info-card">
-            <h2>Propósito</h2>
-            <p>Esta página se ha creado para satisfacer las necesidades de nuestros usuarios, permitiéndoles gestionar sus seguros de manera eficiente y personalizada.</p>
-          </div>
-        </div>
-        <div class="carousel-slide">
-          <div class="info-card">
-            <h2>Ajustes</h2>
-            <p>Ajusta las configuraciones de tu cuenta y preferencias.</p>
-          </div>
-        </div>
-      </div>
-      <button class="carousel-button prev" (click)="prevSlide()">&lt;</button>
-      <button class="carousel-button next" (click)="nextSlide()">&gt;</button>
-    </section>
-  </main>
+    <div class="navigation-buttons">
+      <button class="nav-button prev" (click)="prevSection()" [disabled]="currentSection === 0">&lt;</button>
+      <button class="nav-button next" (click)="nextSection()" [disabled]="currentSection === 2">&gt;</button>
+    </div>
+  </div>
 </div>
