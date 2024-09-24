@@ -24,7 +24,7 @@ export class EmpresasService {
 
   // Método para obtener todas las empresas
   getEmpresas(): Observable<Empresa[]> {
-    return this.http.get<Empresa[]>(`${this.baseUrl}`).pipe(
+    return this.http.get<Empresa[]>(`${this.baseUrl}`).pipe( // Corrige la URL si es necesario
       catchError((error) => {
         console.error('Error obteniendo las empresas:', error);
         return throwError(() => new Error('Error obteniendo las empresas'));
@@ -48,29 +48,6 @@ export class EmpresasService {
       catchError((error) => {
         console.error('Error actualizando la empresa:', error);
         return throwError(() => new Error('Error actualizando la empresa'));
-      })
-    );
-  }
-
-  // Método para cargar el logo de la empresa
-  uploadLogo(file: File): Observable<any> {
-    const formData: FormData = new FormData();
-    formData.append('logo_empresa', file, file.name);
-
-    return this.http.post(`${this.baseUrl}/upload`, formData, { responseType: 'text' }).pipe(
-      catchError((error) => {
-        console.error('Error cargando el logo:', error);
-        return throwError(() => new Error('Error cargando el logo'));
-      })
-    );
-  }
-
-  // Método para obtener el logo de la empresa
-  getLogo(fileName: string): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/logos/${fileName}`, { responseType: 'blob' }).pipe(
-      catchError((error) => {
-        console.error('Error obteniendo el logo:', error);
-        return throwError(() => new Error('Error obteniendo el logo'));
       })
     );
   }
