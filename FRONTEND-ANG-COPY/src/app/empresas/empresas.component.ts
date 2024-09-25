@@ -49,6 +49,11 @@ export class EmpresasComponent implements OnInit {
     this.loadEmpresas();
   }
 
+ // Alternar el estado de la tarjeta (frontal/trasera)
+ toggleCard(empresa: any) {
+  empresa.isFlipped = !empresa.isFlipped; // Cambia el estado de isFlipped
+}
+
 
   // Abrir el modal para agregar una nueva empresa
   openModal(): void {

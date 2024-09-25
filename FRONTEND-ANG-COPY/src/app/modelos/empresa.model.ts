@@ -9,4 +9,6 @@ export interface Empresa {
   numero_poliza: string; // Nuevo campo: Número de póliza
   fecha_creacion?: Date;
   fecha_actualizacion?: Date;
+  isFlipped?: boolean; // Propiedad opcional para manejar el estado de la tarjeta
 }
+
