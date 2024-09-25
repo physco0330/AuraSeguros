@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,13 +23,19 @@ public class EmpresaService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    // Método para crear una nueva empresa, incluye manejo de archivo de logo
-    public Empresa crearEmpresa(String nombreEmpresa, String nombreTabla, String colorPalette, MultipartFile logoEmpresa) {
+    // Método para crear una nueva empresa, incluye manejo de archivo de logo y nuevos campos
+    public Empresa crearEmpresa(String nombreEmpresa, String nombreTabla, String colorPalette,
+                                String nitEmpresa, String correoEmpresa, String contactoEmpresa,
+                                String numeroPoliza, MultipartFile logoEmpresa) {
         // Crea una nueva instancia de Empresa
         Empresa empresa = new Empresa();
         empresa.setNombre_empresa(nombreEmpresa); // Asigna el nombre de la empresa
         empresa.setNombre_tabla(nombreTabla); // Asigna el nombre de la tabla
         empresa.setColor_palette(colorPalette); // Asigna el color de la paleta
+        empresa.setNit_empresa(nitEmpresa); // Asigna el NIT de la empresa
+        empresa.setCorreo_empresa(correoEmpresa); // Asigna el correo de la empresa
+        empresa.setContacto_empresa(contactoEmpresa); // Asigna el contacto de la empresa
+        empresa.setNumero_poliza(numeroPoliza); // Asigna el número de póliza
 
         // Si se subió un archivo, guarda la imagen y almacena la ruta
         if (logoEmpresa != null && !logoEmpresa.isEmpty()) {
@@ -65,4 +70,6 @@ public class EmpresaService {
     public Empresa obtenerEmpresa(Long id) {
         return empresaRepository.findById(id).orElse(null);
     }
+
+    // Resto de los métodos (si los hay)...
 }
