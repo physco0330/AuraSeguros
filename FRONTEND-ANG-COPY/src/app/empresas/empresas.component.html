@@ -12,51 +12,51 @@
   <!-- Botón azul para abrir modal de "Agregar Empresa" -->
   <button class="btn-add" (click)="openModal()">Agregar Empresa</button>
 
-  <!-- Contenedor de tarjetas -->
-  <div class="info-container">
-    <!-- Tarjetas dinámicas de empresas con filtro -->
-    <div *ngFor="let empresa of filteredEmpresas()" class="info-wrapper">
-      <div class="info-card" [routerLink]="['/tabla', empresa.nombre_tabla]"
-           routerLinkActive="active" [ngStyle]="{'background-color': empresa.color_palette}">
+<!-- Contenedor de tarjetas -->
+<div class="info-container">
+  <div *ngFor="let empresa of filteredEmpresas(); let i = index" class="info-wrapper">
+    <div class="info-card"
+         [ngClass]="{ 'flipped': empresa.isShowingBack }"
+         [ngStyle]="{'background-color': empresa.color_palette}">
 
-           <div class="info-wrapper" (click)="toggleCard(empresa)">
-            <div class="info-card" [ngClass]="{ 'flipped': empresa.isFlipped }">
+      <!-- Parte delantera de la tarjeta -->
+      <div class="info-card-front" *ngIf="!empresa.isShowingBack">
+        <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
 
-        <!-- Parte delantera de la tarjeta -->
-        <div class="info-card-front" [ngStyle]="{'background-color': empresa.color_palette}">
-          <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
-          <div class="action-buttons">
-            <button class="btn-delete" title="Eliminar"
-                    (click)="openConfirmDeleteModal(empresa); $event.stopPropagation()">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <button class="btn-edit" title="Editar"
-                    (click)="openEditModal(empresa); $event.stopPropagation()">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button class="btn-info" title="Ver Detalles"
-                    (click)="toggleCard(empresa); $event.stopPropagation()">
-              <mat-icon>info</mat-icon>
-            </button>
-          </div>
-        </div>
+        <div class="action-buttons">
+          <button class="btn-delete" title="Eliminar"
+                  (click)="openConfirmDeleteModal(empresa); $event.stopPropagation()">
+            <mat-icon>delete</mat-icon>
+          </button>
 
-        <!-- Parte trasera de la tarjeta -->
-        <div class="info-card-back" [ngStyle]="{'background-color': empresa.color_palette}">
-          <p style="font-weight: bold; color: #000000;">NIT: {{ empresa.nit_empresa }}</p>
-          <p style="font-weight: bold; color: #000000;">Correo: {{ empresa.correo_empresa }}</p>
-          <p style="font-weight: bold; color: #000000;">Contacto: {{ empresa.contacto_empresa }}</p>
-          <p style="font-weight: bold; color: #000000;">Número de Póliza: {{ empresa.numero_poliza }}</p>
+          <button class="btn-edit" title="Editar"
+                  (click)="openEditModal(empresa); $event.stopPropagation()">
+            <mat-icon>edit</mat-icon>
+          </button>
 
-          <div class="action-buttons">
-            <button class="btn btn-info btn-icon" title="Volver"
-                    (click)="toggleCard(empresa); $event.stopPropagation()">
-              <mat-icon>keyboard_backspace</mat-icon>
-            </button>
-          </div>
+          <!-- Botón de Ver Detalles (Mostrar parte trasera mientras está presionado) -->
+          <button class="btn-info" title="Ver Detalles"
+                  (mousedown)="empresa.isShowingBack = true"
+                  (mouseup)="empresa.isShowingBack = false"
+                  (mouseleave)="empresa.isShowingBack = false">
+            <mat-icon>info</mat-icon>
+          </button>
         </div>
       </div>
+
+      <!-- Parte trasera de la tarjeta -->
+      <div class="info-card-back" *ngIf="empresa.isShowingBack">
+        <p style="font-weight: bold; color: #000000;">NIT: {{ empresa.nit_empresa }}</p>
+        <p style="font-weight: bold; color: #000000;">Correo: {{ empresa.correo_empresa }}</p>
+        <p style="font-weight: bold; color: #000000;">Contacto: {{ empresa.contacto_empresa }}</p>
+        <p style="font-weight: bold; color: #000000;">Número de Póliza: {{ empresa.numero_poliza }}</p>
+        <button class="btn-back" (click)="empresa.isShowingBack = false">
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+      </div>
     </div>
+  </div>
+</div>
 
   <!-- Modal para agregar empresa -->
   <div *ngIf="isModalOpen" class="modal">
@@ -107,7 +107,6 @@
     </div>
   </div>
 
-
   <!-- Modal de confirmación de eliminación -->
   <div *ngIf="isConfirmDeleteModalOpen" class="confirm-delete-modal">
     <div class="confirm-delete-modal-content">
@@ -120,9 +119,8 @@
     </div>
   </div>
 
-
-   <!-- Modal para editar empresa -->
-   <div *ngIf="isEditModalOpen" class="modal">
+  <!-- Modal para editar empresa -->
+  <div *ngIf="isEditModalOpen" class="modal">
     <div class="modal-content">
       <h2 class="modal-title">Editar Empresa</h2>
       <form (ngSubmit)="guardarEdicion()">

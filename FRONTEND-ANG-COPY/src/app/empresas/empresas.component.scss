@@ -23,6 +23,38 @@
   box-sizing: border-box;
   margin: 0;
 }
+
+/* Estilos para el contenedor de búsqueda */
+.search-container {
+  display: flex; /* Flexbox para alinear elementos */
+  justify-content: left; /* Centra el contenido horizontalmente */
+  margin: 20px 0; /* Espacio superior e inferior */
+}
+
+/* Estilos para el input de búsqueda */
+input[type="text"] {
+  width: 250px; /* Ancho del input */
+  padding: 12px 15px; /* Espaciado interno */
+  border: 2px solid #007bff; /* Borde azul */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+  outline: none; /* Quitar el contorno por defecto */
+}
+
+/* Efecto al enfocar el input */
+input[type="text"]:focus {
+  border-color: #0056b3; /* Cambiar el color del borde al enfocar */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra suave alrededor */
+}
+
+/* Placeholder con estilo */
+input[type="text"]::placeholder {
+  color: #999; /* Color del texto del placeholder */
+  font-style: italic; /* Estilo itálico para el placeholder */
+}
+
+
 /* Contenedor de tarjetas */
 .info-container {
   display: flex; /* Activa Flexbox */
@@ -43,7 +75,7 @@
   height: 230px; /* Altura de la tarjeta */
   position: relative;
   transform-style: preserve-3d; /* Mantiene la relación en 3D para ambas caras */
-  transition: transform 0.4s ease-out; /* Transición más suave y menos forzada */
+  transition: transform 0.6s ease-out; /* Transición más suave y menos forzada */
   border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
   border-radius: 10px; /* Bordes redondeados para un acabado suave */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar efecto de elevación */
@@ -68,7 +100,6 @@
 
 /* Estilos de la parte delantera de la tarjeta */
 .info-card-front {
-  background-color: #56e80d; /* Color del frente de la tarjeta */
   font-size: 16px; /* Ajusta el tamaño de fuente */
   color: #070505; /* Color del texto frontal */
   text-align: center; /* Centra el texto */
@@ -88,14 +119,42 @@
 }
 
 /* Espaciado entre los textos de la parte trasera */
-.info-card-back p {
+.info-card-back  {
   margin: 5px 0; /* Espacio entre los párrafos */
 }
+
+/* Botones de acción en la tarjeta */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-top: auto; /* Coloca los botones en la parte inferior */
+}
+
+
+.btn-info:hover {
+  color: #007bff; /* Color azul al pasar el cursor por encima */
+}
+
+
+.btn-back:hover {
+  color: #007bff; /* Color azul al pasar el cursor por encima */
+}
+
+.btn-delete:hover {
+  color: #007bff; /* Color azul al pasar el cursor por encima */
+}
+
+.btn-edit:hover {
+  color: #007bff; /* Color azul al pasar el cursor por encima */
+}
+
 
 /* Clase activadora para girar la tarjeta */
 .info-card.flipped {
   transform: rotateY(180deg); /* Giro cuando se agrega la clase flipped */
 }
+
 
 .empresa-nombre {
   text-align: center; /* Centrar el texto */
@@ -134,6 +193,21 @@
 
 /* Botón de info (abajo a la derecha) */
 .btn-info {
+  background-color: transparent;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: rgb(7, 4, 4);
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem; /* Tamaño de fuente ajustado */
+  transition: background-color 0.3s;
+}
+
+/* Botón de info (abajo a la derecha) */
+.btn-back {
   background-color: transparent;
   position: absolute;
   bottom: 10px;
@@ -298,71 +372,8 @@
 .welcome-text {
   color: #388dac;
 }
-
 /* Estilos para el modal de confirmación de eliminación */
 .confirm-delete-modal {
-  position: fixed; /* Fija la posición del modal en la pantalla */
-  top: 0; /* Alinea el modal en la parte superior */
-  left: 0; /* Alinea el modal a la izquierda */
-  right: 0; /* Alinea el modal a la derecha */
-  bottom: 0; /* Alinea el modal en la parte inferior */
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
-  display: flex; /* Utiliza flexbox para centrar el contenido */
-  justify-content: center; /* Centra horizontalmente el contenido */
-  align-items: center; /* Centra verticalmente el contenido */
-}
-
-.confirm-delete-modal-content {
-  background-color: white; /* Color de fondo del modal */
-  padding: 30px; /* Espacio interno aumentado para mejor presentación */
-  border-radius: 10px; /* Bordes redondeados para suavizar la apariencia */
-  text-align: center; /* Centra el texto dentro del modal */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade sombra para profundidad */
-}
-
-.confirm-delete-buttons {
-  margin-top: 20px; /* Espacio superior para los botones */
-  display: flex; /* Utiliza flexbox para los botones */
-  justify-content: space-between; /* Espaciado entre los botones */
-}
-
-.btn-confirm {
-  background-color: #dc3545; /* Color rojo para el botón de confirmar */
-  color: white; /* Texto blanco */
-  padding: 10px 15px; /* Espacio interno */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cambia el cursor al pasar el ratón */
-}
-
-.btn-cancel-confirm {
-  background-color: #6c757d; /* Color gris para el botón de cancelar */
-  color: white; /* Texto blanco */
-  padding: 10px 15px; /* Espacio interno */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cambia el cursor al pasar el ratón */
-}
-
-/* Transiciones para los botones del modal de confirmación */
-.btn-confirm:hover {
-  background-color: #c82333; /* Color más oscuro al pasar el ratón */
-}
-
-.btn-cancel-confirm:hover {
-  background-color: #5a6268; /* Color más oscuro al pasar el ratón */
-}
-
-/* cambiar el tamaño de la imagen del modal */
-.modal-logo {
-  max-width: 25%; /* Ajusta este porcentaje según el tamaño deseado */
-  height: auto; /* Mantiene la proporción de la imagen */
-  margin: 0 auto; /* Centra la imagen en el modal */
-  display: block; /* Asegura que la imagen se comporte como un bloque para el centrado */
-}
-
-/* Estilos adicionales para el modal */
-.modal {
   display: flex; /* Flexbox para centrar el contenido */
   justify-content: center; /* Centra horizontalmente */
   align-items: center; /* Centra verticalmente */
@@ -375,9 +386,55 @@
   z-index: 1000; /* Asegura que el modal esté por encima de otros elementos */
 }
 
-.modal-content {
+.confirm-delete-modal-content {
   background-color: white; /* Fondo blanco para el contenido del modal */
-  padding: 20px; /* Espaciado interno */
-  border-radius: 5px; /* Bordes redondeados */
+  padding: 30px; /* Aumentar el espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  width: 600px; /* Ancho mayor para hacer un cuadro más grande */
+  height: 400px; /* Altura mayor para hacer un cuadro más grande */
+  display: flex;
+  flex-direction: column; /* Organiza el contenido en columna */
+  justify-content: space-between; /* Distribuye espacio entre elementos */
+  align-items: center; /* Centra el contenido horizontalmente */
+}
+
+/* Estilo para el nombre de la empresa en el modal */
+.nombre-empresa-modal {
+  font-weight: bold; /* Texto en negrita */
+  font-size: 40px; /* Tamaño de fuente más grande */
+  color: black; /* Color negro */
+  margin: 20px 0; /* Aumentar espaciado arriba y abajo */
+  text-align: center; /* Centrar el texto */
+}
+
+/* Ajuste en los botones */
+.confirm-delete-modal-buttons {
+  margin-top: 40px; /* Espacio superior para separar de contenido anterior */
+  display: flex; /* Utiliza flexbox para los botones */
+  justify-content: space-between; /* Espaciado entre los botones */
+  width: 100%; /* Asegura que los botones usen todo el ancho del modal */
+}
+
+.btn-confirm-delete-cancel,
+.btn-confirm-delete-confirm {
+  font-size: 18px; /* Cambia el tamaño de fuente */
+  padding: 12px 20px; /* Espacio interno */
+  border-radius: 8px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar el ratón */
+}
+
+.btn-confirm-delete-cancel {
+  background-color: #007bff; /* Color azul para el botón de cancelar */
+  color: white; /* Texto blanco */
+}
+
+.btn-confirm-delete-confirm {
+  background-color: #ff0000; /* Color rojo para el botón de confirmar */
+  color: white; /* Texto blanco */
+}
+
+/* Transiciones para los botones del modal de confirmación */
+.btn-confirm-delete-confirm:hover {
+  background-color: #c82333; /* Color más oscuro al pasar el ratón */
 }

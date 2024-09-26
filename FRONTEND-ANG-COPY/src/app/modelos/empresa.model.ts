@@ -10,5 +10,7 @@ export interface Empresa {
   fecha_creacion?: Date;
   fecha_actualizacion?: Date;
   isFlipped?: boolean; // Propiedad opcional para manejar el estado de la tarjeta
+  isShowingBack?: boolean; // Propiedad opcional para controlar el estado de la tarjeta
 }
+
 

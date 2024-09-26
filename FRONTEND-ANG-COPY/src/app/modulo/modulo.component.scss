@@ -24,6 +24,37 @@
   margin: 0;
 }
 
+
+/* Estilos para el contenedor de búsqueda */
+.search-container {
+  display: flex; /* Flexbox para alinear elementos */
+  justify-content: left; /* Centra el contenido horizontalmente */
+  margin: 20px 0; /* Espacio superior e inferior */
+}
+
+/* Estilos para el input de búsqueda */
+input[type="text"] {
+  width: 250px; /* Ancho del input */
+  padding: 12px 15px; /* Espaciado interno */
+  border: 2px solid #007bff; /* Borde azul */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+  outline: none; /* Quitar el contorno por defecto */
+}
+
+/* Efecto al enfocar el input */
+input[type="text"]:focus {
+  border-color: #0056b3; /* Cambiar el color del borde al enfocar */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra suave alrededor */
+}
+
+/* Placeholder con estilo */
+input[type="text"]::placeholder {
+  color: #999; /* Color del texto del placeholder */
+  font-style: italic; /* Estilo itálico para el placeholder */
+}
+
 .info-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); // Define un grid que se ajuste al ancho de la tarjeta

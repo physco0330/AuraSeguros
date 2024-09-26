@@ -13,10 +13,8 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-empresas',
   standalone: true,
   templateUrl: './empresas.component.html',
-  styleUrl: './empresas.component.scss',
+  styleUrls: ['./empresas.component.scss'], // Corrige 'styleUrl' a 'styleUrls'
   imports: [SidebarComponent, HeaderComponent, CommonModule, RouterModule, FormsModule, MatIcon] // Importar los módulos necesarios
-
-
 })
 export class EmpresasComponent implements OnInit {
   title = 'Modulo'; // Título del módulo
@@ -37,6 +35,9 @@ export class EmpresasComponent implements OnInit {
   logoEmpresa: File | null = null; // Archivo del logo de la empresa (opcional)
   colorCard: string = '#ffffff'; // Color de la tarjeta de la empresa
   searchTerm: string = ''; // Término de búsqueda para filtrar empresas
+  showBack: boolean = false;
+  hideBack: boolean = true;
+
 
   constructor(
     private empresasService: EmpresasService, // Servicio para manejar empresas
@@ -49,20 +50,20 @@ export class EmpresasComponent implements OnInit {
     this.loadEmpresas();
   }
 
- // Alternar el estado de la tarjeta (frontal/trasera)
- toggleCard(empresa: any) {
-  empresa.isFlipped = !empresa.isFlipped; // Cambia el estado de isFlipped
+ // Método toggleCard
+ toggleCard(empresa: Empresa): void {
+  empresa.isFlipped = !empresa.isFlipped; // Cambia el estado de la tarjeta
 }
 
 
   // Abrir el modal para agregar una nueva empresa
   openModal(): void {
-    this.isModalOpen = true;
+    this.isModalOpen = true; // Cambia el estado del modal a abierto
   }
 
   // Cerrar el modal de agregar empresa
   closeModal(): void {
-    this.isModalOpen = false;
+    this.isModalOpen = false; // Cambia el estado del modal a cerrado
   }
 
   // Abrir el modal de edición para la empresa seleccionada
@@ -121,7 +122,6 @@ export class EmpresasComponent implements OnInit {
       );
     }
   }
-
 
   // Guardar una nueva empresa en la base de datos
   guardarEmpresa(): void {
@@ -187,4 +187,3 @@ export class EmpresasComponent implements OnInit {
     );
   }
 }
-
