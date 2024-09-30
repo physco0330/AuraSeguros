@@ -63,9 +63,7 @@ input[type="text"]::placeholder {
   padding: 0 20px;
 }
 
-.info-wrapper {
-  perspective: 1000px; // Permite el efecto 3D, la perspectiva ayuda a la rotación
-}
+
 .info-card {
   width: 300px; /* Ancho de la tarjeta */
   height: 230px; /* Altura de la tarjeta (ajustada a 20x24) */
@@ -77,9 +75,6 @@ input[type="text"]::placeholder {
   border-radius: 10px; /* Bordes redondeados para un acabado suave */
 }
 
-.info-card:hover {
-  transform: rotateY(180deg); /* Gira la tarjeta al pasar el mouse */
-}
 
 .info-card-front,
 .info-card-back {
