@@ -17,7 +17,13 @@ public interface BienesServiceImp {
     BienesEntity saveBien(BienesEntity bien);
 
     void deleteBien(Long id);
-    // Agrega este método
+
+    // Método para eliminar bienes por código
     void deleteBienPorCodigo(String codigo);
+
+    // Método para buscar bienes por artículo y riesgo
     List<BienesEntity> buscarlistaxfecha(String articulo, String idRiesgo);
+
+    // Nuevo método para obtener bienes por empresa
+    List<BienesEntity> getBienesPorEmpresa(Long idEmpresa);  // <--- Aquí lo agregamos
 }

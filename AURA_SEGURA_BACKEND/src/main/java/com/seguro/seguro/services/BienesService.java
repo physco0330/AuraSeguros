@@ -73,4 +73,11 @@ public class BienesService implements BienesServiceImp {
     public List<BienesEntity> buscarlistaxfecha(String articulo, String idRiesgo) {
         return bienesRepository.listadefecha(articulo, idRiesgo);
     }
+
+    // Nuevo método para obtener bienes por empresa
+    @Override
+    public List<BienesEntity> getBienesPorEmpresa(Long idEmpresa) {
+        // Utiliza el método del repositorio para buscar los bienes asociados a la empresa
+        return bienesRepository.findByEmpresaId(idEmpresa);
+    }
 }

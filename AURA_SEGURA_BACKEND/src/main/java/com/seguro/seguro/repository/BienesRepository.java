@@ -26,4 +26,8 @@ public interface BienesRepository extends JpaRepository<BienesEntity, Long> {
  @Transactional
  @Query("DELETE FROM BienesEntity b WHERE b.codigo = :codigo")
  void deleteByCodigo(@Param("codigo") String codigo);
+
+ // Método para encontrar bienes por empresa
+ @Query("SELECT b FROM BienesEntity b WHERE b.empresa.idEmpresa = :idEmpresa")
+ List<BienesEntity> findByEmpresaId(@Param("idEmpresa") Long idEmpresa);
 }
