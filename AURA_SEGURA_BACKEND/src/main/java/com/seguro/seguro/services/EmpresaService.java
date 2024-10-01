@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpresaService {
@@ -23,41 +24,33 @@ public class EmpresaService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    // Método para crear una nueva empresa, incluye manejo de archivo de logo y nuevos campos
+    // Método para crear una nueva empresa
     public Empresa crearEmpresa(String nombreEmpresa, String nombreTabla, String colorPalette,
                                 String nitEmpresa, String correoEmpresa, String contactoEmpresa,
                                 String numeroPoliza, MultipartFile logoEmpresa) {
-        // Crea una nueva instancia de Empresa
         Empresa empresa = new Empresa();
-        empresa.setNombre_empresa(nombreEmpresa); // Asigna el nombre de la empresa
-        empresa.setNombre_tabla(nombreTabla); // Asigna el nombre de la tabla
-        empresa.setColor_palette(colorPalette); // Asigna el color de la paleta
-        empresa.setNit_empresa(nitEmpresa); // Asigna el NIT de la empresa
-        empresa.setCorreo_empresa(correoEmpresa); // Asigna el correo de la empresa
-        empresa.setContacto_empresa(contactoEmpresa); // Asigna el contacto de la empresa
-        empresa.setNumero_poliza(numeroPoliza); // Asigna el número de póliza
+        empresa.setNombre_empresa(nombreEmpresa);
+        empresa.setNombre_tabla(nombreTabla);
+        empresa.setColor_palette(colorPalette);
+        empresa.setNit_empresa(nitEmpresa);
+        empresa.setCorreo_empresa(correoEmpresa);
+        empresa.setContacto_empresa(contactoEmpresa);
+        empresa.setNumero_poliza(numeroPoliza);
 
-        // Si se subió un archivo, guarda la imagen y almacena la ruta
         if (logoEmpresa != null && !logoEmpresa.isEmpty()) {
             try {
-                // Genera un nombre único para el archivo
                 String fileName = System.currentTimeMillis() + "_" + logoEmpresa.getOriginalFilename();
                 Path filePath = Paths.get(uploadDir, fileName);
 
-                // Crea el directorio si no existe
                 Files.createDirectories(filePath.getParent());
-
-                // Guarda el archivo en la ruta especificada
                 Files.copy(logoEmpresa.getInputStream(), filePath);
 
-                // Almacena la ruta del logo en la empresa
                 empresa.setLogo_empresa(fileName);
             } catch (IOException e) {
-                e.printStackTrace(); // Maneja la excepción en caso de error
+                e.printStackTrace();
             }
         }
 
-        // Guarda la empresa en la base de datos
         return empresaRepository.save(empresa);
     }
 
@@ -71,5 +64,41 @@ public class EmpresaService {
         return empresaRepository.findById(id).orElse(null);
     }
 
-    // Resto de los métodos (si los hay)...
+    // Método para eliminar una empresa por su ID
+    public void eliminarEmpresa(Long id) {
+        if (empresaRepository.existsById(id)) {
+            empresaRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Empresa no encontrada");
+        }
+    }
+
+    // Nuevo método para actualizar una empresa existente
+    public Empresa actualizarEmpresa(Empresa empresa) {
+        // Verifica si la empresa existe antes de actualizarla
+        Optional<Empresa> empresaExistente = empresaRepository.findById(empresa.getId_empresa());
+
+        if (empresaExistente.isPresent()) {
+            Empresa empresaActualizada = empresaExistente.get();
+
+            // Actualizamos los campos de la empresa
+            empresaActualizada.setNombre_empresa(empresa.getNombre_empresa());
+            empresaActualizada.setNombre_tabla(empresa.getNombre_tabla());
+            empresaActualizada.setColor_palette(empresa.getColor_palette());
+            empresaActualizada.setNit_empresa(empresa.getNit_empresa());
+            empresaActualizada.setCorreo_empresa(empresa.getCorreo_empresa());
+            empresaActualizada.setContacto_empresa(empresa.getContacto_empresa());
+            empresaActualizada.setNumero_poliza(empresa.getNumero_poliza());
+
+            // Si hay un logo, actualizarlo
+            if (empresa.getLogo_empresa() != null && !empresa.getLogo_empresa().isEmpty()) {
+                empresaActualizada.setLogo_empresa(empresa.getLogo_empresa());
+            }
+
+            // Guardar la empresa actualizada
+            return empresaRepository.save(empresaActualizada);
+        } else {
+            throw new RuntimeException("Empresa no encontrada con el ID: " + empresa.getId_empresa());
+        }
+    }
 }

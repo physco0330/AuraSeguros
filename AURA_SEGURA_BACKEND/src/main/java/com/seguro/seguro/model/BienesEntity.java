@@ -96,13 +96,4 @@ public class BienesEntity {
 
     @Column(name = "nit_banco")
     private String nitBanco;
-
-    /**
-     * Relación con la entidad Empresa.
-     * Un bien está asociado a una empresa específica.
-     * Esta relación se define como ManyToOne porque muchos bienes pueden pertenecer a una misma empresa.
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_empresa", nullable = false)
-    private Empresa empresa;
 }

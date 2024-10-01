@@ -1,4 +1,3 @@
-// Empresa.java
 package com.seguro.seguro.model;
 
 import jakarta.persistence.Column;
@@ -6,143 +5,127 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 public class Empresa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_empresa")
-    private Long idEmpresa;
+    private Long id_empresa;
 
-    @Column(nullable = false, name = "nombre_empresa")
-    private String nombreEmpresa;
+    @Column(nullable = false)
+    private String nombre_empresa;
 
-    @Column(nullable = false, name = "nombre_tabla")
-    private String nombreTabla;
+    @Column(nullable = false)
+    private String nombre_tabla;
 
-    @Column(name = "logo_empresa")
-    private String logoEmpresa;
+    private String logo_empresa;
 
-    @Column(name = "color_palette")
-    private String colorPalette;
+    private String color_palette;
 
-    // Nuevos campos para información de la empresa
-    @Column(nullable = false, name = "nit_empresa")
-    private String nitEmpresa;
+    // Nuevos campos
+    @Column(nullable = false)
+    private String nit_empresa;
 
-    @Column(nullable = false, name = "correo_empresa")
-    private String correoEmpresa;
+    @Column(nullable = false)
+    private String correo_empresa;
 
-    @Column(nullable = false, name = "contacto_empresa")
-    private String contactoEmpresa;
+    @Column(nullable = false)
+    private String contacto_empresa;
 
-    @Column(nullable = false, name = "numero_poliza")
-    private String numeroPoliza;
+    @Column(nullable = false)
+    private String numero_poliza;
 
-    // Timestamp para creación y actualización automática
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
 
-    /**
-     * Relación con la entidad BienesEntity.
-     * Una empresa puede tener muchos bienes asociados. Esto se refleja con la relación OneToMany.
-     */
-    @OneToMany(mappedBy = "empresa")
-    private List<BienesEntity> bienes;
-
-    // Método que registra la fecha de creación antes de insertar un registro.
     @PrePersist
     protected void onCreate() {
         fechaCreacion = LocalDateTime.now();
     }
 
-    // Método que actualiza la fecha antes de modificar un registro existente.
     @PreUpdate
     protected void onUpdate() {
         fechaActualizacion = LocalDateTime.now();
     }
 
     // Getters y Setters
-
-    public Long getIdEmpresa() {
-        return idEmpresa;
+    public Long getId_empresa() {
+        return id_empresa;
     }
 
-    public void setIdEmpresa(Long idEmpresa) {
-        this.idEmpresa = idEmpresa;
+    public void setId_empresa(Long id_empresa) {
+        this.id_empresa = id_empresa;
     }
 
-    public String getNombreEmpresa() {
-        return nombreEmpresa;
+    public String getNombre_empresa() {
+        return nombre_empresa;
     }
 
-    public void setNombreEmpresa(String nombreEmpresa) {
-        this.nombreEmpresa = nombreEmpresa;
+    public void setNombre_empresa(String nombre_empresa) {
+        this.nombre_empresa = nombre_empresa;
     }
 
-    public String getNombreTabla() {
-        return nombreTabla;
+    public String getNombre_tabla() {
+        return nombre_tabla;
     }
 
-    public void setNombreTabla(String nombreTabla) {
-        this.nombreTabla = nombreTabla;
+    public void setNombre_tabla(String nombre_tabla) {
+        this.nombre_tabla = nombre_tabla;
     }
 
-    public String getLogoEmpresa() {
-        return logoEmpresa;
+    public String getLogo_empresa() {
+        return logo_empresa;
     }
 
-    public void setLogoEmpresa(String logoEmpresa) {
-        this.logoEmpresa = logoEmpresa;
+    public void setLogo_empresa(String logo_empresa) {
+        this.logo_empresa = logo_empresa;
     }
 
-    public String getColorPalette() {
-        return colorPalette;
+    public String getColor_palette() {
+        return color_palette;
     }
 
-    public void setColorPalette(String colorPalette) {
-        this.colorPalette = colorPalette;
+    public void setColor_palette(String color_palette) {
+        this.color_palette = color_palette;
     }
 
-    public String getNitEmpresa() {
-        return nitEmpresa;
+    public String getNit_empresa() {
+        return nit_empresa;
     }
 
-    public void setNitEmpresa(String nitEmpresa) {
-        this.nitEmpresa = nitEmpresa;
+    public void setNit_empresa(String nit_empresa) {
+        this.nit_empresa = nit_empresa;
     }
 
-    public String getCorreoEmpresa() {
-        return correoEmpresa;
+    public String getCorreo_empresa() {
+        return correo_empresa;
     }
 
-    public void setCorreoEmpresa(String correoEmpresa) {
-        this.correoEmpresa = correoEmpresa;
+    public void setCorreo_empresa(String correo_empresa) {
+        this.correo_empresa = correo_empresa;
     }
 
-    public String getContactoEmpresa() {
-        return contactoEmpresa;
+    public String getContacto_empresa() {
+        return contacto_empresa;
     }
 
-    public void setContactoEmpresa(String contactoEmpresa) {
-        this.contactoEmpresa = contactoEmpresa;
+    public void setContacto_empresa(String contacto_empresa) {
+        this.contacto_empresa = contacto_empresa;
     }
 
-    public String getNumeroPoliza() {
-        return numeroPoliza;
+    public String getNumero_poliza() {
+        return numero_poliza;
     }
 
-    public void setNumeroPoliza(String numeroPoliza) {
-        this.numeroPoliza = numeroPoliza;
+    public void setNumero_poliza(String numero_poliza) {
+        this.numero_poliza = numero_poliza;
     }
 
     public LocalDateTime getFechaCreacion() {
@@ -159,13 +142,5 @@ public class Empresa {
 
     public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
-    }
-
-    public List<BienesEntity> getBienes() {
-        return bienes;
-    }
-
-    public void setBienes(List<BienesEntity> bienes) {
-        this.bienes = bienes;
     }
 }
