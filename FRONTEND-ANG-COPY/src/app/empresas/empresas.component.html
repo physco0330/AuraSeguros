@@ -4,6 +4,9 @@
     <h2 class="welcome-text">Empresas</h2>
   </div>
 
+    <!-- Botón para volver al módulo anterior -->
+    <button class="btn btn-primary volver-btn" (click)="volverAModulo()">Volver a modulos</button>
+
   <!-- Campo de búsqueda -->
   <div class="search-container">
     <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar empresa..." />
@@ -17,8 +20,8 @@
   <div *ngFor="let empresa of filteredEmpresas(); let i = index" class="info-wrapper">
     <div class="info-card"
          [ngClass]="{ 'flipped': empresa.isShowingBack }"
-         [ngStyle]="{'background-color': empresa.color_palette}">
-
+         [ngStyle]="{'background-color': empresa.color_palette}"
+         *ngIf="empresa.id_empresa !== undefined" (click)="navigateToIncendio(empresa.id_empresa)">
       <!-- Parte delantera de la tarjeta -->
       <div class="info-card-front" *ngIf="!empresa.isShowingBack">
         <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>

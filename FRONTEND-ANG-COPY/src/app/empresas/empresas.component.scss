@@ -79,6 +79,7 @@ input[type="text"]::placeholder {
   border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
   border-radius: 10px; /* Bordes redondeados para un acabado suave */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar efecto de elevación */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse para indicar interactividad */
 }
 
 /* Parte delantera y trasera de la tarjeta */

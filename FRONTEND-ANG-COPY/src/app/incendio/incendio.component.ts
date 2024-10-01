@@ -1,3 +1,4 @@
+import { EmpresasService } from './../servicios/empresas.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
@@ -8,6 +9,8 @@ import { Router, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
+import { Empresa } from '../modelos/empresa.model'; // Asegúrate de que esta ruta sea correcta
+
 
 
 @Component({
@@ -30,6 +33,8 @@ export class IncendioComponent implements OnInit {
   formBien!: FormGroup; // Formulario reactivo para gestionar los campos de un bien
   mostrarFormulario: boolean = false; // Variable para mostrar/ocultar el formulario de agregar bien
   codigoExistente: boolean = false; // Indicador para saber si el código existe
+  empresaId: number | null = null;
+  empresa: Empresa | null = null;
 
   // Definición de los campos del formulario con sus propiedades
   formFields = [
@@ -64,10 +69,12 @@ export class IncendioComponent implements OnInit {
   constructor(
     private bienesService: BienesService, // Servicio para gestionar bienes
     private router: Router, // Servicio de enrutamiento para navegación
-    private fb: FormBuilder // Constructor de formularios reactivos
+    private fb: FormBuilder, // Constructor de formularios reactivos
+    private EmpresasService: EmpresasService
   ) {}
 
   ngOnInit(): void {
+
     // Inicialización del formulario con todos los campos deshabilitados
     this.formBien = this.fb.group({
       codigo: ['', Validators.required],
@@ -213,7 +220,7 @@ export class IncendioComponent implements OnInit {
 
   // Método para redirigir al módulo anterior
   volverAModulo(): void {
-    this.router.navigate(['/modulo']);
+    this.router.navigate(['/empresas']);
   }
 
 

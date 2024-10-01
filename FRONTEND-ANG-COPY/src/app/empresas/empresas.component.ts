@@ -48,7 +48,20 @@ export class EmpresasComponent implements OnInit {
   ngOnInit(): void {
     // Cargar las empresas al iniciar el componente
     this.loadEmpresas();
+
   }
+
+
+  // Método para redirigir al módulo anterior
+  volverAModulo(): void {
+    this.router.navigate(['/modulo']);
+  }
+
+
+  navigateToIncendio(idEmpresa: number): void {
+    this.router.navigate(['/incendio', idEmpresa]);
+  }
+
 
  // Método toggleCard
  toggleCard(empresa: Empresa): void {
@@ -147,10 +160,6 @@ export class EmpresasComponent implements OnInit {
       formData.append('numero_poliza', this.numeroPoliza); // Añade el número de póliza
       formData.append('color_palette', this.colorCard); // Añade la paleta de colores
 
-      // Añade el archivo de logo si existe
-      if (this.logoEmpresa) {
-        formData.append('logo_empresa', this.logoEmpresa);
-      }
 
       // Llamada al servicio para guardar la empresa
       this.empresasService.saveEmpresa(formData).subscribe(

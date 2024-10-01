@@ -26,7 +26,7 @@ export const routes: Routes = [
   { path: 'bienes', component: BienesComponent },
 
   // Ruta para el componente Incendio
-  { path: 'incendio', component: IncendioComponent },
+  { path: 'incendio/:idEmpresa', component: IncendioComponent },
 
   // Ruta para el componente EditarBien
   { path: 'editar-bien/:codigo', component: EditarBienComponent },

@@ -67,41 +67,21 @@ input[type="text"]::placeholder {
   perspective: 1000px; // Permite el efecto 3D, la perspectiva ayuda a la rotación
 }
 .info-card {
-  width: 300px; /* Ancho de la tarjeta */
-  height: 230px; /* Altura de la tarjeta (ajustada a 20x24) */
-  position: relative;
-  transform-style: preserve-3d; /* Mantiene la relación en 3D para ambas caras */
-  transition: transform 0.4s ease-out; /* Transición más suave y menos forzada */
-  cursor: pointer; /* Cambia el cursor al pasar el mouse para indicar interactividad */
-  border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
-  border-radius: 10px; /* Bordes redondeados para un acabado suave */
-}
+    background-color: #56e80d; // Color del frente de la tarjeta
+    font-size: 16px; // Ajusta el tamaño de fuente
+    color: #333; // Color del texto frontal
+    width: 270px; /* Ancho de la tarjeta */
+    height: 230px; /* Altura de la tarjeta */
+    position: relative;
+    transform-style: preserve-3d; /* Mantiene la relación en 3D para ambas caras */
+    transition: transform 0.6s ease-out; /* Transición más suave y menos forzada */
+    border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
+    border-radius: 10px; /* Bordes redondeados para un acabado suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar efecto de elevación */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse para indicar interactividad */
+  }
 
-.info-card:hover {
-  transform: rotateY(180deg); /* Gira la tarjeta al pasar el mouse */
-}
 
-.info-card-front,
-.info-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden; // Oculta el reverso cuando no está activo
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-  border-radius: 10px; // Mantiene los bordes redondeados en ambas caras
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra para dar efecto de elevación
-  transition: background-color 0.3s ease, transform 0.6s ease; // Transiciones suaves en color y transformación
-}
-
-.info-card-front {
-  background-color: #56e80d; // Color del frente de la tarjeta
-  font-size: 16px; // Ajusta el tamaño de fuente
-  color: #333; // Color del texto frontal
-}
 
 .info-card-back {
   background-color: #f8f8f8; // Color de la parte trasera de la tarjeta
@@ -111,264 +91,85 @@ input[type="text"]::placeholder {
 }
 
 
-
-.empresa-nombre {
-  text-align: center; /* Centrar el texto */
-  color: black;
-  font-size: 1rem; /* Ajusta el tamaño de la fuente */
-  font-weight: bold;
-  margin: 10px 0; /* Espacio entre la tarjeta y el texto */
+/* Contenedor de tarjetas */
+.info-container {
+  display: flex; /* Activa Flexbox */
+  flex-wrap: wrap; /* Permite que las tarjetas se muevan a una nueva fila cuando no hay espacio */
+  justify-content: flex-start; /* Alinea las tarjetas al inicio (izquierda) */
+  gap: 10px; /* Espacio entre las tarjetas */
+  padding: 10px; /* Espacio interno del contenedor */
 }
 
-/* Estilos para los botones de Editar y Eliminar */
-.card-actions {
+/* Perspectiva de la tarjeta */
+.info-wrapper {
+  perspective: 1000px; /* Permite el efecto 3D, la perspectiva ayuda a la rotación */
+}
+
+/* Tarjeta */
+.info-card {
+  width: 270px; /* Ancho de la tarjeta */
+  height: 230px; /* Altura de la tarjeta */
+  position: relative;
+  transform-style: preserve-3d; /* Mantiene la relación en 3D para ambas caras */
+  transition: transform 0.6s ease-out; /* Transición más suave y menos forzada */
+  border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
+  border-radius: 10px; /* Bordes redondeados para un acabado suave */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar efecto de elevación */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse para indicar interactividad */
+}
+
+/* Parte delantera y trasera de la tarjeta */
+.info-card-front,
+.info-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Oculta el reverso cuando no está activo */
   display: flex;
-  justify-content: space-between; /* Espacio entre botones */
-  margin-top: auto; /* Empuja hacia abajo */
-  padding: 10px; /* Espacio interno */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 10px; /* Mantiene los bordes redondeados en ambas caras */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar efecto de elevación */
+  transition: background-color 0.3s ease, transform 0.6s ease; /* Transiciones suaves en color y transformación */
 }
 
-.btn-edit,
-.btn-delete {
-  background-color: #007bff; /* Azul */
-  color: white;
-  padding: 5px 10px; /* Tamaño más pequeño */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem; /* Tamaño de fuente ajustado */
-  transition: background-color 0.3s;
+/* Estilos de la parte delantera de la tarjeta */
+.info-card-front {
+  font-size: 16px; /* Ajusta el tamaño de fuente */
+  color: #070505; /* Color del texto frontal */
+  text-align: center; /* Centra el texto */
+  padding: 15px; /* Espacio interno para que el contenido no quede pegado a los bordes */
 }
 
-.btn-edit:hover,
-.btn-delete:hover {
-  background-color: #0056b3; /* Color más oscuro al pasar el ratón */
-}
-
-.btn-delete {
-  background-color: #dc3545; /* Rojo para eliminar */
-}
-
-.btn-delete:hover {
-  background-color: #c82333; /* Color más oscuro al pasar el ratón */
-}
-
-/* Resto de tus estilos... */
-/* Botón azul para agregar empresa */
-.btn-add {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  position: fixed;
-  top: 120px; /* Mover el botón más abajo */
-  right: 20px;
-}
-
-/* Estilos para el modal */
-.modal {
-  display: flex; /* Flexbox para centrar el modal */
-  position: fixed; /* Fijo para mantenerlo en la pantalla */
-  top: 0;
-  left: 0;
-  width: 100%; /* Cubrir toda la pantalla */
-  height: 100%; /* Cubrir toda la pantalla */
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
-  align-items: center; /* Centrar verticalmente */
-  justify-content: center; /* Centrar horizontalmente */
-  z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
-}
-
-.modal-content {
-  background-color: #fff; /* Fondo blanco para el contenido del modal */
-  border-radius: 8px; /* Bordes redondeados */
-  padding: 20px; /* Espacio interno */
-  width: 400px; /* Ancho del modal */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
-  animation: slide-in 0.3s ease; /* Animación de entrada */
-}
-
-.modal-title {
-  font-size: 24px; /* Tamaño de fuente del título */
-  margin-bottom: 20px; /* Espacio inferior */
-}
-
-.form-group {
-  margin-bottom: 15px; /* Espacio entre los grupos de formulario */
-}
-
-.form-group label {
-  display: block; /* Hacer que la etiqueta ocupe una línea completa */
-  margin-bottom: 5px; /* Espacio inferior */
-}
-
-.form-group input,
-.form-group select {
-  width: 100%; /* Ancho completo */
-  padding: 10px; /* Espacio interno */
-  border: 1px solid #ccc; /* Borde gris claro */
-  border-radius: 4px; /* Bordes redondeados */
-}
-
-.modal-buttons {
-  display: flex; /* Flexbox para los botones */
-  justify-content: space-between; /* Espaciado entre los botones */
-  margin-top: 20px; /* Espacio superior */
-}
-
-.btn-cancel {
-  background-color: #f44336; /* Rojo para cancelar */
-  color: white; /* Texto blanco */
-  padding: 10px 15px; /* Espacio interno para los botones */
-  border: none; /* Sin borde */
-  border-radius: 4px; /* Bordes redondeados */
-  cursor: pointer; /* Cambiar cursor al pasar el ratón */
-}
-
-.btn-save {
-  background-color: #4CAF50; /* Verde para guardar */
-  color: white; /* Texto blanco */
-  padding: 10px 15px; /* Espacio interno para los botones */
-  border: none; /* Sin borde */
-  border-radius: 4px; /* Bordes redondeados */
-  cursor: pointer; /* Cambiar cursor al pasar el ratón */
-}
-
-/* Animación de entrada del modal */
-@keyframes slide-in {
-  from {
-    opacity: 0; /* Comienza invisible */
-    transform: translateY(-30px); /* Se desplaza desde arriba */
-  }
-  to {
-    opacity: 1; /* Termina visible */
-    transform: translateY(0); /* Se establece en su posición original */
-  }
-}
-
-/* Estilos para la paleta de colores */
-.palette-container {
+/* Estilos de la parte trasera de la tarjeta */
+.info-card-back {
+  background-color: #f8f8f8; /* Color de la parte trasera de la tarjeta */
+  transform: rotateY(180deg); /* Rota la parte trasera por defecto */
+  font-size: 14px; /* Ajusta el tamaño de fuente */
+  color: #000000; /* Color del texto trasero */
   display: flex;
-  flex-direction: column;
-}
-
-.palette-label {
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.palette-colors {
-  display: flex;
-  gap: 15px; /* Aumentar el espacio entre los colores */
-}
-
-.palette-colors .color-option {
-  width: 40px; /* Hacer los colores más grandes */
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #ccc;
-}
-
-.palette-colors .color-option:hover {
-  border: 2px solid #007bff;
-}
-
-/* Extra: Ajustar para pantallas más pequeñas */
-@media (max-width: 768px) {
-  .modal-content {
-    width: 90%;
-    height: auto;
-    max-height: 90%;
-  }
-}
-
-/* estilo del texto  */
-.welcome-text {
-  color: #388dac;
-}
-
-/* Estilos para el modal de confirmación de eliminación */
-.confirm-delete-modal {
-  position: fixed; /* Fija la posición del modal en la pantalla */
-  top: 0; /* Alinea el modal en la parte superior */
-  left: 0; /* Alinea el modal a la izquierda */
-  right: 0; /* Alinea el modal a la derecha */
-  bottom: 0; /* Alinea el modal en la parte inferior */
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
-  display: flex; /* Utiliza flexbox para centrar el contenido */
-  justify-content: center; /* Centra horizontalmente el contenido */
-  align-items: center; /* Centra verticalmente el contenido */
-}
-
-.confirm-delete-modal-content {
-  background-color: white; /* Color de fondo del modal */
-  padding: 30px; /* Espacio interno aumentado para mejor presentación */
-  border-radius: 10px; /* Bordes redondeados para suavizar la apariencia */
-  text-align: center; /* Centra el texto dentro del modal */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade sombra para profundidad */
-}
-
-.confirm-delete-buttons {
-  margin-top: 20px; /* Espacio superior para los botones */
-  display: flex; /* Utiliza flexbox para los botones */
-  justify-content: space-between; /* Espaciado entre los botones */
-}
-
-.btn-confirm {
-  background-color: #dc3545; /* Color rojo para el botón de confirmar */
-  color: white; /* Texto blanco */
-  padding: 10px 15px; /* Espacio interno */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cambia el cursor al pasar el ratón */
-}
-
-.btn-cancel-confirm {
-  background-color: #6c757d; /* Color gris para el botón de cancelar */
-  color: white; /* Texto blanco */
-  padding: 10px 15px; /* Espacio interno */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  cursor: pointer; /* Cambia el cursor al pasar el ratón */
-}
-
-/* Transiciones para los botones del modal de confirmación */
-.btn-confirm:hover {
-  background-color: #c82333; /* Color más oscuro al pasar el ratón */
-}
-
-.btn-cancel-confirm:hover {
-  background-color: #5a6268; /* Color más oscuro al pasar el ratón */
-}
-
-/* cambiar el tamaño de la imagen del modal */
-.modal-logo {
-  max-width: 25%; /* Ajusta este porcentaje según el tamaño deseado */
-  height: auto; /* Mantiene la proporción de la imagen */
-  margin: 0 auto; /* Centra la imagen en el modal */
-  display: block; /* Asegura que la imagen se comporte como un bloque para el centrado */
-}
-
-/* Estilos adicionales para el modal */
-.modal {
-  display: flex; /* Flexbox para centrar el contenido */
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente */
-  position: fixed; /* Posiciona el modal en la pantalla */
-  top: 0;
-  left: 0;
-  width: 100%; /* Ancho completo */
-  height: 100%; /* Altura completa */
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
-  z-index: 1000; /* Asegura que el modal esté por encima de otros elementos */
-}
-
-.modal-content {
-  background-color: white; /* Fondo blanco para el contenido del modal */
+  flex-direction: column; /* Organiza los campos en una columna */
+  justify-content: center; /* Centra el contenido verticalmente */
   padding: 20px; /* Espaciado interno */
-  border-radius: 5px; /* Bordes redondeados */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
+
+/* Espaciado entre los textos de la parte trasera */
+.info-card-back  {
+  margin: 5px 0; /* Espacio entre los párrafos */
+}
+
+/* Botones de acción en la tarjeta */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-top: auto; /* Coloca los botones en la parte inferior */
+}
+
+
+.btn-info:hover {
+  color: #007bff; /* Color azul al pasar el cursor por encima */
+}
+

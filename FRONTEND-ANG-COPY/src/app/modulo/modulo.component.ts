@@ -35,6 +35,11 @@ export class ModuloComponent implements OnInit {
   logoEmpresa: File | null = null; // Archivo del logo de la empresa (opcional)
   colorCard: string = '#ffffff'; // Color de la tarjeta de la empresa
   searchTerm: string = ''; // Término de búsqueda para filtrar empresas
+  showBack: boolean = false;
+  hideBack: boolean = true;
+
+
+
 
   constructor(
     private empresasService: EmpresasService, // Servicio para manejar empresas
@@ -47,9 +52,16 @@ export class ModuloComponent implements OnInit {
     this.loadEmpresas();
   }
 
+
+ // Método toggleCard
+ toggleCard(empresa: Empresa): void {
+  empresa.isFlipped = !empresa.isFlipped; // Cambia el estado de la tarjeta
+}
+
+
   // Navegar al componente de incendios
   public irAIncendios(): void {
-    this.router.navigate(['/incendio']);
+    this.router.navigate(['/empresas']);
   }
 
   // Cargar la lista de empresas desde la API
