@@ -69,19 +69,4 @@ public class EmpresaController {
             return ResponseEntity.status(404).body(null);  // Manejar el error en caso de que el archivo no exista
         }
     }
-
-    // Endpoint para actualizar una empresa
-    @PutMapping("/{id}")
-    public ResponseEntity<Empresa> actualizarEmpresa(@PathVariable Long id, @RequestBody Empresa empresa) {
-        empresa.setId_empresa(id);
-        Empresa empresaActualizada = empresaService.actualizarEmpresa(empresa);
-        return ResponseEntity.ok(empresaActualizada);
-    }
-
-    // Endpoint para eliminar una empresa
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarEmpresa(@PathVariable Long id) {
-        empresaService.eliminarEmpresa(id);
-        return ResponseEntity.noContent().build();
-    }
 }
