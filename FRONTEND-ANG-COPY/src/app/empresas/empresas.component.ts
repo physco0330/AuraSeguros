@@ -57,9 +57,10 @@ export class EmpresasComponent implements OnInit {
     this.router.navigate(['/modulo']);
   }
 
+// * Navega al componente 'incendio' y pasa el nombre de la empresa como un parámetro de ruta.
 
-  navigateToIncendio(idEmpresa: number): void {
-    this.router.navigate(['/incendio', idEmpresa]);
+  navigateToIncendio(nombreEmpresa: string) {
+    this.router.navigate(['/incendio', nombreEmpresa]);
   }
 
 

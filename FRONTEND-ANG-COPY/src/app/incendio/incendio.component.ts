@@ -35,6 +35,7 @@ export class IncendioComponent implements OnInit {
   codigoExistente: boolean = false; // Indicador para saber si el código existe
   empresaId: number | null = null;
   empresa: Empresa | null = null;
+  nombreEmpresa: string | null = null;
 
   // Definición de los campos del formulario con sus propiedades
   formFields = [

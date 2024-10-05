@@ -4,8 +4,8 @@
     <h2 class="welcome-text">Empresas</h2>
   </div>
 
-    <!-- Botón para volver al módulo anterior -->
-    <button class="btn btn-primary volver-btn" (click)="volverAModulo()">Volver a modulos</button>
+  <!-- Botón para volver al módulo anterior -->
+  <button class="btn btn-primary volver-btn" (click)="volverAModulo()">Volver a modulos</button>
 
   <!-- Campo de búsqueda -->
   <div class="search-container">
@@ -15,51 +15,52 @@
   <!-- Botón azul para abrir modal de "Agregar Empresa" -->
   <button class="btn-add" (click)="openModal()">Agregar Empresa</button>
 
-<!-- Contenedor de tarjetas -->
-<div class="info-container">
-  <div *ngFor="let empresa of filteredEmpresas(); let i = index" class="info-wrapper">
-    <div class="info-card"
-         [ngClass]="{ 'flipped': empresa.isShowingBack }"
-         [ngStyle]="{'background-color': empresa.color_palette}"
-         *ngIf="empresa.id_empresa !== undefined" (click)="navigateToIncendio(empresa.id_empresa)">
-      <!-- Parte delantera de la tarjeta -->
-      <div class="info-card-front" *ngIf="!empresa.isShowingBack">
-        <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
+  <!-- Contenedor de tarjetas -->
+  <div class="info-container">
+    <div *ngFor="let empresa of filteredEmpresas(); let i = index" class="info-wrapper">
+      <div class="info-card"
+           [ngClass]="{ 'flipped': empresa.isShowingBack }"
+           [ngStyle]="{'background-color': empresa.color_palette}"
+           *ngIf="empresa.id_empresa !== undefined" (click)="navigateToIncendio(empresa.nombre_empresa)"> <!-- Cambiado aquí -->
 
-        <div class="action-buttons">
-          <button class="btn-delete" title="Eliminar"
-                  (click)="openConfirmDeleteModal(empresa); $event.stopPropagation()">
-            <mat-icon>delete</mat-icon>
-          </button>
+        <!-- Parte delantera de la tarjeta -->
+        <div class="info-card-front" *ngIf="!empresa.isShowingBack">
+          <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
 
-          <button class="btn-edit" title="Editar"
-                  (click)="openEditModal(empresa); $event.stopPropagation()">
-            <mat-icon>edit</mat-icon>
-          </button>
+          <div class="action-buttons">
+            <button class="btn-delete" title="Eliminar"
+                    (click)="openConfirmDeleteModal(empresa); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
 
-          <!-- Botón de Ver Detalles (Mostrar parte trasera mientras está presionado) -->
-          <button class="btn-info" title="Ver Detalles"
-                  (mousedown)="empresa.isShowingBack = true"
-                  (mouseup)="empresa.isShowingBack = false"
-                  (mouseleave)="empresa.isShowingBack = false">
-            <mat-icon>info</mat-icon>
+            <button class="btn-edit" title="Editar"
+                    (click)="openEditModal(empresa); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <!-- Botón de Ver Detalles (Mostrar parte trasera mientras está presionado) -->
+            <button class="btn-info" title="Ver Detalles"
+                    (mousedown)="empresa.isShowingBack = true"
+                    (mouseup)="empresa.isShowingBack = false"
+                    (mouseleave)="empresa.isShowingBack = false">
+              <mat-icon>info</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Parte trasera de la tarjeta -->
+        <div class="info-card-back" *ngIf="empresa.isShowingBack">
+          <p style="font-weight: bold; color: #000000;">NIT: {{ empresa.nit_empresa }}</p>
+          <p style="font-weight: bold; color: #000000;">Correo: {{ empresa.correo_empresa }}</p>
+          <p style="font-weight: bold; color: #000000;">Contacto: {{ empresa.contacto_empresa }}</p>
+          <p style="font-weight: bold; color: #000000;">Número de Póliza: {{ empresa.numero_poliza }}</p>
+          <button class="btn-back" (click)="empresa.isShowingBack = false">
+            <mat-icon>keyboard_backspace</mat-icon>
           </button>
         </div>
       </div>
-
-      <!-- Parte trasera de la tarjeta -->
-      <div class="info-card-back" *ngIf="empresa.isShowingBack">
-        <p style="font-weight: bold; color: #000000;">NIT: {{ empresa.nit_empresa }}</p>
-        <p style="font-weight: bold; color: #000000;">Correo: {{ empresa.correo_empresa }}</p>
-        <p style="font-weight: bold; color: #000000;">Contacto: {{ empresa.contacto_empresa }}</p>
-        <p style="font-weight: bold; color: #000000;">Número de Póliza: {{ empresa.numero_poliza }}</p>
-        <button class="btn-back" (click)="empresa.isShowingBack = false">
-          <mat-icon>keyboard_backspace</mat-icon>
-        </button>
-      </div>
     </div>
   </div>
-</div>
 
   <!-- Modal para agregar empresa -->
   <div *ngIf="isModalOpen" class="modal">
