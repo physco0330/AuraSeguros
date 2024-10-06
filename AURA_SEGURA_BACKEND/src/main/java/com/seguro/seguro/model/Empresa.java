@@ -19,9 +19,6 @@ public class Empresa {
     @Column(nullable = false)
     private String nombre_empresa;
 
-    @Column(nullable = false)
-    private String nombre_tabla;
-
     private String logo_empresa;
 
     private String color_palette;
@@ -70,14 +67,6 @@ public class Empresa {
 
     public void setNombre_empresa(String nombre_empresa) {
         this.nombre_empresa = nombre_empresa;
-    }
-
-    public String getNombre_tabla() {
-        return nombre_tabla;
-    }
-
-    public void setNombre_tabla(String nombre_tabla) {
-        this.nombre_tabla = nombre_tabla;
     }
 
     public String getLogo_empresa() {

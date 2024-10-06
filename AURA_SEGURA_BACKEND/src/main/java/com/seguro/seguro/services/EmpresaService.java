@@ -24,13 +24,13 @@ public class EmpresaService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    // Método para crear una nueva empresa
-    public Empresa crearEmpresa(String nombreEmpresa, String nombreTabla, String colorPalette,
-                                String nitEmpresa, String correoEmpresa, String contactoEmpresa,
-                                String numeroPoliza, MultipartFile logoEmpresa) {
+    // Método para crear una nueva empresa (sin nombre_tabla)
+    public Empresa crearEmpresa(String nombreEmpresa, String colorPalette,
+                                String nitEmpresa, String correoEmpresa,
+                                String contactoEmpresa, String numeroPoliza,
+                                MultipartFile logoEmpresa) {
         Empresa empresa = new Empresa();
         empresa.setNombre_empresa(nombreEmpresa);
-        empresa.setNombre_tabla(nombreTabla);
         empresa.setColor_palette(colorPalette);
         empresa.setNit_empresa(nitEmpresa);
         empresa.setCorreo_empresa(correoEmpresa);
@@ -73,7 +73,7 @@ public class EmpresaService {
         }
     }
 
-    // Nuevo método para actualizar una empresa existente
+    // Método para actualizar una empresa existente (sin nombre_tabla)
     public Empresa actualizarEmpresa(Empresa empresa) {
         // Verifica si la empresa existe antes de actualizarla
         Optional<Empresa> empresaExistente = empresaRepository.findById(empresa.getId_empresa());
@@ -83,7 +83,6 @@ public class EmpresaService {
 
             // Actualizamos los campos de la empresa
             empresaActualizada.setNombre_empresa(empresa.getNombre_empresa());
-            empresaActualizada.setNombre_tabla(empresa.getNombre_tabla());
             empresaActualizada.setColor_palette(empresa.getColor_palette());
             empresaActualizada.setNit_empresa(empresa.getNit_empresa());
             empresaActualizada.setCorreo_empresa(empresa.getCorreo_empresa());

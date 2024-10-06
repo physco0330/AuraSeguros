@@ -29,7 +29,6 @@ public class EmpresaController {
     @PostMapping(consumes = {"multipart/form-data"}) // Indica que el método acepta multipart/form-data
     public Empresa crearEmpresa(
             @RequestParam("nombre_empresa") String nombreEmpresa, // Nombre de la empresa
-            @RequestParam("nombre_tabla") String nombreTabla, // Nombre de la tabla
             @RequestParam("color_palette") String colorPalette, // Color de la paleta
             @RequestParam("nit_empresa") String nitEmpresa, // NIT de la empresa
             @RequestParam("correo_empresa") String correoEmpresa, // Correo de la empresa
@@ -38,9 +37,8 @@ public class EmpresaController {
             @RequestParam(value = "logo_empresa", required = false) MultipartFile logoEmpresa) { // Archivo de logo (opcional)
 
         // Llama al servicio para procesar el archivo y guardar la información en la base de datos
-        return empresaService.crearEmpresa(nombreEmpresa, nombreTabla, colorPalette,
-                nitEmpresa, correoEmpresa, contactoEmpresa,
-                numeroPoliza, logoEmpresa);
+        return empresaService.crearEmpresa(nombreEmpresa, colorPalette, nitEmpresa,
+                correoEmpresa, contactoEmpresa, numeroPoliza, logoEmpresa);
     }
 
     // Método para obtener todas las empresas

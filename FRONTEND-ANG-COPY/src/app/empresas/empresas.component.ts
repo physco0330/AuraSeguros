@@ -27,7 +27,7 @@ export class EmpresasComponent implements OnInit {
 
   // Propiedades para agregar una nueva empresa
   nombreEmpresa: string = ''; // Nombre de la empresa a agregar
-  nombreTabla: string = ''; // Nombre de la tabla para la empresa
+
   nitEmpresa: string = ''; // NIT de la empresa
   correoEmpresa: string = ''; // Correo empresarial
   contactoEmpresa: string = ''; // Contacto de la empresa
@@ -140,7 +140,7 @@ export class EmpresasComponent implements OnInit {
   // Guardar una nueva empresa en la base de datos
   guardarEmpresa(): void {
     // Validar que todos los campos requeridos estén llenos
-    if (this.nombreEmpresa && this.nombreTabla && this.colorCard && this.nitEmpresa && this.correoEmpresa && this.contactoEmpresa && this.numeroPoliza) {
+    if (this.nombreEmpresa && this.colorCard && this.nitEmpresa && this.correoEmpresa && this.contactoEmpresa && this.numeroPoliza) {
       const nombreLimpio = this.nombreEmpresa.replace(/\s+/g, '').toLowerCase(); // Elimina espacios y convierte a minúsculas
       const empresaExistente = this.empresas.find(empresa =>
         empresa.nombre_empresa.replace(/\s+/g, '').toLowerCase() === nombreLimpio // Verifica si la empresa ya existe
@@ -154,7 +154,6 @@ export class EmpresasComponent implements OnInit {
       // Crear un nuevo FormData para enviar los datos de la empresa
       const formData = new FormData();
       formData.append('nombre_empresa', this.nombreEmpresa.trim()); // Añade el nombre de la empresa
-      formData.append('nombre_tabla', this.nombreTabla); // Añade el nombre de la tabla
       formData.append('nit_empresa', this.nitEmpresa); // Añade el NIT de la empresa
       formData.append('correo_empresa', this.correoEmpresa); // Añade el correo empresarial
       formData.append('contacto_empresa', this.contactoEmpresa); // Añade el contacto empresarial
