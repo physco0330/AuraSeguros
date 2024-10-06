@@ -51,7 +51,7 @@ public class BienesService implements BienesServiceImp {
 
     @Override
     public List<BienesEntity> getBienesPorCodigo(String codigo) {
-        return bienesRepository.findByCodigo(codigo);
+        return bienesRepository.findByCodigo(codigo); // Este método debe estar correctamente implementado en BienesRepository
     }
 
     @Override

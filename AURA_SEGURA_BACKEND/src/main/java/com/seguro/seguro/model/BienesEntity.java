@@ -100,4 +100,7 @@ public class BienesEntity {
     // Nuevo campo agregado
     @Column(name = "nombre_empresa")
     private String nombreEmpresa;
+
+    @Column(name = "id_empresa")
+    private Long idEmpresa; //  campo para idEmpresa
 }

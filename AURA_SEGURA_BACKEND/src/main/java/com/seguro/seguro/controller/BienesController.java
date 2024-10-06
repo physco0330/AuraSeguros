@@ -52,6 +52,7 @@ public class BienesController {
         return new ResponseEntity<>(savedBien, HttpStatus.CREATED);
     }
 
+
     // Endpoint para actualizar un bien
     @PutMapping("/update")
     public ResponseEntity<GenericResponseDto> updateBien(@RequestBody BienesEntity bien) {
