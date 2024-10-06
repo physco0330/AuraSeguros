@@ -72,5 +72,13 @@ public class BienesController {
     public ResponseEntity<List<HistorialEntity>> getHistorialPorCodigo(@PathVariable String codigo) {
         List<HistorialEntity> historial = historialService.getHistorialPorCodigo(codigo);
         return new ResponseEntity<>(historial, HttpStatus.OK);
+
     }
+    // Endpoint para buscar bienes por nombre de empresa
+    @GetMapping("/buscarPorNombreEmpresa/{nombreEmpresa}")
+    public ResponseEntity<List<BienesEntity>> buscarPorNombreEmpresa(@PathVariable String nombreEmpresa) {
+        List<BienesEntity> bienes = bienesService.buscarBienesPorNombreEmpresa(nombreEmpresa);
+        return new ResponseEntity<>(bienes, HttpStatus.OK);
+    }
+
 }

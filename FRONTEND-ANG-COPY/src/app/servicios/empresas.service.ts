@@ -51,4 +51,17 @@ export class EmpresasService {
       })
     );
   }
+
+
+
+  // NUEVO: Método para obtener una empresa por su nombre
+  getEmpresaByNombre(nombre: string): Observable<Empresa> {
+    const url = `${this.baseUrl}/nombre/${nombre}`; // Asegúrate de que la URL coincida con tu backend
+    return this.http.get<Empresa>(url).pipe(
+      catchError((error) => {
+        console.error('Error obteniendo la empresa por nombre:', error);
+        return throwError(() => new Error('Error obteniendo la empresa por nombre'));
+      })
+    );
+  }
 }

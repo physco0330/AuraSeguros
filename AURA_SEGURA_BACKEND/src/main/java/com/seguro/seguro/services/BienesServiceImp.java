@@ -16,6 +16,8 @@ public interface BienesServiceImp {
 
     BienesEntity saveBien(BienesEntity bien);
 
+    List<BienesEntity> buscarBienesPorNombreEmpresa(String nombreEmpresa);
+
     void deleteBien(Long id);
     // Agrega este método
     void deleteBienPorCodigo(String codigo);

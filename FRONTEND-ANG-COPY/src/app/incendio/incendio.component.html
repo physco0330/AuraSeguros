@@ -12,10 +12,11 @@
         <input type="file" accept=".csv" (change)="subirArchivo($event)" style="display: none;" #fileInput>
         <button class=" csv-btn" (click)="fileInput.click()">Subir CSV</button>
 
-      <!-- Botón para mostrar el formulario de agregar un bien -->
-      <button class="btn btn-primary btn-add" (click)="mostrarFormularioAgregar()">
-        <span class="icon">+</span> Agregar bien
-      </button>
+        <!-- Botón para mostrar el formulario de agregar un bien -->
+        <button class="btn btn-primary btn-add" (click)="mostrarFormularioAgregar()">
+          <span class="icon">+</span> Agregar bien
+        </button>
+      </div>
     </div>
   </div>
 
@@ -43,6 +44,15 @@
 
   <!-- Campo de filtro para buscar en múltiples campos -->
   <input type="text" class="search-container" placeholder="Buscar..." (input)="filtrarArticulos($event)" />
+
+  <!-- Mostrar datos de la empresa -->
+  <div *ngIf="empresa" class="mb-4">
+    <h1>{{ empresa.nombre_empresa }}</h1>
+    <p>NIT: {{ empresa.nit_empresa }}</p>
+    <p>Correo: {{ empresa.correo_empresa }}</p>
+    <p>Contacto: {{ empresa.contacto_empresa }}</p>
+    <p>Número de Póliza: {{ empresa.numero_poliza }}</p>
+  </div>
 
   <!-- Tarjeta contenedora de la tabla -->
   <div class="card shadow-sm">
@@ -83,7 +93,7 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Directiva *ngFor para iterar sobre la lista 'bienesFiltrados' -->
+            <!-- Directiva *ngFor para iterar sobre la lista 'bienes' -->
             <tr *ngFor="let bien of bienesFiltrados">
               <!-- Columna para los botones de acción -->
               <td class="text-center">

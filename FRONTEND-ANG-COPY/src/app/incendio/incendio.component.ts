@@ -5,13 +5,11 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
 import { Bien } from '../modelos/bien.model';
 import { BienesService } from '../servicios/bienes.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
 import { Empresa } from '../modelos/empresa.model'; // Asegúrate de que esta ruta sea correcta
-
-
 
 @Component({
   selector: 'app-incendio',
@@ -71,10 +69,17 @@ export class IncendioComponent implements OnInit {
     private bienesService: BienesService, // Servicio para gestionar bienes
     private router: Router, // Servicio de enrutamiento para navegación
     private fb: FormBuilder, // Constructor de formularios reactivos
-    private EmpresasService: EmpresasService
+    private empresasService: EmpresasService, // Servicio para gestionar las empresas
+    private route: ActivatedRoute // Servicio para obtener parámetros de la ruta
   ) {}
 
   ngOnInit(): void {
+    // Obtener el nombre de la empresa desde los parámetros de la ruta
+    const nombreEmpresa = this.route.snapshot.paramMap.get('nombre');
+    if (nombreEmpresa) {
+      this.getEmpresa(nombreEmpresa);
+      this.getBienesByEmpresa(nombreEmpresa);
+    }
 
     // Inicialización del formulario con todos los campos deshabilitados
     this.formBien = this.fb.group({
@@ -118,6 +123,20 @@ export class IncendioComponent implements OnInit {
         this.codigoExistente = false;
         this.habilitarCampos(false); // Deshabilitar campos si no hay código
       }
+    });
+  }
+
+  // Método para obtener los datos de la empresa por nombre
+  getEmpresa(nombre: string): void {
+    this.empresasService.getEmpresaByNombre(nombre).subscribe(data => {
+      this.empresa = data;
+    });
+  }
+
+  // Método para obtener los bienes de la empresa por nombre
+  getBienesByEmpresa(nombre: string): void {
+    this.bienesService.getBienesByEmpresa(nombre).subscribe(data => {
+      this.bienesFiltrados = data; // Asignar a la lista filtrada o bienes
     });
   }
 

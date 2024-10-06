@@ -96,4 +96,8 @@ public class BienesEntity {
 
     @Column(name = "nit_banco")
     private String nitBanco;
+
+    // Nuevo campo agregado
+    @Column(name = "nombre_empresa")
+    private String nombreEmpresa;
 }

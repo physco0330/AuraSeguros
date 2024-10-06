@@ -18,12 +18,20 @@ public interface BienesRepository extends JpaRepository<BienesEntity, Long> {
  @Query(value = "SELECT * FROM bienes_entity WHERE articulo_bienes = :articulo AND riesgo = :idriesgo", nativeQuery = true)
  List<BienesEntity> listadefecha(@Param("articulo") String articulo, @Param("idriesgo") String idRiesgo);
 
- // Método para encontrar bienes por código
+ // nuevo Método
  List<BienesEntity> findByCodigo(String codigo);
+
+ // Método para encontrar bienes por código
+ List<BienesEntity> findByNombreEmpresa(String nombreEmpresa);
 
  // Método para eliminar bienes por código
  @Modifying
  @Transactional
  @Query("DELETE FROM BienesEntity b WHERE b.codigo = :codigo")
  void deleteByCodigo(@Param("codigo") String codigo);
+
+ // Considerar agregar un método para actualizar o manejar duplicados en lugar de eliminar directamente
+
+
+
 }
