@@ -1,14 +1,14 @@
-<aside class="sidebar d-flex flex-column justify-content-between h-100" [class.collapsed]="isCollapsed">
-  <div class="d-flex justify-content-end mb-3">
-    <button (click)="toggleSidebar()" class="btn btn-sm btn-outline-secondary">
-      <mat-icon>{{ isCollapsed ? 'menu' : 'close' }}</mat-icon>
-    </button>
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="flecha-icon">
+    <div (click)="toggleSidebar()" class="flecha-container">
+      <img src="assets/flecha.svg" [class.rotated]="!isCollapsed" alt="Toggle sidebar" class="flecha-svg">
+    </div>
   </div>
 
   <nav class="nav flex-column">
     <ul class="list-unstyled m-0 p-0">
       <li>
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link d-flex align-items-start">
+        <a routerLink="/inicio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link d-flex align-items-start">
           <mat-icon>home</mat-icon><span class="nav-text ms-2">Inicio</span>
         </a>
       </li>
@@ -26,8 +26,8 @@
   </nav>
 
   <div class="mt-auto">
-    <a (click)="onLogout()" class="nav-link d-flex align-items-center logout-link">
-      <mat-icon>exit_to_app</mat-icon><span class="nav-text ms-2">Cierre de sesión</span>
+    <a (click)="onLogout()" class="nav-link  logout-link">
+      <mat-icon>exit_to_app</mat-icon><span class="nav-text ms-2">Salir</span>
     </a>
   </div>
 
