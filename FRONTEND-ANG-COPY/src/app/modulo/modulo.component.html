@@ -9,9 +9,10 @@
     <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar modulo..." />
   </div>
 
-  <!-- Sección de tarjetas de empresas -->
-  <section class="info-cards">
-    <!-- Tarjeta fija para 'incendio' -->
-    <div class="info-card" [routerLink]="['/empresas']" routerLinkActive="active">
-      <h4>Incendio</h4>
-    </div>
+ <!-- Tarjeta mejorada para "Incendio" -->
+<div class="info-card info-card-incendio" [routerLink]="['/empresas']" routerLinkActive="active">
+  <h4>Incendio</h4>
+  <p>Este módulo brinda informacion relacionada con incidentes sobre incendios,
+    aqui podrás moverte libremente entre las empresas y realizar los cambios necesarios dentro de las tablas selectas.</p>
+</div>
+

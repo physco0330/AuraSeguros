@@ -52,124 +52,38 @@ input[type="text"]:focus {
 /* Placeholder con estilo */
 input[type="text"]::placeholder {
   color: #999; /* Color del texto del placeholder */
-  font-style: italic; /* Estilo itálico para el placeholder */
-}
-
-.info-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); // Define un grid que se ajuste al ancho de la tarjeta
-  grid-gap: 10px; // Espacio entre las tarjetas
-  margin-top: 20px;
-  padding: 0 20px;
-}
-
-.info-wrapper {
-  perspective: 1000px; // Permite el efecto 3D, la perspectiva ayuda a la rotación
-}
-.info-card {
-    background-color: #56e80d; // Color del frente de la tarjeta
-    font-size: 16px; // Ajusta el tamaño de fuente
-    color: #333; // Color del texto frontal
-    width: 270px; /* Ancho de la tarjeta */
-    height: 230px; /* Altura de la tarjeta */
-    position: relative;
-    transform-style: preserve-3d; /* Mantiene la relación en 3D para ambas caras */
-    transition: transform 0.6s ease-out; /* Transición más suave y menos forzada */
-    border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
-    border-radius: 10px; /* Bordes redondeados para un acabado suave */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar efecto de elevación */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse para indicar interactividad */
-  }
-
-
-
-.info-card-back {
-  background-color: #f8f8f8; // Color de la parte trasera de la tarjeta
-  transform: rotateY(180deg); // Rota la parte trasera por defecto
-  font-size: 14px; // Ajusta el tamaño de fuente
-  color: #666; // Color del texto trasero
+  font-style: i
+  talic; /* Estilo itálico para el placeholder */
 }
 
 
-/* Contenedor de tarjetas */
-.info-container {
-  display: flex; /* Activa Flexbox */
-  flex-wrap: wrap; /* Permite que las tarjetas se muevan a una nueva fila cuando no hay espacio */
-  justify-content: flex-start; /* Alinea las tarjetas al inicio (izquierda) */
-  gap: 10px; /* Espacio entre las tarjetas */
-  padding: 10px; /* Espacio interno del contenedor */
-}
-
-/* Perspectiva de la tarjeta */
-.info-wrapper {
-  perspective: 1000px; /* Permite el efecto 3D, la perspectiva ayuda a la rotación */
-}
-
-/* Tarjeta */
-.info-card {
-  width: 270px; /* Ancho de la tarjeta */
-  height: 230px; /* Altura de la tarjeta */
-  position: relative;
-  transform-style: preserve-3d; /* Mantiene la relación en 3D para ambas caras */
-  transition: transform 0.6s ease-out; /* Transición más suave y menos forzada */
-  border: 1px solid #ddd; /* Borde alrededor de la tarjeta */
-  border-radius: 10px; /* Bordes redondeados para un acabado suave */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar efecto de elevación */
-  cursor: pointer; /* Cambia el cursor al pasar el mouse para indicar interactividad */
-}
-
-/* Parte delantera y trasera de la tarjeta */
-.info-card-front,
-.info-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden; /* Oculta el reverso cuando no está activo */
+/* Estilos de la tarjeta "Incendio" */
+.info-card-incendio {
+  background-color: #042eff; /* Color vívido */
+  color: #ffffff; /* Color de texto */
+  font-size: 25px; /* Tamaño de fuente mayor para hacerlo más legible */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center; /* Centrar verticalmente */
+  align-items: center; /* Centrar horizontalmente */
+  text-align: center; /* Centrar el texto */
   padding: 20px;
-  box-sizing: border-box;
-  border-radius: 10px; /* Mantiene los bordes redondeados en ambas caras */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar efecto de elevación */
-  transition: background-color 0.3s ease, transform 0.6s ease; /* Transiciones suaves en color y transformación */
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más notoria */
+  transition: transform 0.3s, background-color 0.3s; /* Transiciones suaves */
+  cursor: pointer;
 }
 
-/* Estilos de la parte delantera de la tarjeta */
-.info-card-front {
-  font-size: 16px; /* Ajusta el tamaño de fuente */
-  color: #070505; /* Color del texto frontal */
-  text-align: center; /* Centra el texto */
-  padding: 15px; /* Espacio interno para que el contenido no quede pegado a los bordes */
+.info-card-incendio:hover {
+  background-color: #e74c3c; /* Cambia ligeramente el color al pasar el cursor */
+  transform: scale(1.05); /* Agranda un poco la tarjeta para dar efecto interactivo */
 }
 
-/* Estilos de la parte trasera de la tarjeta */
-.info-card-back {
-  background-color: #f8f8f8; /* Color de la parte trasera de la tarjeta */
-  transform: rotateY(180deg); /* Rota la parte trasera por defecto */
-  font-size: 14px; /* Ajusta el tamaño de fuente */
-  color: #000000; /* Color del texto trasero */
-  display: flex;
-  flex-direction: column; /* Organiza los campos en una columna */
-  justify-content: center; /* Centra el contenido verticalmente */
-  padding: 20px; /* Espaciado interno */
-}
-
-/* Espaciado entre los textos de la parte trasera */
-.info-card-back  {
-  margin: 5px 0; /* Espacio entre los párrafos */
-}
-
-/* Botones de acción en la tarjeta */
-.action-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 5px;
-  margin-top: auto; /* Coloca los botones en la parte inferior */
-}
-
-
-.btn-info:hover {
-  color: #007bff; /* Color azul al pasar el cursor por encima */
+/* Estilo del texto descriptivo */
+.info-card-incendio p {
+  margin-top: 10px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #f0f0f0; /* Texto más claro */
 }
 
