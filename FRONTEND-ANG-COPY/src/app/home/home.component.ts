@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
   currentSlide = 0;
   private isBrowser: boolean;
   currentSection = 0;
+  totalSections = 3;
+  totalSlides = 3; // Inicializa totalSlides con el número correcto de diapositivas
 
   constructor(@Inject(PLATFORM_ID) platformId: Object) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -35,44 +37,39 @@ export class HomeComponent implements OnInit {
   }
 
   prevSlide() {
-    this.currentSlide = (this.currentSlide - 1 + 3) % 3;
-    this.updateCarousel();
+    // Eliminar este método si no se usa
   }
 
   nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % 3;
-    this.updateCarousel();
+    // Eliminar este método si no se usa
   }
 
-  private updateCarousel() {
-    if (this.isBrowser) {
-      const carousel = document.querySelector('.carousel') as HTMLElement;
-      if (carousel) {
-        carousel.style.transform = `translateX(-${this.currentSlide * 33.333}%)`;
-      }
-    }
+  private updateCarousel(): void {
+    // Eliminar este método si no se usa
   }
 
   private adjustCarouselContainer() {
-    if (this.isBrowser) {
-      const carouselContainer = document.querySelector('.carousel-container') as HTMLElement;
-
-      if (carouselContainer) {
-        carouselContainer.style.width = '100%';
-        carouselContainer.style.left = '0';
-      }
-    }
+    // Eliminar este método si no se usa
   }
 
   prevSection() {
-    if (this.currentSection > 0) {
-      this.currentSection--;
-    }
+    this.currentSection = (this.currentSection - 1 + this.totalSections) % this.totalSections;
+    this.actualizarCarrusel();
   }
 
   nextSection() {
-    if (this.currentSection < 2) {
-      this.currentSection++;
+    this.currentSection = (this.currentSection + 1) % this.totalSections;
+    this.actualizarCarrusel();
+  }
+
+  private actualizarCarrusel(): void {
+    if (this.isBrowser) {
+      const contenedor = document.querySelector('.info-section-wrapper') as HTMLElement;
+      if (contenedor) {
+        const desplazamiento = -this.currentSection * 100;
+        contenedor.style.transition = 'transform 0.3s ease';
+        contenedor.style.transform = `translateX(${desplazamiento}%)`;
+      }
     }
   }
 }

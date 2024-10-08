@@ -28,8 +28,8 @@
   h1 {
     overflow: hidden;
     white-space: nowrap;
-    animation: typing 3s steps(60) infinite;
-    font-size: 20px;
+    animation: typing 5s steps(60) infinite;
+    font-size: 40px;
     margin: 0;
     padding: 0;
     border: 0;
@@ -41,6 +41,7 @@
     line-height: 1em;
     font-weight: 500;
     box-sizing: border-box;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 
     span:first-child {
       color: #388dac;
@@ -48,9 +49,10 @@
 
     span:last-child {
       color: #ffffff;
-      text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+      text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000, 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
   }
+
 
   @keyframes typing {
     from { width: 0; }

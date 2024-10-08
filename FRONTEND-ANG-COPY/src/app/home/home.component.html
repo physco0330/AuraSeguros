@@ -1,14 +1,18 @@
 <div class="home-container">
   <div class="welcome-message d-flex align-items-center">
     <!-- Imagen del logo -->
-    <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
     <div class="text-container ms-3">
-      <h1 class="welcome-title">Bienvenido a la aplicación</h1>
-      <p>Explora los diferentes módulos y funcionalidades.</p>
+      <h1 class="welcome-title">
+        <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
+        Bienvenido a la Aplicación
+        <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
+      </h1>
+      <p>Explora los diferentes módulos y funcionalidades...</p>
     </div>
   </div>
   <div class="info-container">
     <div class="info-section-wrapper" [style.transform]="'translateX(' + (-currentSection * 100) + '%)'">
+      <!-- Sección de Módulos -->
       <div class="info-section">
         <h2>Módulos</h2>
         <div class="modulo-content">
@@ -18,6 +22,7 @@
         </div>
       </div>
       
+      <!-- Sección de Propósito -->
       <div class="info-section">
         <h2>Propósito</h2>
         <div class="proposito-content">
@@ -27,6 +32,7 @@
         </div>
       </div>
       
+      <!-- Sección de Ajustes -->
       <div class="info-section">
         <h2>Ajustes</h2>
         <div class="ajustes-content">
@@ -37,8 +43,8 @@
       </div>
     </div>
     <div class="navigation-buttons">
-      <button class="nav-button prev" (click)="prevSection()" [disabled]="currentSection === 0">&lt;</button>
-      <button class="nav-button next" (click)="nextSection()" [disabled]="currentSection === 2">&gt;</button>
+      <button class="nav-button prev" (click)="prevSection()">&lt;</button>
+      <button class="nav-button next" (click)="nextSection()">&gt;</button>
     </div>
   </div>
 </div>
