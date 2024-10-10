@@ -3,7 +3,7 @@ $transition-timing: cubic-bezier(0.25, 0.1, 0.25, 1); // Cambiamos la función d
 $transition-properties: width $transition-duration $transition-timing,
                         transform $transition-duration $transition-timing,
                         left $transition-duration $transition-timing,
-                        right $transition-duration $transition-timing,
+                        right $transition-duration $transition-timing,  
                         margin $transition-duration $transition-timing,
                         padding $transition-duration $transition-timing,
                         font-size $transition-duration $transition-timing,
@@ -14,6 +14,7 @@ $info-section-transition-duration: 2s; // Nueva variable para info-section
   transition: $transition-properties;
 }
 
+/* home.component.scss */
 // Variables
 $primary-color: #000000d9;
 $secondary-color: #216280;
@@ -27,154 +28,163 @@ $border-color: lighten($primary-color, 20%); // Color del borde, más claro que 
   flex-direction: column;
   height: 100%; // Ajustamos la altura para tener en cuenta el margen superior del main-content
   overflow-y: auto;
+
   box-sizing: border-box;
   @include transition;
 
   .welcome-title {
-    font-size: 4rem;
+    font-size: 4rem; // Asegúrate de que este tamaño sea suficientemente grande
     font-weight: 600;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-shadow: 2px 2px 4px rgb(74, 126, 129);
-    color: $primary-color;
-    text-align: center;
-    margin-bottom: 20px;
     @include transition;
+    color: $primary-color; // Añadimos el color aquí
+    text-align: center; // Centramos el texto
+    margin-bottom: 20px; // Añadimos un margen inferior
+  }
+// Estilos para el mensaje de bienvenida
+.welcome-message {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include transition;
+
+  .logo {
+    max-width: 100px;
+    height: auto;
+    margin-right: 10px;
+    @include transition;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
   }
 
-  .welcome-message {
-    text-align: center;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .text-container {
     @include transition;
 
-    .logo {
-      max-width: 100px;
-      height: auto;
-      margin-right: 10px;
-      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
-      @include transition;
-    }
-
-    .text-container {
-      @include transition;
-
-      p {
-        font-size: 1.5rem;
-        margin: 0.5rem 0 0;
-        @include transition;
-      }
-    }
-  }
-
-  // Estilos para la sección de información
-  .info-container {
-    position: relative;
-    overflow: hidden;
-    padding: 0 25px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    @include transition;
-  }
-
-  .info-section-wrapper {
-    display: flex;
-    flex-grow: 1;
-    @include transition;
-    transition: transform $info-section-transition-duration $transition-timing;
-  }
-
-  .info-section {
-    flex: 0 0 100%;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: default;
-    text-align: center;
-    background-color: $background-color;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    overflow-y: auto;
-    top: 10px;
-    height: calc(100% - 20px);
-    margin-bottom: 20px;
-    border: 2px solid $border-color;
-    @include transition;
-
-    &:hover {
-      transform: scale(1.01);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      border-color: $primary-color;
-      transition: transform $info-section-transition-duration $transition-timing;
-    }
-
-    h2 {
-      color: rgb(4, 4, 4);
-      margin-top: 0;
-      margin-left: 0;
-      font-size: 3.2rem;
-      font-weight: 600;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(0, 0, 0, 0.849);
-      background-color: rgba(40, 137, 159, 0.722);
-      border-radius: 5px;
-      padding: 5px 10px;
-      @include transition;
-    }
 
     p {
-      margin-left: 30px;
-      font-size: 1.2rem;
-      text-align: justify;
+      font-size: 1.5rem;
+      margin: 0.5rem 0 0;
       @include transition;
     }
   }
+}
 
-  .navigation-buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    margin-top: 400px;
-    left: 30px;
-    right: 30px;
-    transform: translateY(-50%);
-    z-index: 10;
+// Estilos para la sección de información
+.info-container {
+  position: relative;
+  overflow: hidden;
+  padding: 0 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  @include transition;
+}
+
+.info-section-wrapper {
+  display: flex;
+  flex-grow: 1;
+  @include transition;
+  transition: transform $info-section-transition-duration $transition-timing; // Cambiado de 'all' a 'transform'
+}
+
+.info-section {
+  flex: 0 0 100%;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: default; // Cambiado de 'pointer' a 'default'
+  text-align: center;
+  background-color: $background-color;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+  top: 10px;
+  height: calc(100% - 20px); // Reducimos la altura en 20px
+  margin-bottom: 20px; // Añadimos un margen inferior
+  @include transition;
+  
+  border: 2px solid $border-color; // Añadimos un borde
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: $primary-color; // Cambiamos el color del borde al hacer hover
+    transition: all $info-section-transition-duration $transition-timing; // Transición más lenta para el hover
+
+  }
+
+  h2 {
+    color: rgb(4, 4, 4);
+    margin-top: 0;
+    margin-left: 0;
+    font-size: 3.2rem;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    @include transition;
+    border: 1px solid rgba(0, 0, 0, 0.849);
+    background-color: rgba(40, 137, 159, 0.722);
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+
+  p {
+    margin-left: 30px;
+    font-size: 1.2rem;
+    @include transition;
+    text-align: justify;
+  }
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 9%;
+  left: 20px;
+  right: 20px;
+  transform: translateY(-50%); // Añadido para centrar verticalmente
+  z-index: 10;
+  @include transition;
+  transition: all $info-section-transition-duration $transition-timing;
+}
+
+.nav-button {
+  transition: all $info-section-transition-duration $transition-timing; // Transición más lenta para el hover
+
+  background-color: rgba($primary-color, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  @include transition;
+
+  &:hover {
+    background-color: $secondary-color;
     @include transition;
   }
 
-  .nav-button {
-    background-color: rgba($primary-color, 0.7);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-    cursor: pointer;
+  &:disabled {
+    background-color: rgba($secondary-color, 0.3);
+    cursor: not-allowed;
     @include transition;
-
-    &:hover {
-      background-color: $secondary-color;
-    }
-
-    &:disabled {
-      background-color: rgba($secondary-color, 0.3);
-      cursor: not-allowed;
-    }
   }
 }
 
 // Ajustes responsivos
 @media (max-width: 768px) {
+  transition: all $info-section-transition-duration $transition-timing; // Transición más lenta para el hover
+
   .welcome-message {
     flex-direction: column;
-
+    
     .logo {
       margin-right: 0;
       margin-bottom: 10px;
@@ -191,7 +201,11 @@ $border-color: lighten($primary-color, 20%); // Color del borde, más claro que 
 }
 
 @media (max-width: 480px) {
+  transition: all $info-section-transition-duration $transition-timing; // Transición más lenta para el hover
+
   .home-container {
     padding: 1rem;
   }
+}
+
 }

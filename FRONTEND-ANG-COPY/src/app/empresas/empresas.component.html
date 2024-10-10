@@ -48,20 +48,16 @@
           </div>
         </div>
 
-    <!-- Parte trasera de la tarjeta -->
-<div class="info-card-back" *ngIf="empresa.isShowingBack">
-  <p style="font-weight: bold; color: #000000;">NIT: {{ empresa.nit_empresa }}</p>
-  <p style="font-weight: bold; color: #000000;">Correo: {{ empresa.correo_empresa }}</p>
-  <p style="font-weight: bold; color: #000000;">Contacto: {{ empresa.contacto_empresa }}</p>
-  <p style="font-weight: bold; color: #000000;">Número de Póliza: {{ empresa.numero_poliza }}</p>
-
-  <!-- Botón "back" con stopPropagation para evitar que se propague el evento hacia la tarjeta -->
-  <button class="btn-back" type="button" (click)="empresa.isShowingBack = false; $event.stopPropagation()">
-    <mat-icon>keyboard_backspace</mat-icon>
-  </button>
-</div>
-
-
+        <!-- Parte trasera de la tarjeta -->
+        <div class="info-card-back" *ngIf="empresa.isShowingBack">
+          <p style="font-weight: bold; color: #000000;">NIT: {{ empresa.nit_empresa }}</p>
+          <p style="font-weight: bold; color: #000000;">Correo: {{ empresa.correo_empresa }}</p>
+          <p style="font-weight: bold; color: #000000;">Contacto: {{ empresa.contacto_empresa }}</p>
+          <p style="font-weight: bold; color: #000000;">Número de Póliza: {{ empresa.numero_poliza }}</p>
+          <button class="btn-back" (click)="empresa.isShowingBack = false">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>

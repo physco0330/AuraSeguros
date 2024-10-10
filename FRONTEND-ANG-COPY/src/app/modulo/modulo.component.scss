@@ -76,7 +76,7 @@ input[type="text"]::placeholder {
 
 .info-card-incendio:hover {
   background-color: #e74c3c; /* Cambia ligeramente el color al pasar el cursor */
-  transform: scale(1.01); /* Agranda un poco la tarjeta para dar efecto interactivo */
+  transform: scale(1.05); /* Agranda un poco la tarjeta para dar efecto interactivo */
 }
 
 /* Estilo del texto descriptivo */
@@ -85,10 +85,5 @@ input[type="text"]::placeholder {
   font-size: 18px;
   line-height: 1.5;
   color: #f0f0f0; /* Texto más claro */
-}
-
-.welcome-text {
-  color: #388dac;
-
 }
 

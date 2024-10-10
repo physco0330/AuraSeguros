@@ -4,9 +4,10 @@
     <div class="text-container ms-3">
       <h1 class="welcome-title">
         <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
-        Te damos la bienvenida a nuestro portal
+        Bienvenido a la Aplicación
+        <img src="assets/logo-auras_150.png" alt="Logo" class="img-fluid logo">
       </h1>
-      <p>Aquí podrás explorar y navegar por nuestra aplicación de manera fácil e intuitiva...</p>
+      <p>Explora los diferentes módulos y funcionalidades...</p>
     </div>
   </div>
   <div class="info-container">
@@ -15,33 +16,29 @@
       <div class="info-section">
         <h2>Módulos</h2>
         <div class="modulo-content">
-          <p>sirve como un punto central para gestionar y organizar los módulos del sistema. Desde esta interfaz, los usuarios pueden
-            navegar a diferentes módulos específicos, como gestionar empresas, proyectos o servicios, con opciones claras para agregar,
-            editar o eliminar información. Facilita la organización y control dentro del sistema, asegurando que
-            los usuarios puedan acceder a las funcionalidades que necesiten de manera eficiente..</p>
-
+          <p>En esta sección puedes gestionar los distintos módulos disponibles.</p>
+          <p>Módulos activos: {{ "modulosActivos" }}</p>
+          <p>Módulos disponibles: {{ "modulosDisponibles" }}</p>
         </div>
       </div>
-
+      
       <!-- Sección de Propósito -->
       <div class="info-section">
         <h2>Propósito</h2>
         <div class="proposito-content">
-          <p>"La página principal ofrece una visión general del sistema y actúa como un centro de control desde el cual los usuarios
-            pueden acceder rápidamente a los módulos más importantes, recibir notificaciones y mantenerse informados sobre sus
-            actividades recientes."</p>
+          <p>Esta página se ha creado para satisfacer las necesidades de nuestros usuarios, permitiéndoles gestionar sus seguros de manera eficiente y personalizada.</p>
+          <p>Usuarios activos: {{ "usuariosActivos" }}</p>
+          <p>Seguros gestionados: {{ "segurosGestionados" }}</p>
         </div>
       </div>
-
+      
       <!-- Sección de Ajustes -->
       <div class="info-section">
         <h2>Ajustes</h2>
         <div class="ajustes-content">
-          <p> permite a los usuarios personalizar y configurar las preferencias del sistema. Aquí,
-            se pueden ajustar detalles como los datos personales, la seguridad de la cuenta, las preferencias de notificación,
-            y otros aspectos que permiten personalizar la experiencia de uso. Es clave para la administración de configuraciones
-            tanto personales como del sistema general.</p>
-
+          <p>Ajusta las configuraciones de tu cuenta y preferencias.</p>
+          <p>Última actualización: {{ "ultimaActualizacion" | date }}</p>
+          <p>Configuraciones disponibles: {{ "configuracionesDisponibles" }}</p>
         </div>
       </div>
     </div>
