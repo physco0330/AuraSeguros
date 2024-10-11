@@ -463,8 +463,8 @@ import {
   ɵɵviewQuery,
   ɵɵviewQuerySignal
 } from "./chunk-KISQQRCA.js";
-import "./chunk-OXNQPEDM.js";
 import "./chunk-TA35YPAB.js";
+import "./chunk-OXNQPEDM.js";
 import "./chunk-MXZPVDG5.js";
 export {
   ANIMATION_MODULE_TYPE,

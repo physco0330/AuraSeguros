@@ -1,18 +1,18 @@
 <div class="modulo-container">
   <!-- Mensaje de bienvenida -->
   <div class="welcome-message">
-    <h2 class="welcome-text">Módulos</h2>
+    <h2 class="welcome-title">Módulos</h2>
   </div>
-
   <!-- Campo de búsqueda -->
   <div class="search-container">
-    <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar modulo..." />
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar módulo..." />
   </div>
-
- <!-- Tarjeta mejorada para "Incendio" -->
-<div class="info-card info-card-incendio" [routerLink]="['/empresas']" routerLinkActive="active">
-  <h4>Incendio</h4>
-  <p>Este módulo brinda informacion relacionada con incidentes sobre incendios,
-    aqui podrás moverte libremente entre las empresas y realizar los cambios necesarios dentro de las tablas selectas.</p>
+  <!-- Tarjeta mejorada para "Incendio" -->
+  <div class="info-card info-card-incendio" [routerLink]="['/empresas']" routerLinkActive="active">
+    <h4>Incendio</h4>
+    <hr>
+    <p>Este módulo brinda información relacionada con incidentes sobre incendios.
+      Aquí podrás moverte libremente entre las empresas y realizar los cambios necesarios dentro de las tablas selectas.</p>
+  </div>
 </div>
 

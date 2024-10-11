@@ -1,14 +1,14 @@
 import { Component, OnInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from "../header/header.component";
 import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -19,7 +19,10 @@ export class HomeComponent implements OnInit {
   totalSections = 3;
   totalSlides = 3; // Inicializa totalSlides con el número correcto de diapositivas
 
-  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID) platformId: Object,
+    private router: Router // Añadir el Router
+  ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
@@ -72,4 +75,6 @@ export class HomeComponent implements OnInit {
       }
     }
   }
+
+  // Las funciones navegarAModulos() y navegarAAjustes() han sido eliminadas
 }

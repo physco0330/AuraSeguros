@@ -1,94 +1,136 @@
+$primary-color: #000000d9;
+$secondary-color: #216280;
+$background-color: #fff;
+$text-color: #000000;
+$border-color: lighten($primary-color, 20%);
 /* Estilos existentes */
-.modulo {
-  display: flex;
-  background: rgba(0, 0, 0, 0.34) url('/assets/FONDO.webp') no-repeat center center / cover;
-  background-color: rgba(0, 0, 0, 0.137);
-  position: fixed;
-  top: 60px;
-  left: 0;
-  right: 0;
-  bottom: 0;
+$transition-duration: 0.8s;
+$transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+$transition-properties: width $transition-duration $transition-timing,
+                        transform $transition-duration $transition-timing,
+                        left $transition-duration $transition-timing,
+                        right $transition-duration $transition-timing,
+                        margin $transition-duration $transition-timing,
+                        padding $transition-duration $transition-timing,
+                        font-size $transition-duration $transition-timing,
+                        opacity $transition-duration $transition-timing;
+
+@mixin transition {
+  transition: $transition-properties;
 }
 
-.main-content {
-  width: calc(100% - 350px);
-  padding: 2rem;
-  transition: all 0.3s ease-in-out;
-  position: absolute;
-  top: 60px;
-  left: 350px;
-  right: 0;
-  bottom: 0;
+@mixin responsive-font($min, $pref, $max) {
+  font-size: clamp($min, $pref, $max);
+}
+
+.modulo-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
-  margin: 0;
+  transition: all 1s ease-in-out;
+
+  .welcome-title {
+    text-align: center;
+    @include responsive-font(2.5rem, 5vw, 4rem);
+    @include transition;
+    // Eliminar media queries redundantes
+
+  }
 }
 
+h2 {
+  margin: 30px auto;
+  color: #337fa4ee;
+  font-weight: 600;
+  text-shadow: 2px 2px 3px #000000db;
 
+  @include responsive-font(2.1rem, 3vw, 2.5rem);
+}
 /* Estilos para el contenedor de búsqueda */
 .search-container {
   display: flex; /* Flexbox para alinear elementos */
-  justify-content: left; /* Centra el contenido horizontalmente */
-  margin: 20px 0; /* Espacio superior e inferior */
+  justify-content: flex-start; /* Centra el contenido horizontalmente */
+  margin: 5px 100px; /* Espacio superior e inferior */
+
+  @include transition;
 }
 
 /* Estilos para el input de búsqueda */
 input[type="text"] {
   width: 250px; /* Ancho del input */
   padding: 12px 15px; /* Espaciado interno */
-  border: 2px solid #007bff; /* Borde azul */
+  border: 2px solid $secondary-color; /* Borde azul */
   border-radius: 5px; /* Bordes redondeados */
   font-size: 16px; /* Tamaño de fuente */
   transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
   outline: none; /* Quitar el contorno por defecto */
+  
+  &:focus {
+    border-color: #2d5278; /* Cambiar el color del borde al enfocar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra suave alrededor */
+  }
+  
+  &::placeholder {
+    color: #999; /* Color del texto del placeholder */
+    font-style: italic; /* Estilo itálico para el placeholder */
+  }
 }
-
-/* Efecto al enfocar el input */
-input[type="text"]:focus {
-  border-color: #0056b3; /* Cambiar el color del borde al enfocar */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra suave alrededor */
-}
-
-/* Placeholder con estilo */
-input[type="text"]::placeholder {
-  color: #999; /* Color del texto del placeholder */
-  font-style: i
-  talic; /* Estilo itálico para el placeholder */
-}
-
 
 /* Estilos de la tarjeta "Incendio" */
 .info-card-incendio {
-  background-color: #042eff; /* Color vívido */
-  color: #ffffff; /* Color de texto */
-  font-size: 25px; /* Tamaño de fuente mayor para hacerlo más legible */
+  position: relative;
+  border-left: 20px solid $secondary-color;
+  margin: 20px 100px; // Centrar la tarjeta
+  width: calc(100% - 40px); // Ancho responsive con margen
+  max-width: 600px; // Ancho máximo para pantallas grandes
+  background-color: #ffffff;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centrar verticalmente */
-  align-items: center; /* Centrar horizontalmente */
-  text-align: center; /* Centrar el texto */
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
   padding: 20px;
-  border-radius: 12px; /* Bordes redondeados */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más notoria */
-  transition: transform 0.3s, background-color 0.3s; /* Transiciones suaves */
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, background-color 0.3s;
   cursor: pointer;
+  will-change: transform, background-color;
+  
+  &::after {
+    content: '\1F525';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 80px; // Tamaño reducido para mejor adaptabilidad
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5)); // Sombra en la parte inferior del fuego
+  }
+  
+  &:hover {
+    background-color: #ffffff;
+    transform: scale(1.03); // Reducido para evitar desbordamiento en pantallas pequeñas
+  }
+  
+  h4 {
+    color: #1a1d1dee;
+    font-weight: 600;
+    @include responsive-font(2.1rem, 3vw, 2.5rem);
+  }
+  
+  hr {
+    border: 2px solid #1a1d1dee;
+    width: 100%;
+  }
+  
+  p {
+    @include responsive-font(0.8rem, 2vw, 1rem);
+    // Eliminar la declaración redundante de font-size
+    margin-top: 10px;
+    line-height: 1.6;
+    color: #000000;
+  }
+
+  // El comentario sobre la eliminación de media queries ya no es necesario
 }
-
-.info-card-incendio:hover {
-  background-color: #e74c3c; /* Cambia ligeramente el color al pasar el cursor */
-  transform: scale(1.01); /* Agranda un poco la tarjeta para dar efecto interactivo */
-}
-
-/* Estilo del texto descriptivo */
-.info-card-incendio p {
-  margin-top: 10px;
-  font-size: 18px;
-  line-height: 1.5;
-  color: #f0f0f0; /* Texto más claro */
-}
-
-.welcome-text {
-  color: #388dac;
-
-}
-
