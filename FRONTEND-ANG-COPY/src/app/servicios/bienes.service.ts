@@ -1,5 +1,3 @@
-// src/app/services/bienes.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -11,11 +9,20 @@ import { Historial } from '../modelos/historial.model'; // Importar modelo Histo
   providedIn: 'root' // El servicio está disponible en toda la aplicación
 })
 export class BienesService {
-
   // URL base del backend para acceder a los servicios relacionados con bienes
   private baseUrl = 'http://localhost:8080/bien';
 
   constructor(private http: HttpClient) {}
+
+  // Método para buscar bienes por nombre de empresa
+  buscarPorNombreEmpresa(nombreEmpresa: string): Observable<Bien[]> {
+    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${nombreEmpresa}`).pipe(
+      catchError((error) => {
+        console.error('Error buscando bienes por nombre de empresa:', error);
+        return throwError(() => new Error('Error buscando bienes por nombre de empresa'));
+      })
+    );
+  }
 
   // Método para obtener bienes por empresa
   getBienesByEmpresa(nombre: string): Observable<Bien[]> {

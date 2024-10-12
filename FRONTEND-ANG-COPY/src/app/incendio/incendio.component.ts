@@ -75,10 +75,14 @@ export class IncendioComponent implements OnInit {
 
   ngOnInit(): void {
     // Obtener el nombre de la empresa desde los parámetros de la ruta
-    const nombreEmpresa = this.route.snapshot.paramMap.get('nombre');
+    const nombreEmpresa = this.route.snapshot.paramMap.get('nombreEmpresa');
     if (nombreEmpresa) {
       this.getEmpresa(nombreEmpresa);
-      this.getBienesByEmpresa(nombreEmpresa);
+
+      // Usar el servicio para buscar bienes por nombre de empresa
+      this.bienesService.buscarPorNombreEmpresa(nombreEmpresa).subscribe((data) => {
+        this.bienes = data;
+      });
     }
 
     // Inicialización del formulario con todos los campos deshabilitados
@@ -111,12 +115,14 @@ export class IncendioComponent implements OnInit {
       nitBanco: [{ value: '', disabled: true }]
     });
 
+    // Cargar todos los bienes inicialmente
     this.cargarBienes();
 
     // Suscripción a cambios en el campo 'codigo' para verificar existencia en tiempo real
     this.formBien.get('codigo')?.valueChanges.pipe(
       debounceTime(300)
     ).subscribe(codigo => {
+      this.filtrarBienes(codigo); // Llama a la función de filtrado
       if (codigo) {
         this.verificarCodigo(codigo);
       } else {
@@ -124,6 +130,16 @@ export class IncendioComponent implements OnInit {
         this.habilitarCampos(false); // Deshabilitar campos si no hay código
       }
     });
+  }
+
+  filtrarBienes(codigo: string): void {
+    if (!codigo) {
+      this.bienesFiltrados = this.bienes; // Muestra todos los bienes si no hay filtro
+    } else {
+      this.bienesFiltrados = this.bienes.filter(bien =>
+        bien.codigo.includes(codigo) // Ajusta esta lógica según el campo que quieras filtrar
+      );
+    }
   }
 
   // Método para obtener los datos de la empresa por nombre
