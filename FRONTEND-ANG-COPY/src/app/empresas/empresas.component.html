@@ -21,7 +21,7 @@
       <div class="info-card"
            [ngClass]="{ 'flipped': empresa.isShowingBack }"
            [ngStyle]="{'background-color': empresa.color_palette}"
-           *ngIf="empresa.id_empresa !== undefined" (click)="navigateToIncendio(empresa.nombre_empresa)"> <!-- Cambiado aquí -->
+           *ngIf="empresa.id_empresa !== undefined" (click)="navigateToIncendio(empresa.nombre_empresa, empresa.id_empresa)"> <!-- Cambiado aquí -->
 
         <!-- Parte delantera de la tarjeta -->
         <div class="info-card-front" *ngIf="!empresa.isShowingBack">

@@ -116,7 +116,13 @@ export class IncendioComponent implements OnInit {
     });
 
     // Cargar todos los bienes inicialmente
-    this.cargarBienes();
+    //this.cargarBienes();
+    this.route.queryParams.subscribe(params => {
+      const idEmpresa = params['idEmpresa'];
+      if (idEmpresa) {
+        this.cargarBienesByEmpresaId(idEmpresa);
+      }
+    });
 
     // Suscripción a cambios en el campo 'codigo' para verificar existencia en tiempo real
     this.formBien.get('codigo')?.valueChanges.pipe(
@@ -170,6 +176,15 @@ export class IncendioComponent implements OnInit {
 // Asigna los datos recibidos tanto a 'bienes' como a 'bienesFiltrados' para mantener una copia original y una filtrada
   cargarBienes(): void {
     this.bienesService.getBienes().subscribe((data: Bien[]) => {
+      this.bienes = data;
+      this.bienesFiltrados = data; // Inicializa los bienes filtrados con todos los bienes
+    });
+  }
+
+  cargarBienesByEmpresaId(idEmpresa: number): void {
+
+
+    this.bienesService.getBienesByEmpresaId(idEmpresa).subscribe((data: Bien[]) => {
       this.bienes = data;
       this.bienesFiltrados = data; // Inicializa los bienes filtrados con todos los bienes
     });

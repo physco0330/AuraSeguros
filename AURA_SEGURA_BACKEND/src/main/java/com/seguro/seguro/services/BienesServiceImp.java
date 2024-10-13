@@ -7,6 +7,8 @@ import java.util.List;
 public interface BienesServiceImp {
 
     List<BienesEntity> getAllBienes();
+    List<BienesEntity> getAllBienesByEmpresaId(Long empresaId);
+
 
     void updateBien(BienesEntity bien);
 

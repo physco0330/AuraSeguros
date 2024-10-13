@@ -29,6 +29,12 @@ public class BienesController {
         return new ResponseEntity<>(bienes, HttpStatus.OK);
     }
 
+    @GetMapping("/empresa/{empresaId}")
+    public ResponseEntity<List<BienesEntity>> getAllBienesByEmpresaId(@PathVariable Long empresaId) {
+        List<BienesEntity> bienes = bienesService.getAllBienesByEmpresaId(empresaId);
+        return new ResponseEntity<>(bienes, HttpStatus.OK);
+    }
+
     // Endpoint para buscar bienes por artículo y riesgo
     @GetMapping("/buscarPorArticuloYRiesgo/{articulo}/{idriesgo}")
     public ResponseEntity<List<BienesEntity>> buscarPorArticuloYRiesgo(

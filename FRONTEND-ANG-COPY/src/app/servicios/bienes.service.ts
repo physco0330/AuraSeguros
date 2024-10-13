@@ -29,6 +29,11 @@ export class BienesService {
     return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${nombre}`); // Cambié apiUrl a baseUrl
   }
 
+  getBienesByEmpresaId(empresaId: number): Observable<Bien[]> {
+    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${empresaId}`); // Cambié apiUrl a baseUrl
+  }
+
+
   // Método para obtener bienes por código
   getBienPorCodigo(codigo: string): Observable<Bien[]> {
     return this.http.get<Bien[]>(`${this.baseUrl}/codigo/${codigo}`).pipe(

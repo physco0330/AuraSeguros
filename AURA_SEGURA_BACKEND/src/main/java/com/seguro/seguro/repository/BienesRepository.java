@@ -21,6 +21,9 @@ public interface BienesRepository extends JpaRepository<BienesEntity, Long> {
  // nuevo Método
  List<BienesEntity> findByCodigo(String codigo);
 
+ List<BienesEntity> findByIdEmpresa(Long IdEmpresa);
+
+
  // Método para encontrar bienes por código
  List<BienesEntity> findByNombreEmpresa(String nombreEmpresa);
 

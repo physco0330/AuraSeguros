@@ -19,6 +19,12 @@ public class BienesService implements BienesServiceImp {
     @Autowired
     private HistorialRepository historialRepository;
 
+
+    @Override
+    public List<BienesEntity> getAllBienesByEmpresaId(Long empresaId) {
+        return bienesRepository.findByIdEmpresa(empresaId);
+    }
+
     @Override
     public List<BienesEntity> getAllBienes() {
         return bienesRepository.findAll();

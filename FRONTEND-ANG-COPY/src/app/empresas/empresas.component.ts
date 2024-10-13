@@ -59,9 +59,11 @@ export class EmpresasComponent implements OnInit {
 
 // * Navega al componente 'incendio' y pasa el nombre de la empresa como un parámetro de ruta.
 
-  navigateToIncendio(nombreEmpresa: string) {
-    this.router.navigate(['/incendio', nombreEmpresa]);
-  }
+
+navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
+  this.router.navigate(['/incendio', nombreEmpresa], { queryParams: { idEmpresa } });
+}
+
 
 
  // Método toggleCard
