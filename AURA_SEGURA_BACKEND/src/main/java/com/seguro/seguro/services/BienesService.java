@@ -7,6 +7,7 @@ import com.seguro.seguro.repository.BienesRepository;
 import com.seguro.seguro.repository.HistorialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -18,7 +19,6 @@ public class BienesService implements BienesServiceImp {
 
     @Autowired
     private HistorialRepository historialRepository;
-
 
     @Override
     public List<BienesEntity> getAllBienesByEmpresaId(Long empresaId) {
@@ -40,13 +40,13 @@ public class BienesService implements BienesServiceImp {
         historial.setIdBien(updatedBien.getIdBien());
         historial.setCodigo(updatedBien.getCodigo());
         historial.setFechaModificacion(new Timestamp(System.currentTimeMillis()));
-        historial.setUsuario("Usuario Ejemplo"); // Aquí puedes usar el usuario real si está disponible
+        historial.setUsuario("Usuario Ejemplo"); // Puedes reemplazar esto con el usuario real si está disponible
 
-        // Crear un JSON que represente los cambios, si es necesario
+        // Crear un JSON que represente los cambios
         String cambiosJson = "{ \"descripcion\": \"Modificación realizada en el bien.\" }";
         historial.setCambios(cambiosJson);
 
-        // Guardar historial
+        // Guardar el historial en la base de datos
         historialRepository.save(historial);
     }
 
@@ -57,12 +57,29 @@ public class BienesService implements BienesServiceImp {
 
     @Override
     public List<BienesEntity> getBienesPorCodigo(String codigo) {
-        return bienesRepository.findByCodigo(codigo); // Este método debe estar correctamente implementado en BienesRepository
+        return bienesRepository.findByCodigo(codigo); // Asegúrate de que este método esté implementado en BienesRepository
     }
 
     @Override
     public BienesEntity saveBien(BienesEntity bien) {
-        return bienesRepository.save(bien);
+        // Guardar el bien en la base de datos
+        BienesEntity savedBien = bienesRepository.save(bien);
+
+        // Registrar el historial al guardar un nuevo bien
+        HistorialEntity historial = new HistorialEntity();
+        historial.setIdBien(savedBien.getIdBien());
+        historial.setCodigo(savedBien.getCodigo());
+        historial.setFechaModificacion(new Timestamp(System.currentTimeMillis()));
+        historial.setUsuario("Usuario Ejemplo"); // Puedes reemplazar con el usuario real
+
+        // Crear un JSON que represente la acción de creación
+        String cambiosJson = "{ \"descripcion\": \"Creación del bien con ID de Empresa: " + savedBien.getIdEmpresa() + ".\" }";
+        historial.setCambios(cambiosJson);
+
+        // Guardar el historial
+        historialRepository.save(historial);
+
+        return savedBien;
     }
 
     @Override
@@ -80,7 +97,7 @@ public class BienesService implements BienesServiceImp {
         return bienesRepository.listadefecha(articulo, idRiesgo);
     }
 
-    // Nuevo método para buscar bienes por nombre de empresa
+    // Nuevo método para buscar bienes por el nombre de la empresa
     @Override
     public List<BienesEntity> buscarBienesPorNombreEmpresa(String nombreEmpresa) {
         return bienesRepository.findByNombreEmpresa(nombreEmpresa);

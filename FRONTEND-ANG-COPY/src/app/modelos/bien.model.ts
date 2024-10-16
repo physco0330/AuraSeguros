@@ -31,4 +31,6 @@ export interface Bien {
   vigenciaEndoso: string;    // Vigencia del endoso del bien
   banco: string;    // Banco asociado al bien
   nitBanco: string;    // NIT del banco asociado al bien
+  idEmpresa: number;                  // Identificador numérico de la empresa a la que pertenece el bien
+
 }

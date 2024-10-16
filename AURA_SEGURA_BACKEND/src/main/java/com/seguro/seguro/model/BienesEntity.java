@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "bienes_entity")
 public class BienesEntity {
 
     @Id
@@ -19,7 +20,7 @@ public class BienesEntity {
     @Column(name = "id_bien")
     private Long idBien;
 
-    @Column(name = "codigo")
+    @Column(name = "codigo", nullable = false)
     private String codigo;
 
     @Column(name = "articulo_bienes")
@@ -97,10 +98,11 @@ public class BienesEntity {
     @Column(name = "nit_banco")
     private String nitBanco;
 
-    // Nuevo campo agregado
+    // Nuevo campo para almacenar el nombre de la empresa
     @Column(name = "nombre_empresa")
     private String nombreEmpresa;
 
-    @Column(name = "id_empresa")
-    private Long idEmpresa; //  campo para idEmpresa
+    // Campo para almacenar el ID de la empresa
+    @Column(name = "id_empresa", nullable = false)
+    private Long idEmpresa;
 }

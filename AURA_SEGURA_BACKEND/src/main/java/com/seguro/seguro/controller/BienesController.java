@@ -52,12 +52,17 @@ public class BienesController {
     }
 
     // Endpoint para guardar un bien
-    @PostMapping("/save")
-    public ResponseEntity<BienesEntity> saveBien(@RequestBody BienesEntity bien) {
-        BienesEntity savedBien = bienesService.saveBien(bien);
-        return new ResponseEntity<>(savedBien, HttpStatus.CREATED);
-    }
+    @PostMapping("/crear")
+    public ResponseEntity<BienesEntity> crearBien(@RequestBody BienesEntity bien) {
+        // Asegúrate de que el idEmpresa esté establecido en el objeto BienesEntity
+        // Esto podría ser útil si el idEmpresa no se establece en el objeto que se envía desde el frontend.
 
+        // Guardar el nuevo bien en la base de datos
+        BienesEntity nuevoBien = bienesService.saveBien(bien); // Asegúrate que el método saveBien en el servicio maneje idEmpresa
+
+        // Devolver la respuesta con el nuevo bien y el estado CREATED (201)
+        return new ResponseEntity<>(nuevoBien, HttpStatus.CREATED);
+    }
 
     // Endpoint para actualizar un bien
     @PutMapping("/update")
@@ -79,13 +84,12 @@ public class BienesController {
     public ResponseEntity<List<HistorialEntity>> getHistorialPorCodigo(@PathVariable String codigo) {
         List<HistorialEntity> historial = historialService.getHistorialPorCodigo(codigo);
         return new ResponseEntity<>(historial, HttpStatus.OK);
-
     }
+
     // Endpoint para buscar bienes por nombre de empresa
     @GetMapping("/buscarPorNombreEmpresa/{nombreEmpresa}")
     public ResponseEntity<List<BienesEntity>> buscarPorNombreEmpresa(@PathVariable String nombreEmpresa) {
         List<BienesEntity> bienes = bienesService.buscarBienesPorNombreEmpresa(nombreEmpresa);
         return new ResponseEntity<>(bienes, HttpStatus.OK);
     }
-
 }

@@ -26,13 +26,13 @@ export class BienesService {
 
   // Método para obtener bienes por empresa
   getBienesByEmpresa(nombre: string): Observable<Bien[]> {
-    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${nombre}`); // Cambié apiUrl a baseUrl
+    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${nombre}`);
   }
 
+  // Método para obtener bienes por empresa ID
   getBienesByEmpresaId(empresaId: number): Observable<Bien[]> {
-    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${empresaId}`); // Cambié apiUrl a baseUrl
+    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${empresaId}`);
   }
-
 
   // Método para obtener bienes por código
   getBienPorCodigo(codigo: string): Observable<Bien[]> {
@@ -64,28 +64,29 @@ export class BienesService {
     );
   }
 
-  // Método para guardar un bien
-  saveBien(bien: Bien): Observable<Bien> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Bien>(`${this.baseUrl}/save`, bien, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error guardando el bien:', error);
-        return throwError(() => new Error('Error guardando el bien'));
-      })
-    );
-  }
+ // Método para guardar un bien, incluyendo el idEmpresa
+saveBien(bien: Bien, idEmpresa: number): Observable<Bien> {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  // Aquí se actualiza la URL para que incluya idEmpresa
+  return this.http.post<Bien>(`${this.baseUrl}/bienes/${idEmpresa}`, bien, { headers }).pipe(
+    catchError((error) => {
+      console.error('Error guardando el bien:', error);
+      return throwError(() => new Error('Error guardando el bien'));
+    })
+  );
+}
+
 
   // Método para actualizar un bien
   updateBien(bienToUpdate: Bien): Observable<string> {
-    console.log('Updating bien:', bienToUpdate); // Añade esta línea para depurar
-    return this.http.put<{ message: string }>(`${this.baseUrl}/update`, bienToUpdate)
-      .pipe(
-        map(response => response.message), // Extrae el mensaje de la respuesta
-        catchError(error => {
-          console.error('Error actualizando bien:', error); // Registra el objeto de error
-          return throwError(error);
-        })
-      );
+    return this.http.put<{ message: string }>(`${this.baseUrl}/update`, bienToUpdate).pipe(
+      map(response => response.message),
+      catchError(error => {
+        console.error('Error actualizando bien:', error);
+        return throwError(error);
+      })
+    );
   }
 
   // Método para eliminar un bien por su código
@@ -98,20 +99,20 @@ export class BienesService {
     );
   }
 
-  // Método para agregar un nuevo bien
-  agregarBien(nuevoBien: Bien): Observable<Bien> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Bien>(`${this.baseUrl}/add`, nuevoBien, { headers }).pipe(
+// Método para agregar un nuevo bien
+agregarBien(nuevoBien: Bien, idEmpresa: number): Observable<Bien> {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  return this.http.post<Bien>(`${this.baseUrl}/crear`, { ...nuevoBien, idEmpresa }, { headers }).pipe(
       catchError((error) => {
-        console.error('Error agregando el bien:', error);
-        return throwError(() => new Error('Error agregando el bien'));
+          console.error('Error agregando el bien:', error);
+          return throwError(() => new Error('Error agregando el bien'));
       })
-    );
-  }
+  );
+}
 
-  // Nuevo método para obtener el historial por código
+  // Método para obtener el historial por código
   getHistorialByCodigo(codigo: string): Observable<Historial[]> {
-    return this.http.get<Historial[]>(`http://localhost:8080/bien/historial/${codigo}`).pipe(
+    return this.http.get<Historial[]>(`${this.baseUrl}/historial/${codigo}`).pipe(
       catchError((error) => {
         console.error('Error obteniendo el historial por código:', error);
         return throwError(() => new Error('Error obteniendo el historial por código'));
