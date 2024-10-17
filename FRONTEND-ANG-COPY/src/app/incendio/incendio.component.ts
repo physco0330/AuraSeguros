@@ -6,7 +6,7 @@ import { HeaderComponent } from '../header/header.component';
 import { Bien } from '../modelos/bien.model';
 import { BienesService } from '../servicios/bienes.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
 import { Empresa } from '../modelos/empresa.model'; // Asegúrate de que esta ruta sea correcta
@@ -20,8 +20,8 @@ import { Empresa } from '../modelos/empresa.model'; // Asegúrate de que esta ru
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    MatIconModule
-  ],
+    MatIconModule,
+    FormsModule ],
   templateUrl: './incendio.component.html',
   styleUrls: ['./incendio.component.scss']
 })
@@ -34,6 +34,12 @@ export class IncendioComponent implements OnInit {
   empresaId: number | null = null;
   empresa: Empresa | null = null;
   nombreEmpresa: string | null = null;
+   nitEmpresa: string = ''; // NIT de la empresa
+   correoEmpresa: string = ''; // Correo empresarial
+   contactoEmpresa: string = ''; // Contacto de la empresa
+   numeroPoliza: string = ''; // Número de póliza
+   showBack: boolean = false;
+   hideBack: boolean = true;
 
   // Definición de los campos del formulario con sus propiedades
   formFields = [
@@ -76,12 +82,16 @@ export class IncendioComponent implements OnInit {
   ngOnInit(): void {
     // Obtener el nombre de la empresa desde los parámetros de la ruta
     const nombreEmpresa = this.route.snapshot.paramMap.get('nombreEmpresa');
+    const idEmpresa = this.route.snapshot.queryParamMap.get('idEmpresa'); // Obtener el idEmpresa desde la URL
+
     if (nombreEmpresa) {
       this.getEmpresa(nombreEmpresa);
 
       // Usar el servicio para buscar bienes por nombre de empresa
       this.bienesService.buscarPorNombreEmpresa(nombreEmpresa).subscribe((data) => {
         this.bienes = data;
+
+
       });
     }
 
@@ -112,7 +122,8 @@ export class IncendioComponent implements OnInit {
       valorEndoso: [{ value: 0, disabled: true }],
       vigenciaEndoso: [{ value: '', disabled: true }],
       banco: [{ value: '', disabled: true }],
-      nitBanco: [{ value: '', disabled: true }]
+      nitBanco: [{ value: '', disabled: true }],
+      idEmpresa: [idEmpresa]
     });
 
     // Cargar todos los bienes inicialmente
@@ -228,19 +239,31 @@ export class IncendioComponent implements OnInit {
     this.mostrarFormulario = !this.mostrarFormulario;
   }
 
- // Método para agregar un bien
- agregarBien(): void {
+// Método para agregar un bien
+agregarBien(): void {
   if (this.formBien.valid) {
-    this.bienesService.saveBien(this.formBien.value).subscribe(() => {
-      alert('Bien agregado correctamente.');
-      this.formBien.reset(); // Restablecer el formulario después de agregar
-      this.mostrarFormulario = false;
-      this.cargarBienes(); // Volver a cargar bienes para actualizar la lista
-    });
+    const bienData = this.formBien.value;
+
+    // Obtener el idEmpresa desde la URL
+    const idEmpresa = this.route.snapshot.queryParamMap.get('idEmpresa');
+
+    // Asegurarte de que el idEmpresa sea un número (si es necesario)
+    if (idEmpresa) {
+      this.bienesService.saveBien(bienData, Number(idEmpresa)).subscribe(() => {
+        alert('Bien agregado correctamente.');
+        this.formBien.reset(); // Restablecer el formulario después de agregar
+        this.mostrarFormulario = false;
+        this.cargarBienes(); // Volver a cargar bienes para actualizar la lista
+      });
+    } else {
+      alert('ID de empresa no encontrado en la URL.');
+    }
   } else {
     alert('Por favor, complete el formulario correctamente.');
-    }
   }
+}
+
+
 
   // Método para navegar a la página de visualización de un bien específico
 // Recibe el código del bien como parámetro y redirige a la ruta '/visualizar-bien' con el código como parámetro de la URL
@@ -304,6 +327,12 @@ export class IncendioComponent implements OnInit {
       bien.vigenciaEndoso.toLowerCase().includes(filtro) || // Filtrar por Vigencia Endoso
       bien.banco.toLowerCase().includes(filtro) || // Filtrar por Banco
       bien.nitBanco.toLowerCase().includes(filtro) // Filtrar por NIT Banco
+
+
+
+
+
+
 
     );
   }

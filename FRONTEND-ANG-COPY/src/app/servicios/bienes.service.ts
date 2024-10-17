@@ -65,15 +65,20 @@ export class BienesService {
   }
 
   // Método para guardar un bien
-  saveBien(bien: Bien): Observable<Bien> {
+  saveBien(bien: Bien, idEmpresa: number): Observable<Bien> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Bien>(`${this.baseUrl}/save`, bien, { headers }).pipe(
+
+    // Agregar el ID de la empresa como parámetro de consulta
+    const url = `${this.baseUrl}/save?idEmpresa=${idEmpresa}`;
+
+    return this.http.post<Bien>(url, bien, { headers }).pipe(
       catchError((error) => {
         console.error('Error guardando el bien:', error);
         return throwError(() => new Error('Error guardando el bien'));
       })
     );
-  }
+}
+
 
   // Método para actualizar un bien
   updateBien(bienToUpdate: Bien): Observable<string> {

@@ -52,15 +52,35 @@ export class EmpresasService {
     );
   }
 
-
-
-  // NUEVO: Método para obtener una empresa por su nombre
+  // Método para obtener una empresa por su nombre
   getEmpresaByNombre(nombre: string): Observable<Empresa> {
     const url = `${this.baseUrl}/nombre/${nombre}`; // Asegúrate de que la URL coincida con tu backend
     return this.http.get<Empresa>(url).pipe(
       catchError((error) => {
         console.error('Error obteniendo la empresa por nombre:', error);
         return throwError(() => new Error('Error obteniendo la empresa por nombre'));
+      })
+    );
+  }
+
+  // NUEVO: Método para obtener empresas por su correo
+  getEmpresaByCorreo(correo: string): Observable<Empresa> {
+    const url = `${this.baseUrl}/correo/${correo}`;
+    return this.http.get<Empresa>(url).pipe(
+      catchError((error) => {
+        console.error('Error obteniendo la empresa por correo:', error);
+        return throwError(() => new Error('Error obteniendo la empresa por correo'));
+      })
+    );
+  }
+
+  // NUEVO: Método para obtener empresas según múltiples criterios
+  getEmpresasByFiltro(filtro: any): Observable<Empresa[]> {
+    const url = `${this.baseUrl}/buscar`; // Ruta para búsquedas avanzadas, ajusta según tu API
+    return this.http.post<Empresa[]>(url, filtro).pipe(
+      catchError((error) => {
+        console.error('Error obteniendo las empresas con filtro:', error);
+        return throwError(() => new Error('Error obteniendo las empresas con filtro'));
       })
     );
   }
