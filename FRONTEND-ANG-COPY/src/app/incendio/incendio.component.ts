@@ -82,18 +82,8 @@ export class IncendioComponent implements OnInit {
       // Usar el servicio para buscar bienes por nombre de empresa
       this.bienesService.buscarPorNombreEmpresa(nombreEmpresa).subscribe((data) => {
         this.bienes = data;
-        this.bienesFiltrados = data;
       });
     }
-
-    // Suscribirse a los parámetros de la URL para obtener el idEmpresa
-    this.route.queryParams.subscribe(params => {
-      const idEmpresa = params['idEmpresa'];
-      if (idEmpresa) {
-        this.empresaId = Number(idEmpresa);
-        this.cargarBienesByEmpresaId(this.empresaId);
-      }
-    });
 
     // Inicialización del formulario con todos los campos deshabilitados
     this.formBien = this.fb.group({
@@ -125,20 +115,28 @@ export class IncendioComponent implements OnInit {
       nitBanco: [{ value: '', disabled: true }]
     });
 
+    // Cargar todos los bienes inicialmente
+    //this.cargarBienes();
+    this.route.queryParams.subscribe(params => {
+      const idEmpresa = params['idEmpresa'];
+      if (idEmpresa) {
+        this.cargarBienesByEmpresaId(idEmpresa);
+      }
+    });
+
     // Suscripción a cambios en el campo 'codigo' para verificar existencia en tiempo real
     this.formBien.get('codigo')?.valueChanges.pipe(
       debounceTime(300)
     ).subscribe(codigo => {
-      this.filtrarBienes(codigo);
+      this.filtrarBienes(codigo); // Llama a la función de filtrado
       if (codigo) {
         this.verificarCodigo(codigo);
       } else {
         this.codigoExistente = false;
-        this.habilitarCampos(false);
+        this.habilitarCampos(false); // Deshabilitar campos si no hay código
       }
     });
   }
-
 
   filtrarBienes(codigo: string): void {
     if (!codigo) {
@@ -230,13 +228,10 @@ export class IncendioComponent implements OnInit {
     this.mostrarFormulario = !this.mostrarFormulario;
   }
 
-// Método para agregar un bien
-agregarBien(): void {
+ // Método para agregar un bien
+ agregarBien(): void {
   if (this.formBien.valid) {
-    const bien = this.formBien.value;
-    const idEmpresa = bien.idEmpresa; // Asegúrate de tener el idEmpresa en el formulario
-
-    this.bienesService.saveBien(bien, idEmpresa).subscribe(() => {
+    this.bienesService.saveBien(this.formBien.value).subscribe(() => {
       alert('Bien agregado correctamente.');
       this.formBien.reset(); // Restablecer el formulario después de agregar
       this.mostrarFormulario = false;
@@ -244,8 +239,8 @@ agregarBien(): void {
     });
   } else {
     alert('Por favor, complete el formulario correctamente.');
+    }
   }
-}
 
   // Método para navegar a la página de visualización de un bien específico
 // Recibe el código del bien como parámetro y redirige a la ruta '/visualizar-bien' con el código como parámetro de la URL
