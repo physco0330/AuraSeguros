@@ -65,6 +65,8 @@ public class Empresa {
         return nombre_empresa;
     }
 
+
+
     public void setNombre_empresa(String nombre_empresa) {
         this.nombre_empresa = nombre_empresa;
     }

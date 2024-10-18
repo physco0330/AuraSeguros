@@ -81,17 +81,22 @@ export class IncendioComponent implements OnInit {
 
   ngOnInit(): void {
     // Obtener el nombre de la empresa desde los parámetros de la ruta
-    const nombreEmpresa = this.route.snapshot.paramMap.get('nombreEmpresa');
-    const idEmpresa = this.route.snapshot.queryParamMap.get('idEmpresa'); // Obtener el idEmpresa desde la URL
+    const nombreEmpresa = this.route.snapshot.paramMap.get('nombreEmpresa'); // Ruta del tipo /empresa/:nombreEmpresa
+    const idEmpresa = this.route.snapshot.queryParamMap.get('idEmpresa'); // Obtener idEmpresa como parámetro de consulta, si es necesario
 
     if (nombreEmpresa) {
+      // Obtener la información de la empresa usando su nombre
       this.getEmpresa(nombreEmpresa);
 
-      // Usar el servicio para buscar bienes por nombre de empresa
+      // Si también necesitas trabajar con idEmpresa, puedes validarlo aquí
+      if (idEmpresa) {
+        console.log('ID de la empresa:', idEmpresa);
+      }
+
+      // Usar el servicio para buscar los bienes por nombre de la empresa
       this.bienesService.buscarPorNombreEmpresa(nombreEmpresa).subscribe((data) => {
         this.bienes = data;
-
-
+        console.log('Bienes obtenidos:', this.bienes); // Para asegurarte que los bienes se están obteniendo
       });
     }
 
@@ -159,12 +164,25 @@ export class IncendioComponent implements OnInit {
     }
   }
 
-  // Método para obtener los datos de la empresa por nombre
-  getEmpresa(nombre: string): void {
-    this.empresasService.getEmpresaByNombre(nombre).subscribe(data => {
-      this.empresa = data;
-    });
-  }
+// Método para obtener los datos de la empresa por nombre
+getEmpresa(nombre: string): void {
+  this.empresasService.getEmpresaByNombre(nombre).subscribe({
+    next: (data) => {
+      if (data) {
+        this.empresa = data;  // Asignar los datos de la empresa recibida
+        console.log('Empresa obtenida:', this.empresa);
+      } else {
+        console.log(`No se encontró ninguna empresa con el nombre: ${nombre}`);
+        this.empresa = null;  // Limpiar el dato de empresa si no se encuentra
+      }
+    },
+    error: (err) => {
+      console.error('Error al obtener la empresa:', err);
+      // Aquí podrías manejar el error mostrando un mensaje al usuario o realizando alguna acción
+      this.empresa = null;
+    }
+  });
+}
 
   // Método para obtener los bienes de la empresa por nombre
   getBienesByEmpresa(nombre: string): void {
@@ -327,12 +345,6 @@ agregarBien(): void {
       bien.vigenciaEndoso.toLowerCase().includes(filtro) || // Filtrar por Vigencia Endoso
       bien.banco.toLowerCase().includes(filtro) || // Filtrar por Banco
       bien.nitBanco.toLowerCase().includes(filtro) // Filtrar por NIT Banco
-
-
-
-
-
-
 
     );
   }

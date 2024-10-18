@@ -36,18 +36,18 @@ public class BienesService implements BienesServiceImp {
         BienesEntity updatedBien = bienesRepository.save(bien);
 
         // Registrar el historial
-        HistorialEntity historial = new HistorialEntity();
-        historial.setIdBien(updatedBien.getIdBien());
-        historial.setCodigo(updatedBien.getCodigo());
-        historial.setFechaModificacion(new Timestamp(System.currentTimeMillis()));
-        historial.setUsuario("Usuario Ejemplo"); // Aquí puedes usar el usuario real si está disponible
+      //  HistorialEntity historial = new HistorialEntity();
+       // historial.setIdBien(updatedBien.getIdBien());
+       // historial.setCodigo(updatedBien.getCodigo());
+       // historial.setFechaModificacion(new Timestamp(System.currentTimeMillis()));
+       // historial.setUsuario("Usuario Ejemplo"); // Aquí puedes usar el usuario real si está disponible
 
         // Crear un JSON que represente los cambios, si es necesario
         String cambiosJson = "{ \"descripcion\": \"Modificación realizada en el bien.\" }";
-        historial.setCambios(cambiosJson);
+       // historial.setCambios(cambiosJson);
 
         // Guardar historial
-        historialRepository.save(historial);
+       // historialRepository.save(historial);
     }
 
     @Override

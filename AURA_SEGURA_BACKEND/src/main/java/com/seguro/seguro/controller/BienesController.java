@@ -63,7 +63,7 @@ public class BienesController {
     @PutMapping("/update")
     public ResponseEntity<GenericResponseDto> updateBien(@RequestBody BienesEntity bien) {
         bienesService.updateBien(bien);
-        GenericResponseDto genericResponseDto = new GenericResponseDto("Update successfully");
+        GenericResponseDto genericResponseDto = new GenericResponseDto("");
         return new ResponseEntity<>(genericResponseDto, HttpStatus.OK);
     }
 

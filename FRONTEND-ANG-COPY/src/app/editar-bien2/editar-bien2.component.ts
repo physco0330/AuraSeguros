@@ -15,10 +15,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class EditarBienComponent implements OnInit {
   bienes: Bien[] = []; // Lista de bienes relacionados con el código
   codigo: string | null = ''; // Código del bien recibido desde la ruta
-
   public bienForm!: FormGroup;
-
-
 
   constructor(
     private route: ActivatedRoute,
@@ -28,16 +25,14 @@ export class EditarBienComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-      this.createForm();
-      this.loadBienData();
+    this.createForm();
+    this.loadBienData();
   }
 
-   // Método para navegar a la ruta 'incendio'
-   goToIncendio(): void {
+  // Método para navegar a la ruta 'incendio'
+  goToIncendio(): void {
     this.router.navigate(['/incendio']);
   }
-
-
 
   onSubmit() {
     if (this.bienForm.valid) {
@@ -83,7 +78,6 @@ export class EditarBienComponent implements OnInit {
     }
   }
 
-
   loadFormFromBien(bien: Bien) {
     this.bienForm.patchValue(bien);
   }
@@ -93,6 +87,7 @@ export class EditarBienComponent implements OnInit {
     this.bienForm = this.fb.group({
       idBien: [''], // Campo para el identificador del bien, desactivado desde el inicio (no editable en el formulario)
       codigo: [''], // Campo para el código del bien, desactivado desde el inicio (no editable en el formulario)
+      idEmpresa: [''], // Campo para el ID de la empresa, desactivado y añadido aquí
       articuloBienes: [''], // Campo para el nombre o descripción del artículo del bien
       procesoEstaciones: [''], // Campo para el proceso o estaciones relacionadas con el bien
       cantidad: [''], // Campo para la cantidad del bien
@@ -119,7 +114,5 @@ export class EditarBienComponent implements OnInit {
       banco: [''], // Campo para el banco asociado al bien
       nitBanco: [''] // Campo para el NIT del banco asociado al bien
     });
-
   }
-
 }

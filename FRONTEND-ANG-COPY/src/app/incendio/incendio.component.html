@@ -46,14 +46,11 @@
   <!-- Campo de filtro para buscar en múltiples campos -->
   <input type="text" class="search-container" placeholder="Buscar..." (input)="filtrarArticulos($event)" />
 
-  <!-- Mostrar datos de la empresa -->
-  <div *ngIf="empresa" class="info-card-back">
-    <h1>{{ empresa.nombre_empresa }}</h1>
-    <p>NIT: {{ empresa.nit_empresa }}</p>
-    <p>Correo: {{ empresa.correo_empresa }}</p>
-    <p>Contacto: {{ empresa.contacto_empresa }}</p>
-    <p>Número de Póliza: {{ empresa.numero_poliza }}</p>
-  </div>
+<!-- Mostrar datos de la empresa -->
+<div *ngIf="empresa" class="info-card-back">
+  <h1>{{ empresa.nombre_empresa }}</h1>
+</div>
+
 
 
 <!-- Si no hay datos de la empresa -->
