@@ -4,6 +4,7 @@ import { Bien } from '../modelos/bien.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BienesService } from '../servicios/bienes.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-editar-bien',
@@ -21,7 +22,8 @@ export class EditarBienComponent implements OnInit {
     private route: ActivatedRoute,
     private bienesService: BienesService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -29,9 +31,14 @@ export class EditarBienComponent implements OnInit {
     this.loadBienData();
   }
 
+<<<<<<< Updated upstream
   // Método para navegar a la ruta 'incendio'
   goToIncendio(): void {
     this.router.navigate(['/incendio']);
+=======
+  regresar(): void {
+    this.location.back();
+>>>>>>> Stashed changes
   }
 
   onSubmit() {
@@ -41,9 +48,13 @@ export class EditarBienComponent implements OnInit {
       if (confirmation) {
         const bien: Bien = this.bienForm.value;
         this.bienesService.updateBien(bien).subscribe(
-          () => { // Cambia el parámetro de (message: string) a () porque no estás usando el mensaje
-            alert('Se actualizó con éxito'); // Mensaje modificado
-            this.router.navigate(['/incendio']);
+          () => {
+            alert('Se actualizó con éxito');
+            // Eliminamos la redirección
+            // this.router.navigate(['/incendio']);
+            
+            // En su lugar, recargamos los datos del bien
+            this.loadBienData();
           },
           error => {
             alert('Error: No se pudo actualizar el bien. Por favor, intente nuevamente.');

@@ -61,7 +61,9 @@ export class EmpresasComponent implements OnInit {
 
 
 navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
-  this.router.navigate(['/incendio', nombreEmpresa], { queryParams: { idEmpresa } });
+  this.router.navigate(['/incendio', nombreEmpresa], { 
+    queryParams: { idEmpresa: idEmpresa } 
+  });
 }
 
 

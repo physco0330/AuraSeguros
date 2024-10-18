@@ -1,79 +1,134 @@
 {
+<<<<<<< Updated upstream
   "hash": "5f07d3cb",
   "configHash": "c7c4eba8",
   "lockfileHash": "2efd63ce",
   "browserHash": "f574d694",
+=======
+  "hash": "3e04ed35",
+  "configHash": "b2dd0296",
+  "lockfileHash": "f3bfc797",
+  "browserHash": "e7a1ea90",
+>>>>>>> Stashed changes
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
+<<<<<<< Updated upstream
       "fileHash": "390e84df",
+=======
+      "fileHash": "f7e7688b",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
+<<<<<<< Updated upstream
       "fileHash": "e1b9fffc",
+=======
+      "fileHash": "ef5e9c48",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
+<<<<<<< Updated upstream
       "fileHash": "6613253d",
+=======
+      "fileHash": "fe04d54b",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
+<<<<<<< Updated upstream
       "fileHash": "aa005835",
+=======
+      "fileHash": "5619fc89",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/material/icon": {
       "src": "../../../../../node_modules/@angular/material/fesm2022/icon.mjs",
       "file": "@angular_material_icon.js",
+<<<<<<< Updated upstream
       "fileHash": "272f6e55",
+=======
+      "fileHash": "78dd5d9b",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/material/snack-bar": {
       "src": "../../../../../node_modules/@angular/material/fesm2022/snack-bar.mjs",
       "file": "@angular_material_snack-bar.js",
+<<<<<<< Updated upstream
       "fileHash": "c3556931",
+=======
+      "fileHash": "65852376",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
+<<<<<<< Updated upstream
       "fileHash": "9570d6ce",
+=======
+      "fileHash": "73c9b5f4",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/platform-browser/animations/async": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/animations/async.mjs",
       "file": "@angular_platform-browser_animations_async.js",
+<<<<<<< Updated upstream
       "fileHash": "1b4a06bd",
+=======
+      "fileHash": "1f6792cb",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/platform-server": {
       "src": "../../../../../node_modules/@angular/platform-server/fesm2022/platform-server.mjs",
       "file": "@angular_platform-server.js",
+<<<<<<< Updated upstream
       "fileHash": "f5798843",
+=======
+      "fileHash": "ee7a4f2c",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
+<<<<<<< Updated upstream
       "fileHash": "400e6750",
+=======
+      "fileHash": "5d586a07",
+>>>>>>> Stashed changes
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../node_modules/rxjs/dist/cjs/index.js",
       "file": "rxjs.js",
+<<<<<<< Updated upstream
       "fileHash": "cde14894",
+=======
+      "fileHash": "198afdff",
+>>>>>>> Stashed changes
       "needsInterop": true
     },
     "rxjs/operators": {
       "src": "../../../../../node_modules/rxjs/dist/cjs/operators/index.js",
       "file": "rxjs_operators.js",
+<<<<<<< Updated upstream
       "fileHash": "507efd22",
+=======
+      "fileHash": "49247581",
+>>>>>>> Stashed changes
       "needsInterop": true
     }
   },

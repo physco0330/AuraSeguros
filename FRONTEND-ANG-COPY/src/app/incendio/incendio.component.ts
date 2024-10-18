@@ -292,7 +292,12 @@ agregarBien(): void {
 // Método para navegar a la página de edición de un bien específico
 // Recibe el código del bien como parámetro y redirige a la ruta '/editar-bien' con el código como parámetro de la URL
   editarBien(codigo: string): void {
-    this.router.navigate(['/editar-bien', codigo]);
+    this.router.navigate(['/editar-bien', codigo], {
+      queryParams: { 
+        nombreEmpresa: this.nombreEmpresa, 
+        idEmpresa: this.empresaId 
+      }
+    });
   }
 
 // Método para eliminar un bien específico
@@ -349,4 +354,5 @@ agregarBien(): void {
     );
   }
 }
+
 

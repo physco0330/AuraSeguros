@@ -6,6 +6,7 @@ import { BienesService } from '../servicios/bienes.service';
 import { Bien } from '../modelos/bien.model';
 import { Historial } from '../modelos/historial.model'; // Importa el modelo de Historial
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-visualizar-bien',
@@ -22,7 +23,8 @@ export class VisualizarBienComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, // Servicio para acceder a parámetros de ruta
     private bienesService: BienesService, // Servicio para obtener datos de bienes
-    private router: Router // Servicio para navegar entre rutas
+    private router: Router, // Servicio para navegar entre rutas
+    private location: Location // Añadir el servicio Location
   ) {}
 
   ngOnInit(): void {
@@ -59,8 +61,8 @@ export class VisualizarBienComponent implements OnInit {
     }
   }
 
-  // Función para navegar de regreso al componente Incendio
+  // Modificar el método regresar
   regresar(): void {
-    this.router.navigate(['/incendio']);
+    this.location.back(); // Usa el método back() de Location para regresar a la página anterior
   }
 }
