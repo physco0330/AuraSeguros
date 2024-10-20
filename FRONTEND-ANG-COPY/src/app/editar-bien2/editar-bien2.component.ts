@@ -31,14 +31,13 @@ export class EditarBienComponent implements OnInit {
     this.loadBienData();
   }
 
-<<<<<<< Updated upstream
   // Método para navegar a la ruta 'incendio'
   goToIncendio(): void {
     this.router.navigate(['/incendio']);
-=======
+ }
   regresar(): void {
     this.location.back();
->>>>>>> Stashed changes
+
   }
 
   onSubmit() {
@@ -52,7 +51,7 @@ export class EditarBienComponent implements OnInit {
             alert('Se actualizó con éxito');
             // Eliminamos la redirección
             // this.router.navigate(['/incendio']);
-            
+
             // En su lugar, recargamos los datos del bien
             this.loadBienData();
           },
