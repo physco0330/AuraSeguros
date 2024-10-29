@@ -40,6 +40,7 @@ export class IncendioComponent implements OnInit {
    numeroPoliza: string = ''; // Número de póliza
    showBack: boolean = false;
    hideBack: boolean = true;
+   isLoading = false; // Agrega esta propiedad para manejar el estado de carga
 
   // Definición de los campos del formulario con sus propiedades
   formFields = [
@@ -195,10 +196,22 @@ getEmpresa(nombre: string): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      // Aquí puedes agregar la lógica para procesar el archivo CSV
-      console.log(file);
+      const formData = new FormData();
+      formData.append('file', file);
+
+      // Aquí llamamos al servicio para subir el archivo
+      this.bienesService.subirArchivoCSV(formData).subscribe(
+        (response) => {
+          // Lógica después de la subida exitosa
+          alert('Datos subidos con éxito');
+        },
+        (error) => {
+          console.error('Error al subir archivo:', error);
+        }
+      );
     }
   }
+
 
   // Método para cargar todos los bienes desde el servicio
 // Llama al método 'getBienes' del servicio 'bienesService' para obtener todos los bienes
@@ -293,9 +306,9 @@ agregarBien(): void {
 // Recibe el código del bien como parámetro y redirige a la ruta '/editar-bien' con el código como parámetro de la URL
   editarBien(codigo: string): void {
     this.router.navigate(['/editar-bien', codigo], {
-      queryParams: { 
-        nombreEmpresa: this.nombreEmpresa, 
-        idEmpresa: this.empresaId 
+      queryParams: {
+        nombreEmpresa: this.nombreEmpresa,
+        idEmpresa: this.empresaId
       }
     });
   }

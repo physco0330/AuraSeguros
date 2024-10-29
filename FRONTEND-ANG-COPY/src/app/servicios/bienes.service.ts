@@ -34,6 +34,7 @@ export class BienesService {
   }
 
 
+
   // Método para obtener bienes por código
   getBienPorCodigo(codigo: string): Observable<Bien[]> {
     return this.http.get<Bien[]>(`${this.baseUrl}/codigo/${codigo}`).pipe(
@@ -114,6 +115,18 @@ export class BienesService {
     );
   }
 
+  // Método para subir un archivo CSV
+subirArchivoCSV(archivo: FormData): Observable<any> {
+  const url = `${this.baseUrl}/upload-csv`; // Ajusta esta URL según el endpoint del backend
+  return this.http.post(url, archivo).pipe(
+    catchError((error) => {
+      console.error('Error al subir el archivo CSV:', error);
+      return throwError(() => new Error('Error al subir el archivo CSV'));
+    })
+  );
+}
+
+
   // Nuevo método para obtener el historial por código
   getHistorialByCodigo(codigo: string): Observable<Historial[]> {
     return this.http.get<Historial[]>(`http://localhost:8080/bien/historial/${codigo}`).pipe(
@@ -124,3 +137,5 @@ export class BienesService {
     );
   }
 }
+
+

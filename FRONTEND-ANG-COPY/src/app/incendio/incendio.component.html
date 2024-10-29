@@ -8,9 +8,15 @@
       <button class="btn btn-primary volver-btn" (click)="volverAModulo()">Volver a empresas</button>
 
       <div style="position: relative;">
-        <!-- Botón para subir archivo CSV -->
-        <input type="file" accept=".csv" (change)="subirArchivo($event)" style="display: none;" #fileInput>
-        <button class=" csv-btn" (click)="fileInput.click()">Subir CSV</button>
+<!-- Botón para subir archivo CSV -->
+<input type="file" accept=".csv" (change)="subirArchivo($event)" style="display: none;" #fileInput>
+<button class="csv-btn" (click)="fileInput.click()">Subir CSV</button>
+
+<!-- Pantalla de carga -->
+<div *ngIf="isLoading" class="loading-overlay">
+  <p>Cargando datos, por favor espera...</p>
+</div>
+
 
         <!-- Botón para mostrar el formulario de agregar un bien -->
         <button class="btn btn-primary btn-add" (click)="mostrarFormularioAgregar()">

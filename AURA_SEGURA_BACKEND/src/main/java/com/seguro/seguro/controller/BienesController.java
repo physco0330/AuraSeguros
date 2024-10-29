@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -58,7 +59,6 @@ public class BienesController {
         return new ResponseEntity<>(savedBien, HttpStatus.CREATED);
     }
 
-
     // Endpoint para actualizar un bien
     @PutMapping("/update")
     public ResponseEntity<GenericResponseDto> updateBien(@RequestBody BienesEntity bien) {
@@ -79,8 +79,8 @@ public class BienesController {
     public ResponseEntity<List<HistorialEntity>> getHistorialPorCodigo(@PathVariable String codigo) {
         List<HistorialEntity> historial = historialService.getHistorialPorCodigo(codigo);
         return new ResponseEntity<>(historial, HttpStatus.OK);
-
     }
+
     // Endpoint para buscar bienes por nombre de empresa
     @GetMapping("/buscarPorNombreEmpresa/{nombreEmpresa}")
     public ResponseEntity<List<BienesEntity>> buscarPorNombreEmpresa(@PathVariable String nombreEmpresa) {
@@ -88,4 +88,14 @@ public class BienesController {
         return new ResponseEntity<>(bienes, HttpStatus.OK);
     }
 
+    // Nuevo endpoint para cargar archivo CSV
+    @PostMapping("/upload-csv")
+    public ResponseEntity<String> uploadCSV(@RequestParam("file") MultipartFile file) {
+        try {
+            bienesService.processCSV(file); // Llama al método de servicio para procesar el archivo
+            return new ResponseEntity<>("Archivo CSV subido y procesado con éxito", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al procesar el archivo CSV: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
