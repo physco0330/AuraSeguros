@@ -1,12 +1,6 @@
 package com.seguro.seguro.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -42,6 +36,11 @@ public class Empresa {
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
 
+    // Relación con la entidad Modulo
+    @ManyToOne
+    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
+    private Modulo modulo;
+
     @PrePersist
     protected void onCreate() {
         fechaCreacion = LocalDateTime.now();
@@ -64,8 +63,6 @@ public class Empresa {
     public String getNombre_empresa() {
         return nombre_empresa;
     }
-
-
 
     public void setNombre_empresa(String nombre_empresa) {
         this.nombre_empresa = nombre_empresa;
@@ -133,5 +130,13 @@ public class Empresa {
 
     public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
+    }
+
+    public Modulo getModulo() {
+        return modulo;
+    }
+
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
     }
 }

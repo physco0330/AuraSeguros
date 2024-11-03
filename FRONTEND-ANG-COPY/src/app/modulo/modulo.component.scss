@@ -3,6 +3,7 @@ $secondary-color: #216280;
 $background-color: #fff;
 $text-color: #000000;
 $border-color: lighten($primary-color, 20%);
+
 /* Estilos existentes */
 $transition-duration: 0.8s;
 $transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
@@ -35,8 +36,25 @@ $transition-properties: width $transition-duration $transition-timing,
     text-align: center;
     @include responsive-font(2.5rem, 5vw, 4rem);
     @include transition;
-    // Eliminar media queries redundantes
+  }
 
+  /* Estilo para el botón pequeño */
+  .btn-add-small {
+    position: absolute; /* Para colocarlo en la parte superior derecha */
+    top: 150px; /* Espacio desde la parte superior */
+    right: 15px; /* Espacio desde el lado derecho */
+    padding:  10px 10px; /* Tamaño más pequeño */
+    background-color: $secondary-color; /* Color de fondo azul */
+    color: white; /* Color del texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor a pointer */
+    font-size: 14px; /* Tamaño de fuente reducido */
+    @include transition; /* Incluir transiciones */
+
+    &:hover {
+      background-color: darken($secondary-color, 10%); /* Color más oscuro al pasar el ratón */
+    }
   }
 }
 
@@ -45,15 +63,14 @@ h2 {
   color: #337fa4ee;
   font-weight: 600;
   text-shadow: 2px 2px 3px #000000db;
-
   @include responsive-font(2.1rem, 3vw, 2.5rem);
 }
+
 /* Estilos para el contenedor de búsqueda */
 .search-container {
   display: flex; /* Flexbox para alinear elementos */
   justify-content: flex-start; /* Centra el contenido horizontalmente */
   margin: 5px 100px; /* Espacio superior e inferior */
-
   @include transition;
 }
 
@@ -66,12 +83,12 @@ input[type="text"] {
   font-size: 16px; /* Tamaño de fuente */
   transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
   outline: none; /* Quitar el contorno por defecto */
-  
+
   &:focus {
     border-color: #2d5278; /* Cambiar el color del borde al enfocar */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra suave alrededor */
   }
-  
+
   &::placeholder {
     color: #999; /* Color del texto del placeholder */
     font-style: italic; /* Estilo itálico para el placeholder */
@@ -98,7 +115,7 @@ input[type="text"] {
   transition: transform 0.3s, background-color 0.3s;
   cursor: pointer;
   will-change: transform, background-color;
-  
+
   &::after {
     content: '\1F525';
     position: absolute;
@@ -107,30 +124,120 @@ input[type="text"] {
     font-size: 80px; // Tamaño reducido para mejor adaptabilidad
     filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5)); // Sombra en la parte inferior del fuego
   }
-  
+
   &:hover {
     background-color: #ffffff;
     transform: scale(1.03); // Reducido para evitar desbordamiento en pantallas pequeñas
   }
-  
+
   h4 {
     color: #1a1d1dee;
     font-weight: 600;
     @include responsive-font(2.1rem, 3vw, 2.5rem);
   }
-  
+
   hr {
     border: 2px solid #1a1d1dee;
     width: 100%;
   }
-  
+
   p {
     @include responsive-font(0.8rem, 2vw, 1rem);
-    // Eliminar la declaración redundante de font-size
     margin-top: 10px;
     line-height: 1.6;
     color: #000000;
   }
+}
 
-  // El comentario sobre la eliminación de media queries ya no es necesario
+/* Estilos para el modal */
+.modal {
+  position: fixed; /* Posición fija para que cubra toda la pantalla */
+  top: 0; /* Comienza en la parte superior */
+  left: 0; /* Comienza desde el lado izquierdo */
+  width: 100%; /* Ancho completo */
+  height: 100%; /* Altura completa */
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  display: flex; /* Usar flexbox para centrar el contenido */
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  animation: slideDown 0.5s ease forwards; /* Animación de deslizamiento hacia abajo */
+
+  .modal-content {
+    background-color: #fff; /* Fondo blanco para el contenido del modal */
+    padding: 20px; /* Espacio interno */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    width: 400px; /* Ancho fijo del modal */
+    max-width: 90%; /* Ancho máximo del modal */
+    transform: translateY(-30px); /* Mueve el modal hacia arriba al iniciar */
+    opacity: 0; /* Comienza invisible */
+    animation: fadeIn 0.5s forwards; /* Animación de aparición */
+
+    @keyframes slideDown {
+      0% {
+        transform: translateY(-30px); /* Comienza un poco más arriba */
+        opacity: 0; /* Comienza invisible */
+      }
+      100% {
+        transform: translateY(0); /* Termina en su posición original */
+        opacity: 1; /* Se hace completamente visible */
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0; /* Comienza invisible */
+      }
+      to {
+        opacity: 1; /* Termina visible */
+      }
+    }
+
+    h3 {
+      margin-bottom: 20px; /* Espacio inferior para el título */
+    }
+
+    label {
+      display: block; /* Hacer que las etiquetas ocupen toda la línea */
+      margin-bottom: 5px; /* Espacio inferior para las etiquetas */
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%; /* Ancho completo */
+      padding: 10px; /* Espaciado interno */
+      margin-bottom: 15px; /* Espacio entre campos */
+      border: 1px solid #ccc; /* Borde del campo */
+      border-radius: 4px; /* Bordes redondeados */
+    }
+
+    textarea {
+      resize: vertical; /* Permitir redimensionar verticalmente */
+      height: 80px; /* Altura inicial del textarea */
+    }
+
+    .button-container {
+      display: flex; /* Usar flexbox para alinear botones */
+      justify-content: space-between; /* Espacio entre botones */
+      margin-top: 20px; /* Espacio superior para los botones */
+    }
+
+    button {
+      padding: 10px 15px; /* Espaciado interno */
+      border: none; /* Sin borde */
+      border-radius: 4px; /* Bordes redondeados */
+      cursor: pointer; /* Cambiar cursor a pointer */
+      font-size: 16px; /* Tamaño de fuente */
+    }
+
+    .btn-guardar {
+      background-color: blue; /* Color azul para el botón Guardar */
+      color: white; /* Texto blanco */
+    }
+
+    .btn-cancelar {
+      background-color: red; /* Color rojo para el botón Cancelar */
+      color: white; /* Texto blanco */
+    }
+  }
 }
