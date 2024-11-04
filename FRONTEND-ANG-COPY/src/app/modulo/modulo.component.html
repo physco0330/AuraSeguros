@@ -9,17 +9,25 @@
 
   <button class="btn-add-small" (click)="openModal()">Agregar Módulo</button>
 
+  <!-- Tarjeta mejorada para "Incendio" -->
+  <div class="info-card info-card-incendio" [routerLink]="['/empresas']" routerLinkActive="active">
+    <h4>Incendio</h4>
+    <hr>
+    <p>Este módulo brinda información relacionada con incidentes sobre incendios.
+      Aquí podrás moverte libremente entre las empresas y realizar los cambios necesarios dentro de las tablas selectas.</p>
+  </div>
+
   <div class="modal" *ngIf="isModalOpen">
     <div class="modal-content">
       <h3>Agregar Módulo</h3>
       <form (ngSubmit)="onSubmit()">
         <div>
           <label for="nombreModulo">Nombre del Módulo:</label>
-          <input type="text" id="nombreModulo" [(ngModel)]="nuevoModulo.nombre" name="nombreModulo" required />
+          <input type="text" id="nombreModulo" [(ngModel)]="nuevoModulo.nombreModulo" name="nombreModulo" required />
         </div>
         <div>
           <label for="descripcionModulo">Descripción:</label>
-          <textarea id="descripcionModulo" [(ngModel)]="nuevoModulo.descripcion" name="descripcionModulo" required></textarea>
+          <textarea id="descripcionModulo" [(ngModel)]="nuevoModulo.descripcionModulo" name="descripcionModulo" required></textarea>
         </div>
         <div class="button-container">
           <button type="button" class="btn-cancelar" (click)="closeModal()">Cancelar</button>
@@ -29,17 +37,9 @@
     </div>
   </div>
 
-  <!-- Tarjeta mejorada para "Incendio" -->
-  <div class="info-card info-card-incendio" [routerLink]="['/empresas']" routerLinkActive="active">
-    <h4>Incendio</h4>
-    <hr>
-    <p>Este módulo brinda información relacionada con incidentes sobre incendios.
-      Aquí podrás moverte libremente entre las empresas y realizar los cambios necesarios dentro de las tablas selectas.</p>
-  </div>
-
   <div class="info-card" *ngFor="let modulo of filteredModulos()">
-    <h4 class="nombre-modulo">{{ modulo.nombre }}</h4>
+    <h4 class="nombre-modulo">{{ modulo.nombreModulo }}</h4>
     <hr>
-    <p>{{ modulo.descripcion }}</p>
+    <p>{{ modulo.descripcionModulo }}</p>
   </div>
 </div>

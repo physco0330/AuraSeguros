@@ -11,11 +11,11 @@ public class Modulo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_modulo;
 
-    @Column(nullable = false)
-    private String nombre_modulo;
+    @Column(name = "nombre_modulo", nullable = false)  // Cambiado para coincidir con la tabla
+    private String nombreModulo;
 
-    @Column(length = 1000)
-    private String descripcion_modulo;
+    @Column(name = "descripcion_modulo", length = 1000)  // Cambiado para coincidir con la tabla
+    private String descripcionModulo;
 
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
@@ -42,20 +42,20 @@ public class Modulo {
         this.id_modulo = id_modulo;
     }
 
-    public String getNombre_modulo() {
-        return nombre_modulo;
+    public String getNombreModulo() {
+        return nombreModulo;
     }
 
-    public void setNombre_modulo(String nombre_modulo) {
-        this.nombre_modulo = nombre_modulo;
+    public void setNombreModulo(String nombreModulo) {
+        this.nombreModulo = nombreModulo;
     }
 
-    public String getDescripcion_modulo() {
-        return descripcion_modulo;
+    public String getDescripcionModulo() {
+        return descripcionModulo;
     }
 
-    public void setDescripcion_modulo(String descripcion_modulo) {
-        this.descripcion_modulo = descripcion_modulo;
+    public void setDescripcionModulo(String descripcionModulo) {
+        this.descripcionModulo = descripcionModulo;
     }
 
     public LocalDateTime getFechaCreacion() {

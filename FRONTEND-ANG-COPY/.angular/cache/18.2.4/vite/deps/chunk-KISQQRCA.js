@@ -1,15 +1,12 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  require_operators
-} from "./chunk-IJKRIHJI.js";
-import {
-  require_cjs
-} from "./chunk-IXWXOSOL.js";
-import {
+  BehaviorSubject,
+  Subject,
+  Subscription,
   __spreadProps,
   __spreadValues,
-  __toESM
-} from "./chunk-NQ4HTGF6.js";
+  first,
+  map
+} from "./chunk-MXZPVDG5.js";
 
 // node_modules/@angular/core/fesm2022/primitives/signals.mjs
 function defaultEquals(a, b) {
@@ -375,10 +372,6 @@ var WATCH_NODE = (() => {
     cleanupFn: NOOP_CLEANUP_FN
   });
 })();
-
-// node_modules/@angular/core/fesm2022/core.mjs
-var import_rxjs = __toESM(require_cjs(), 1);
-var import_operators = __toESM(require_operators(), 1);
 
 // node_modules/@angular/core/fesm2022/primitives/event-dispatch.mjs
 var Attribute = {
@@ -5456,7 +5449,7 @@ var _PendingTasks = class _PendingTasks {
   constructor() {
     this.taskId = 0;
     this.pendingTasks = /* @__PURE__ */ new Set();
-    this.hasPendingTasks = new import_rxjs.BehaviorSubject(false);
+    this.hasPendingTasks = new BehaviorSubject(false);
   }
   get _hasPendingTasks() {
     return this.hasPendingTasks.value;
@@ -5507,7 +5500,7 @@ _ExperimentalPendingTasks.ɵprov = ɵɵdefineInjectable({
   factory: () => new _ExperimentalPendingTasks()
 });
 var ExperimentalPendingTasks = _ExperimentalPendingTasks;
-var EventEmitter_ = class extends import_rxjs.Subject {
+var EventEmitter_ = class extends Subject {
   constructor(isAsync = false) {
     super();
     this.destroyRef = void 0;
@@ -5554,7 +5547,7 @@ var EventEmitter_ = class extends import_rxjs.Subject {
       error: errorFn,
       complete: completeFn
     });
-    if (observerOrNext instanceof import_rxjs.Subscription) {
+    if (observerOrNext instanceof Subscription) {
       observerOrNext.add(sink);
     }
     return sink;
@@ -20184,11 +20177,11 @@ var _ApplicationRef = class _ApplicationRef {
     this.dirtyFlags = 0;
     this.deferredDirtyFlags = 0;
     this.externalTestViews = /* @__PURE__ */ new Set();
-    this.beforeRender = new import_rxjs.Subject();
-    this.afterTick = new import_rxjs.Subject();
+    this.beforeRender = new Subject();
+    this.afterTick = new Subject();
     this.componentTypes = [];
     this.components = [];
-    this.isStable = inject(PendingTasks).hasPendingTasks.pipe((0, import_operators.map)((pending) => !pending));
+    this.isStable = inject(PendingTasks).hasPendingTasks.pipe(map((pending) => !pending));
     this._injector = inject(EnvironmentInjector);
   }
   /** @internal */
@@ -20525,7 +20518,7 @@ function whenStable(applicationRef) {
   if (cachedWhenStable) {
     return cachedWhenStable;
   }
-  const whenStablePromise = applicationRef.isStable.pipe((0, import_operators.first)((isStable) => isStable)).toPromise().then(() => void 0);
+  const whenStablePromise = applicationRef.isStable.pipe(first((isStable) => isStable)).toPromise().then(() => void 0);
   whenStableStore.set(applicationRef, whenStablePromise);
   applicationRef.onDestroy(() => whenStableStore?.delete(applicationRef));
   return whenStablePromise;
@@ -20781,7 +20774,7 @@ function getNgZoneOptions(options) {
 }
 var _ZoneStablePendingTask = class _ZoneStablePendingTask {
   constructor() {
-    this.subscription = new import_rxjs.Subscription();
+    this.subscription = new Subscription();
     this.initialized = false;
     this.zone = inject(NgZone);
     this.pendingTasks = inject(PendingTasks);
@@ -20862,7 +20855,7 @@ var _ChangeDetectionSchedulerImpl = class _ChangeDetectionSchedulerImpl {
         "__scheduler_tick__": true
       }
     }];
-    this.subscriptions = new import_rxjs.Subscription();
+    this.subscriptions = new Subscription();
     this.angularZoneId = this.zoneIsDefined ? this.ngZone._inner?.get(angularZoneInstanceIdProperty) : null;
     this.scheduleInRootZone = !this.zonelessEnabled && this.zoneIsDefined && (inject(SCHEDULE_IN_ROOT_ZONE, {
       optional: true
@@ -24546,4 +24539,4 @@ export {
    * found in the LICENSE file at https://angular.io/license
    *)
 */
-//# sourceMappingURL=chunk-MFKODPNL.js.map
+//# sourceMappingURL=chunk-KISQQRCA.js.map

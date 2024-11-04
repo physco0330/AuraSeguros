@@ -1,7 +1,7 @@
 package com.seguro.seguro.controller;
 
 import com.seguro.seguro.model.Modulo;
-import com.seguro.seguro.services.ModuloService; // Asegúrate de que tienes este servicio implementado
+import com.seguro.seguro.services.ModuloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,19 @@ public class ModuloController {
 
     // Método para crear un nuevo módulo
     @PostMapping
-    public Modulo crearModulo(@RequestBody Modulo modulo) {
-        return moduloService.saveModulo(modulo); // Llama al servicio para guardar el módulo
+    public ResponseEntity<Modulo> crearModulo(@RequestBody Modulo modulo) {
+        // Validación de entrada
+        if (modulo.getNombreModulo() == null || modulo.getNombreModulo().isEmpty()) {
+            return ResponseEntity.badRequest().body(null); // Retorna un error 400 si el nombre es inválido
+        }
+
+        if (modulo.getDescripcionModulo() == null || modulo.getDescripcionModulo().isEmpty()) {
+            return ResponseEntity.badRequest().body(null); // Retorna un error 400 si la descripción es inválida
+        }
+
+        // Si las validaciones pasan, guarda el módulo
+        Modulo nuevoModulo = moduloService.saveModulo(modulo);
+        return ResponseEntity.status(201).body(nuevoModulo); // Retorna el módulo creado con un estado 201 Created
     }
 
     // Método para obtener todos los módulos
