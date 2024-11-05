@@ -38,22 +38,21 @@ $transition-properties: width $transition-duration $transition-timing,
     @include transition;
   }
 
-  /* Estilo para el botón pequeño */
   .btn-add-small {
-    position: absolute; /* Para colocarlo en la parte superior derecha */
-    top: 150px; /* Espacio desde la parte superior */
-    right: 15px; /* Espacio desde el lado derecho */
-    padding:  10px 10px; /* Tamaño más pequeño */
-    background-color: $secondary-color; /* Color de fondo azul */
-    color: white; /* Color del texto blanco */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambiar cursor a pointer */
-    font-size: 14px; /* Tamaño de fuente reducido */
-    @include transition; /* Incluir transiciones */
+    position: absolute;
+    top: 150px;
+    right: 15px;
+    padding: 10px;
+    background-color: $secondary-color;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    @include transition;
 
     &:hover {
-      background-color: darken($secondary-color, 10%); /* Color más oscuro al pasar el ratón */
+      background-color: darken($secondary-color, 10%);
     }
   }
 }
@@ -66,49 +65,43 @@ h2 {
   @include responsive-font(2.1rem, 3vw, 2.5rem);
 }
 
-/* Estilos para el contenedor de búsqueda */
 .search-container {
-  display: flex; /* Flexbox para alinear elementos */
-  justify-content: flex-start; /* Centra el contenido horizontalmente */
-  margin: 5px 100px; /* Espacio superior e inferior */
+  display: flex;
+  justify-content: flex-start;
+  margin: 5px 100px;
   @include transition;
 }
 
-/* Estilos para el input de búsqueda */
 input[type="text"] {
-  width: 250px; /* Ancho del input */
-  padding: 12px 15px; /* Espaciado interno */
-  border: 2px solid $secondary-color; /* Borde azul */
-  border-radius: 5px; /* Bordes redondeados */
-  font-size: 16px; /* Tamaño de fuente */
-  transition: border-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
-  outline: none; /* Quitar el contorno por defecto */
+  width: 250px;
+  padding: 12px 15px;
+  border: 2px solid $secondary-color;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
 
   &:focus {
-    border-color: #2d5278; /* Cambiar el color del borde al enfocar */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra suave alrededor */
+    border-color: #2d5278;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
 
   &::placeholder {
-    color: #999; /* Color del texto del placeholder */
-    font-style: italic; /* Estilo itálico para el placeholder */
+    color: #999;
+    font-style: italic;
   }
 }
 
-/* Estilos de la tarjeta "Incendio" */
 .info-card-incendio {
   position: relative;
-  border-left: 20px solid $secondary-color;
-  margin: 20px 100px; // Centrar la tarjeta
-  width: calc(100% - 40px); // Ancho responsive con margen
-  max-width: 600px; // Ancho máximo para pantallas grandes
-  background-color: #ffffff;
-  color: #ffffff;
+  border-left: 20px solid $secondary-color; // Franja lateral izquierda
+  margin: 20px 100px;
+  width: calc(100% - 40px);
+  max-width: 600px;
+  background-color: $background-color; // Fondo blanco para la tarjeta
+  color: $text-color;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  text-align: left;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -116,18 +109,9 @@ input[type="text"] {
   cursor: pointer;
   will-change: transform, background-color;
 
-  &::after {
-    content: '\1F525';
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 80px; // Tamaño reducido para mejor adaptabilidad
-    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5)); // Sombra en la parte inferior del fuego
-  }
-
   &:hover {
-    background-color: #ffffff;
-    transform: scale(1.03); // Reducido para evitar desbordamiento en pantallas pequeñas
+    background-color: lighten($background-color, 5%); // Ligera variación en hover
+    transform: scale(1.03);
   }
 
   h4 {
@@ -145,99 +129,107 @@ input[type="text"] {
     @include responsive-font(0.8rem, 2vw, 1rem);
     margin-top: 10px;
     line-height: 1.6;
-    color: #000000;
+    color: $text-color;
+  }
+
+  /* Nueva clase para los botones */
+  .action-buttons {
+    position: absolute; /* Posición absoluta para que se superponga en la tarjeta */
+    top: 10px; /* Ajusta la distancia desde la parte superior */
+    right: 10px; /* Ajusta la distancia desde la derecha */
+    display: flex;
+    gap: 10px; /* Espaciado entre los botones */
+
+    button {
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      background: transparent; /* Fondo transparente para que solo se vean los iconos */
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: scale(1.1); /* Aumenta el tamaño en hover */
+      }
+
+      &.btn-editar {
+        color: #007bff; /* Color para el icono de editar */
+      }
+
+      &.btn-eliminar {
+        color: #dc3545; /* Color para el icono de eliminar */
+      }
+    }
   }
 }
 
-/* Estilos para el modal */
 .modal {
-  position: fixed; /* Posición fija para que cubra toda la pantalla */
-  top: 0; /* Comienza en la parte superior */
-  left: 0; /* Comienza desde el lado izquierdo */
-  width: 100%; /* Ancho completo */
-  height: 100%; /* Altura completa */
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-  display: flex; /* Usar flexbox para centrar el contenido */
-  justify-content: center; /* Centrar horizontalmente */
-  align-items: center; /* Centrar verticalmente */
-  animation: slideDown 0.5s ease forwards; /* Animación de deslizamiento hacia abajo */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: slideDown 0.5s ease forwards;
 
   .modal-content {
-    background-color: #fff; /* Fondo blanco para el contenido del modal */
-    padding: 20px; /* Espacio interno */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
-    width: 400px; /* Ancho fijo del modal */
-    max-width: 90%; /* Ancho máximo del modal */
-    transform: translateY(-30px); /* Mueve el modal hacia arriba al iniciar */
-    opacity: 0; /* Comienza invisible */
-    animation: fadeIn 0.5s forwards; /* Animación de aparición */
+    background-color: $background-color;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    max-width: 90%;
+    transform: translateY(-30px);
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
 
     @keyframes slideDown {
-      0% {
-        transform: translateY(-30px); /* Comienza un poco más arriba */
-        opacity: 0; /* Comienza invisible */
-      }
-      100% {
-        transform: translateY(0); /* Termina en su posición original */
-        opacity: 1; /* Se hace completamente visible */
-      }
+      0% { transform: translateY(-30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0; /* Comienza invisible */
-      }
-      to {
-        opacity: 1; /* Termina visible */
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
-    h3 {
-      margin-bottom: 20px; /* Espacio inferior para el título */
-    }
+    h3 { margin-bottom: 20px; }
 
-    label {
-      display: block; /* Hacer que las etiquetas ocupen toda la línea */
-      margin-bottom: 5px; /* Espacio inferior para las etiquetas */
-    }
+    label { display: block; margin-bottom: 5px; }
 
     input[type="text"],
     textarea {
-      width: 100%; /* Ancho completo */
-      padding: 10px; /* Espaciado interno */
-      margin-bottom: 15px; /* Espacio entre campos */
-      border: 1px solid #ccc; /* Borde del campo */
-      border-radius: 4px; /* Bordes redondeados */
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
 
     textarea {
-      resize: vertical; /* Permitir redimensionar verticalmente */
-      height: 80px; /* Altura inicial del textarea */
+      resize: vertical;
+      height: 80px;
     }
 
     .button-container {
-      display: flex; /* Usar flexbox para alinear botones */
-      justify-content: space-between; /* Espacio entre botones */
-      margin-top: 20px; /* Espacio superior para los botones */
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
     }
 
     button {
-      padding: 10px 15px; /* Espaciado interno */
-      border: none; /* Sin borde */
-      border-radius: 4px; /* Bordes redondeados */
-      cursor: pointer; /* Cambiar cursor a pointer */
-      font-size: 16px; /* Tamaño de fuente */
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
     }
 
-    .btn-guardar {
-      background-color: blue; /* Color azul para el botón Guardar */
-      color: white; /* Texto blanco */
-    }
-
-    .btn-cancelar {
-      background-color: red; /* Color rojo para el botón Cancelar */
-      color: white; /* Texto blanco */
-    }
+    .btn-guardar { background-color: blue; color: white; }
+    .btn-cancelar { background-color: red; color: white; }
   }
 }

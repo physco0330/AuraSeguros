@@ -66,51 +66,57 @@
     </div>
   </div>
 
-  <!-- Modal para agregar empresa -->
-  <div *ngIf="isModalOpen" class="modal">
-    <div class="modal-content">
-      <h2 class="modal-title" style="text-align: center; color: #388dac;">Agregar Nueva Empresa</h2>
-      <form (ngSubmit)="guardarEmpresa()">
-        <div class="form-group">
-          <label for="nombreEmpresa">Nombre de la empresa</label>
-          <input type="text" id="nombreEmpresa" [(ngModel)]="nombreEmpresa" name="nombreEmpresa" required />
-        </div>
+<!-- Modal para agregar empresa -->
+<div *ngIf="isModalOpen" class="modal">
+  <div class="modal-content">
+    <h2 class="modal-title" style="text-align: center; color: #388dac;">Agregar Nueva Empresa</h2>
+    <form (ngSubmit)="guardarEmpresa()">
+      <div class="form-group">
+        <label for="nombreEmpresa">Nombre de la empresa</label>
+        <input type="text" id="nombreEmpresa" [(ngModel)]="nombreEmpresa" name="nombreEmpresa" required />
+      </div>
 
-        <div class="form-group">
-          <label for="nitEmpresa">NIT de la empresa</label>
-          <input type="text" id="nitEmpresa" [(ngModel)]="nitEmpresa" name="nitEmpresa" required />
-        </div>
+      <div class="form-group">
+        <label for="nitEmpresa">NIT de la empresa</label>
+        <input type="text" id="nitEmpresa" [(ngModel)]="nitEmpresa" name="nitEmpresa" required />
+      </div>
 
-        <div class="form-group">
-          <label for="correoEmpresa">Correo empresarial</label>
-          <input type="email" id="correoEmpresa" [(ngModel)]="correoEmpresa" name="correoEmpresa" required />
-        </div>
+      <div class="form-group">
+        <label for="correoEmpresa">Correo empresarial</label>
+        <input type="email" id="correoEmpresa" [(ngModel)]="correoEmpresa" name="correoEmpresa" required />
+      </div>
 
-        <div class="form-group">
-          <label for="contactoEmpresa">Contacto</label>
-          <input type="text" id="contactoEmpresa" [(ngModel)]="contactoEmpresa" name="contactoEmpresa" required />
-        </div>
+      <div class="form-group">
+        <label for="contactoEmpresa">Contacto</label>
+        <input type="text" id="contactoEmpresa" [(ngModel)]="contactoEmpresa" name="contactoEmpresa" required />
+      </div>
 
-        <div class="form-group">
-          <label for="numeroPoliza">Número de póliza</label>
-          <input type="text" id="numeroPoliza" [(ngModel)]="numeroPoliza" name="numeroPoliza" required />
-        </div>
+      <div class="form-group">
+        <label for="numeroPoliza">Número de póliza</label>
+        <input type="text" id="numeroPoliza" [(ngModel)]="numeroPoliza" name="numeroPoliza" required />
+      </div>
 
+      <div class="form-group">
+        <label for="colorCard">Color de tarjeta</label>
+        <input type="color" id="colorCard" [(ngModel)]="colorCard" name="colorCard" required />
+      </div>
 
+      <!-- Campo deshabilitado para mostrar el ID del módulo -->
+      <div class="form-group">
+        <label for="moduloId">ID del Módulo</label>
+        <input type="text" id="moduloId" [value]=" moduloId" disabled />
+      </div>
 
-        <div class="form-group">
-          <label for="colorCard">Color de tarjeta</label>
-          <input type="color" id="colorCard" [(ngModel)]="colorCard" name="colorCard" required />
-        </div>
-
-        <!-- Botones de Cancelar y Guardar -->
-        <div class="modal-buttons">
-          <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
-          <button type="submit" class="btn-save">Guardar</button>
-        </div>
-      </form>
-    </div>
+      <!-- Botones de Cancelar y Guardar -->
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
+        <button type="submit" class="btn-save">Guardar</button>
+      </div>
+    </form>
   </div>
+</div>
+
+
 
   <!-- Modal de confirmación de eliminación -->
   <div *ngIf="isConfirmDeleteModalOpen" class="confirm-delete-modal">

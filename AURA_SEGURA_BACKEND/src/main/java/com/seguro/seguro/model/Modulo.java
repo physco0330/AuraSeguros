@@ -17,6 +17,9 @@ public class Modulo {
     @Column(name = "descripcion_modulo", length = 1000)  // Cambiado para coincidir con la tabla
     private String descripcionModulo;
 
+    @Column(name = "color_modulo", length = 7) // Nueva columna para el color del módulo
+    private String colorModulo; // Campo para almacenar el color del módulo
+
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
 
@@ -56,6 +59,14 @@ public class Modulo {
 
     public void setDescripcionModulo(String descripcionModulo) {
         this.descripcionModulo = descripcionModulo;
+    }
+
+    public String getColorModulo() {  // Nuevo getter para el color
+        return colorModulo;
+    }
+
+    public void setColorModulo(String colorModulo) {  // Nuevo setter para el color
+        this.colorModulo = colorModulo;
     }
 
     public LocalDateTime getFechaCreacion() {

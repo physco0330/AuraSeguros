@@ -16,6 +16,8 @@ public class ModuloService {
 
     // Método para guardar un nuevo módulo
     public Modulo saveModulo(Modulo modulo) {
+        // Aquí puedes agregar lógica adicional si es necesario,
+        // como validaciones específicas para el color
         return moduloRepository.save(modulo); // Guarda el módulo en la base de datos
     }
 
@@ -32,11 +34,22 @@ public class ModuloService {
 
     // Método para actualizar un módulo
     public Modulo updateModulo(Modulo modulo) {
-        return moduloRepository.save(modulo); // Guarda el módulo actualizado
+        // Verifica si el módulo existe antes de actualizar
+        if (moduloRepository.existsById(modulo.getId_modulo())) {
+            return moduloRepository.save(modulo); // Guarda el módulo actualizado
+        } else {
+            // Podrías lanzar una excepción si el módulo no existe
+            throw new IllegalArgumentException("Modulo no encontrado con ID: " + modulo.getId_modulo());
+        }
     }
 
     // Método para eliminar un módulo
     public void deleteModulo(Long id) {
-        moduloRepository.deleteById(id); // Elimina el módulo por ID
+        if (moduloRepository.existsById(id)) {
+            moduloRepository.deleteById(id); // Elimina el módulo por ID
+        } else {
+            // Podrías lanzar una excepción si el módulo no existe
+            throw new IllegalArgumentException("Modulo no encontrado con ID: " + id);
+        }
     }
 }

@@ -38,8 +38,12 @@ public class Empresa {
 
     // Relación con la entidad Modulo
     @ManyToOne
-    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo")
+    @JoinColumn(name = "id_modulo", referencedColumnName = "id_modulo", insertable = false, updatable = false)
     private Modulo modulo;
+
+    // Nuevo campo para almacenar el ID del módulo
+    @Column(name = "id_modulo")
+    private Long id_modulo; // Agregado
 
     @PrePersist
     protected void onCreate() {
@@ -138,5 +142,16 @@ public class Empresa {
 
     public void setModulo(Modulo modulo) {
         this.modulo = modulo;
+        if (modulo != null) {
+            this.id_modulo = modulo.getId_modulo(); // Establece el id_modulo cuando se establece el módulo
+        }
+    }
+
+    public Long getId_modulo() {
+        return id_modulo;
+    }
+
+    public void setId_modulo(Long id_modulo) {
+        this.id_modulo = id_modulo;
     }
 }

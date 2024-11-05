@@ -27,6 +27,11 @@ public class ModuloController {
             return ResponseEntity.badRequest().body(null); // Retorna un error 400 si la descripción es inválida
         }
 
+        // Validación del color
+        if (modulo.getColorModulo() == null || modulo.getColorModulo().isEmpty()) {
+            return ResponseEntity.badRequest().body(null); // Retorna un error 400 si el color es inválido
+        }
+
         // Si las validaciones pasan, guarda el módulo
         Modulo nuevoModulo = moduloService.saveModulo(modulo);
         return ResponseEntity.status(201).body(nuevoModulo); // Retorna el módulo creado con un estado 201 Created
@@ -42,6 +47,9 @@ public class ModuloController {
     @GetMapping("/{id}")
     public ResponseEntity<Modulo> obtenerModulo(@PathVariable Long id) {
         Modulo modulo = moduloService.getModuloById(id);
+        if (modulo == null) {
+            return ResponseEntity.notFound().build(); // Retorna 404 si no se encuentra el módulo
+        }
         return ResponseEntity.ok(modulo); // Retorna el módulo encontrado
     }
 
@@ -49,6 +57,21 @@ public class ModuloController {
     @PutMapping("/{id}")
     public ResponseEntity<Modulo> actualizarModulo(@PathVariable Long id, @RequestBody Modulo modulo) {
         modulo.setId_modulo(id); // Asegúrate de que el ID sea el correcto
+
+        // Validación de entrada
+        if (modulo.getNombreModulo() == null || modulo.getNombreModulo().isEmpty()) {
+            return ResponseEntity.badRequest().body(null); // Retorna un error 400 si el nombre es inválido
+        }
+
+        if (modulo.getDescripcionModulo() == null || modulo.getDescripcionModulo().isEmpty()) {
+            return ResponseEntity.badRequest().body(null); // Retorna un error 400 si la descripción es inválida
+        }
+
+        // Validación del color
+        if (modulo.getColorModulo() == null || modulo.getColorModulo().isEmpty()) {
+            return ResponseEntity.badRequest().body(null); // Retorna un error 400 si el color es inválido
+        }
+
         Modulo moduloActualizado = moduloService.updateModulo(modulo);
         return ResponseEntity.ok(moduloActualizado); // Retorna el módulo actualizado
     }

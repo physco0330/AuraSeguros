@@ -1,11 +1,8 @@
-// modulo.model.ts
-
-
-
 export interface Modulo {
-  id_modulo: number;           // Identificador único del módulo
-  nombreModulo: string;      // Nombre del módulo
-  descripcionModulo: string; // Descripción del módulo
-  fechaCreacion?: string;    // Fecha de creación (opcional)
-  fechaActualizacion?: string; // Fecha de actualización (opcional)
+  id_modulo: number; // Debe ser solo number si no permites null
+  nombreModulo: string;
+  descripcionModulo: string;
+  fechaCreacion?: string;
+  fechaActualizacion?: string;
+  colorModulo: string;
 }

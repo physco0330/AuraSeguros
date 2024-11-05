@@ -24,11 +24,11 @@ public class EmpresaService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    // Método para crear una nueva empresa (sin nombre_tabla)
+    // Método para crear una nueva empresa (con id_modulo)
     public Empresa crearEmpresa(String nombreEmpresa, String colorPalette,
                                 String nitEmpresa, String correoEmpresa,
                                 String contactoEmpresa, String numeroPoliza,
-                                MultipartFile logoEmpresa) {
+                                MultipartFile logoEmpresa, Long idModulo) { // Añadir idModulo
         Empresa empresa = new Empresa();
         empresa.setNombre_empresa(nombreEmpresa);
         empresa.setColor_palette(colorPalette);
@@ -36,6 +36,7 @@ public class EmpresaService {
         empresa.setCorreo_empresa(correoEmpresa);
         empresa.setContacto_empresa(contactoEmpresa);
         empresa.setNumero_poliza(numeroPoliza);
+        empresa.setId_modulo(idModulo); // Asignar el id_modulo
 
         if (logoEmpresa != null && !logoEmpresa.isEmpty()) {
             try {
@@ -88,6 +89,7 @@ public class EmpresaService {
             empresaActualizada.setCorreo_empresa(empresa.getCorreo_empresa());
             empresaActualizada.setContacto_empresa(empresa.getContacto_empresa());
             empresaActualizada.setNumero_poliza(empresa.getNumero_poliza());
+            empresaActualizada.setId_modulo(empresa.getId_modulo()); // Actualizar id_modulo
 
             // Si hay un logo, actualizarlo
             if (empresa.getLogo_empresa() != null && !empresa.getLogo_empresa().isEmpty()) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router'; // Importa ActivatedRoute
 import { HttpClient } from '@angular/common/http';
 import { Empresa } from '../modelos/empresa.model'; // Modelo de empresa
 import { EmpresasService } from '../servicios/empresas.service'; // Servicio para manejar empresas
@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
   imports: [SidebarComponent, HeaderComponent, CommonModule, RouterModule, FormsModule, MatIcon] // Importar los módulos necesarios
 })
 export class EmpresasComponent implements OnInit {
+  moduloId: string | null = null;
+  moduloNombre: string | null = null;
   title = 'Modulo'; // Título del módulo
   empresas: Empresa[] = []; // Lista de empresas obtenidas de la API
   isModalOpen = false; // Controla si el modal para agregar empresas está abierto o cerrado
@@ -27,7 +29,6 @@ export class EmpresasComponent implements OnInit {
 
   // Propiedades para agregar una nueva empresa
   nombreEmpresa: string = ''; // Nombre de la empresa a agregar
-
   nitEmpresa: string = ''; // NIT de la empresa
   correoEmpresa: string = ''; // Correo empresarial
   contactoEmpresa: string = ''; // Contacto de la empresa
@@ -38,19 +39,26 @@ export class EmpresasComponent implements OnInit {
   showBack: boolean = false;
   hideBack: boolean = true;
 
-
   constructor(
     private empresasService: EmpresasService, // Servicio para manejar empresas
     private router: Router, // Servicio de enrutamiento
+    private route: ActivatedRoute, // Servicio para capturar los parámetros de la URL
     private http: HttpClient // Servicio HTTP para comunicarse con la API
   ) {}
 
   ngOnInit(): void {
+    // Capturar los parámetros de la URL al iniciar el componente
+    this.route.queryParams.subscribe(params => {
+      this.moduloId = params['id'] ? params['id'] : null;
+      this.moduloNombre = params['nombre'] ? params['nombre'] : null;
+
+      console.log('Módulo ID:', this.moduloId);
+      console.log('Módulo Nombre:', this.moduloNombre);
+    });
+
     // Cargar las empresas al iniciar el componente
     this.loadEmpresas();
-
   }
-
 
   // Método para redirigir al módulo anterior
   volverAModulo(): void {
@@ -61,8 +69,8 @@ export class EmpresasComponent implements OnInit {
 
 
 navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
-  this.router.navigate(['/incendio', nombreEmpresa], { 
-    queryParams: { idEmpresa: idEmpresa } 
+  this.router.navigate(['/incendio', nombreEmpresa], {
+    queryParams: { idEmpresa: idEmpresa }
   });
 }
 
@@ -141,46 +149,51 @@ navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
     }
   }
 
-  // Guardar una nueva empresa en la base de datos
-  guardarEmpresa(): void {
-    // Validar que todos los campos requeridos estén llenos
-    if (this.nombreEmpresa && this.colorCard && this.nitEmpresa && this.correoEmpresa && this.contactoEmpresa && this.numeroPoliza) {
-      const nombreLimpio = this.nombreEmpresa.replace(/\s+/g, '').toLowerCase(); // Elimina espacios y convierte a minúsculas
-      const empresaExistente = this.empresas.find(empresa =>
-        empresa.nombre_empresa.replace(/\s+/g, '').toLowerCase() === nombreLimpio // Verifica si la empresa ya existe
-      );
+// Guardar una nueva empresa en la base de datos
+guardarEmpresa(): void {
+  // Validar que todos los campos requeridos estén llenos
+  if (this.nombreEmpresa && this.colorCard && this.nitEmpresa && this.correoEmpresa && this.contactoEmpresa && this.numeroPoliza) {
+    const nombreLimpio = this.nombreEmpresa.replace(/\s+/g, '').toLowerCase(); // Elimina espacios y convierte a minúsculas
+    const empresaExistente = this.empresas.find(empresa =>
+      empresa.nombre_empresa.replace(/\s+/g, '').toLowerCase() === nombreLimpio // Verifica si la empresa ya existe
+    );
 
-      if (empresaExistente) {
-        alert('Ya existe una empresa con ese nombre. Por favor, elige otro nombre.'); // Mensaje de error si existe
-        return;
-      }
-
-      // Crear un nuevo FormData para enviar los datos de la empresa
-      const formData = new FormData();
-      formData.append('nombre_empresa', this.nombreEmpresa.trim()); // Añade el nombre de la empresa
-      formData.append('nit_empresa', this.nitEmpresa); // Añade el NIT de la empresa
-      formData.append('correo_empresa', this.correoEmpresa); // Añade el correo empresarial
-      formData.append('contacto_empresa', this.contactoEmpresa); // Añade el contacto empresarial
-      formData.append('numero_poliza', this.numeroPoliza); // Añade el número de póliza
-      formData.append('color_palette', this.colorCard); // Añade la paleta de colores
-
-
-      // Llamada al servicio para guardar la empresa
-      this.empresasService.saveEmpresa(formData).subscribe(
-        response => {
-          console.log('Empresa guardada', response); // Muestra la respuesta en consola
-          this.closeModal(); // Cierra el modal después de guardar
-          this.loadEmpresas(); // Recarga la lista de empresas
-          alert('Guardado exitoso'); // Muestra un mensaje de éxito
-        },
-        error => {
-          console.error('Error guardando la empresa:', error); // Muestra el error en la consola
-        }
-      );
-    } else {
-      alert('Todos los campos son obligatorios'); // Mensaje de error si faltan campos
+    if (empresaExistente) {
+      alert('Ya existe una empresa con ese nombre. Por favor, elige otro nombre.'); // Mensaje de error si existe
+      return;
     }
+
+    // Crear un nuevo FormData para enviar los datos de la empresa
+    const formData = new FormData();
+    formData.append('nombre_empresa', this.nombreEmpresa.trim()); // Añade el nombre de la empresa
+    formData.append('nit_empresa', this.nitEmpresa); // Añade el NIT de la empresa
+    formData.append('correo_empresa', this.correoEmpresa); // Añade el correo empresarial
+    formData.append('contacto_empresa', this.contactoEmpresa); // Añade el contacto empresarial
+    formData.append('numero_poliza', this.numeroPoliza); // Añade el número de póliza
+    formData.append('color_palette', this.colorCard); // Añade la paleta de colores
+
+    // Añade el ID del módulo a los datos de la empresa
+    if (this.moduloId) {
+      formData.append('id_modulo', this.moduloId); // Añade el id del módulo
+    }
+
+    // Llamada al servicio para guardar la empresa
+    this.empresasService.saveEmpresa(formData).subscribe(
+      response => {
+        console.log('Empresa guardada', response); // Muestra la respuesta en consola
+        this.closeModal(); // Cierra el modal después de guardar
+        this.loadEmpresas(); // Recarga la lista de empresas
+        alert('Guardado exitoso'); // Muestra un mensaje de éxito
+      },
+      error => {
+        console.error('Error guardando la empresa:', error); // Muestra el error en la consola
+      }
+    );
+  } else {
+    alert('Todos los campos son obligatorios'); // Mensaje de error si faltan campos
   }
+}
+
 
   // Cargar la lista de empresas desde la API
   loadEmpresas(): void {

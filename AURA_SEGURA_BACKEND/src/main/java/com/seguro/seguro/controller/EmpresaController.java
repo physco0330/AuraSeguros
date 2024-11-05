@@ -26,19 +26,20 @@ public class EmpresaController {
     private String uploadDir;
 
     // Método para crear una nueva empresa, acepta multipart/form-data
-    @PostMapping(consumes = {"multipart/form-data"}) // Indica que el método acepta multipart/form-data
+    @PostMapping(consumes = {"multipart/form-data"})
     public Empresa crearEmpresa(
-            @RequestParam("nombre_empresa") String nombreEmpresa, // Nombre de la empresa
-            @RequestParam("color_palette") String colorPalette, // Color de la paleta
-            @RequestParam("nit_empresa") String nitEmpresa, // NIT de la empresa
-            @RequestParam("correo_empresa") String correoEmpresa, // Correo de la empresa
-            @RequestParam("contacto_empresa") String contactoEmpresa, // Contacto de la empresa
-            @RequestParam("numero_poliza") String numeroPoliza, // Número de póliza
-            @RequestParam(value = "logo_empresa", required = false) MultipartFile logoEmpresa) { // Archivo de logo (opcional)
+            @RequestParam("nombre_empresa") String nombreEmpresa,
+            @RequestParam("color_palette") String colorPalette,
+            @RequestParam("nit_empresa") String nitEmpresa,
+            @RequestParam("correo_empresa") String correoEmpresa,
+            @RequestParam("contacto_empresa") String contactoEmpresa,
+            @RequestParam("numero_poliza") String numeroPoliza,
+            @RequestParam(value = "logo_empresa", required = false) MultipartFile logoEmpresa,
+            @RequestParam("id_modulo") Long idModulo) { // El id_modulo sigue como parámetro
 
         // Llama al servicio para procesar el archivo y guardar la información en la base de datos
         return empresaService.crearEmpresa(nombreEmpresa, colorPalette, nitEmpresa,
-                correoEmpresa, contactoEmpresa, numeroPoliza, logoEmpresa);
+                correoEmpresa, contactoEmpresa, numeroPoliza, logoEmpresa, idModulo);
     }
 
     // Método para obtener todas las empresas
