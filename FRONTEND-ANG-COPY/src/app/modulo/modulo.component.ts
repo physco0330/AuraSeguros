@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Empresa } from '../modelos/empresa.model'; // Modelo de empresa
-import { Modulo } from '../modelos/modulo.model'; // Modelo de módulo
-import { EmpresasService } from '../servicios/empresas.service'; // Servicio para manejar empresas
-import { ModuloService } from '../servicios/modulo.service'; // Importar el servicio de módulos
+import { Empresa } from '../modelos/empresa.model';
+import { Modulo } from '../modelos/modulo.model';
+import { EmpresasService } from '../servicios/empresas.service';
+import { ModuloService } from '../servicios/modulo.service';
 import { MatIcon } from '@angular/material/icon';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router'; // Importar ActivatedRoute
 
 @Component({
   selector: 'app-modulo',
@@ -24,27 +25,35 @@ export class ModuloComponent implements OnInit {
   modulos: Modulo[] = [];
   isModalOpen = false;
 
-  // Actualización del objeto nuevoModulo para incluir id_modulo
-nuevoModulo: Modulo = { id_modulo: 0, nombreModulo: '', descripcionModulo: '', colorModulo: '#ffffff' }; // Cambiado de null a 0
-
+  nuevoModulo: Modulo = { id_modulo: null, nombreModulo: '', descripcionModulo: '', colorModulo: '#ffffff' };
   searchTerm: string = '';
 
   constructor(
     private empresasService: EmpresasService,
     private moduloService: ModuloService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private route: ActivatedRoute // Inyectar ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.loadEmpresas();
     this.loadModulos();
+
+    // Cargar empresas solo si hay un id_modulo en los parámetros de consulta
+    this.route.queryParams.subscribe(params => {
+      const moduloId = params['id']; // Obtener el ID del módulo de los parámetros
+      if (moduloId) {
+        this.loadEmpresasByModuloId(moduloId); // Cargar empresas filtradas
+      } else {
+        this.loadEmpresas(); // Cargar todas las empresas si no hay un ID
+      }
+    });
   }
 
   navigateToEmpresas(modulo: Modulo): void {
     this.router.navigate(['/empresas'], {
       queryParams: {
-        id: modulo.id_modulo, // Cambia 'id' por 'id_modulo'
+        id: modulo.id_modulo,
         nombre: modulo.nombreModulo
       }
     });
@@ -62,12 +71,17 @@ nuevoModulo: Modulo = { id_modulo: 0, nombreModulo: '', descripcionModulo: '', c
     });
   }
 
-  // Método para filtrar los módulos según el término de búsqueda
+  // Nuevo método para cargar empresas filtradas por ID del módulo
+  loadEmpresasByModuloId(moduloId: string): void {
+    this.empresasService.getEmpresasByModuloId(moduloId).subscribe(data => {
+      this.empresas = data;
+    });
+  }
+
   filteredModulos(): Modulo[] {
     if (!this.searchTerm) {
-      return this.modulos; // Si no hay término de búsqueda, devuelve todos los módulos
+      return this.modulos;
     }
-    // Filtra módulos que coinciden con el término de búsqueda
     return this.modulos.filter(modulo =>
       modulo.nombreModulo.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
@@ -75,7 +89,7 @@ nuevoModulo: Modulo = { id_modulo: 0, nombreModulo: '', descripcionModulo: '', c
 
   openModal() {
     this.isModalOpen = true;
-    this.nuevoModulo = { id_modulo: 0, nombreModulo: '', descripcionModulo: '', colorModulo: '#ffffff' }; // Resetea el modal
+    this.nuevoModulo = { id_modulo: null, nombreModulo: '', descripcionModulo: '', colorModulo: '#ffffff' };
   }
 
   closeModal() {
@@ -83,28 +97,24 @@ nuevoModulo: Modulo = { id_modulo: 0, nombreModulo: '', descripcionModulo: '', c
   }
 
   onSubmit() {
-    const trimmedName = this.nuevoModulo.nombreModulo.trim(); // Elimina espacios en blanco al inicio y al final
+    const trimmedName = this.nuevoModulo.nombreModulo.trim();
 
-    // Validación para evitar módulos con el mismo nombre o solo espacios
     if (!trimmedName) {
       alert('Por favor, ingrese un nombre válido para el módulo. No puede estar vacío ni contener solo espacios.');
       return;
     }
 
-    // Verifica si el módulo está en modo edición
     const isEditing = this.nuevoModulo.id_modulo !== null;
 
     if (!isEditing) {
-      // Solo comprueba si el nombre ya existe si no está editando
       if (this.modulos.some(modulo => modulo.nombreModulo.toLowerCase() === trimmedName.toLowerCase())) {
         alert('Error: Ya existe un módulo con ese nombre. Por favor, elige un nombre diferente.');
         return;
       }
     }
 
-    this.nuevoModulo.nombreModulo = trimmedName; // Asigna el nombre recortado a nuevoModulo
+    this.nuevoModulo.nombreModulo = trimmedName;
 
-    // Si está editando, llama a la API de actualización
     if (isEditing) {
       this.moduloService.updateModulo(this.nuevoModulo).subscribe(
         (response) => {
@@ -119,7 +129,6 @@ nuevoModulo: Modulo = { id_modulo: 0, nombreModulo: '', descripcionModulo: '', c
         }
       );
     } else {
-      // Si no está editando, llama a la API de guardar
       this.moduloService.saveModulo(this.nuevoModulo).subscribe(
         (response) => {
           console.log('Módulo agregado:', response);
@@ -135,26 +144,26 @@ nuevoModulo: Modulo = { id_modulo: 0, nombreModulo: '', descripcionModulo: '', c
     }
   }
 
-  // Nuevo método para editar un módulo
   editModulo(modulo: Modulo) {
-    this.nuevoModulo = { ...modulo }; // Copiar los datos del módulo a editar
-    this.isModalOpen = true; // Abre el modal para editar
+    this.nuevoModulo = { ...modulo };
+    this.isModalOpen = true;
   }
 
-  // Nuevo método para eliminar un módulo
-  deleteModulo(moduloId: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este módulo?')) {
+  deleteModulo(moduloId: number | null) {
+    if (moduloId !== null && confirm('¿Estás seguro de que deseas eliminar este módulo?')) {
       this.moduloService.deleteModulo(moduloId).subscribe(
         (response) => {
           console.log('Módulo eliminado:', response);
           alert('Módulo eliminado con éxito!');
-          this.loadModulos(); // Recarga la lista de módulos
+          this.loadModulos();
         },
         (error) => {
           console.error('Error al eliminar el módulo:', error);
           alert('Error al eliminar el módulo. Por favor, inténtelo de nuevo.');
         }
       );
+    } else {
+      alert('ID de módulo no válido.');
     }
   }
 }

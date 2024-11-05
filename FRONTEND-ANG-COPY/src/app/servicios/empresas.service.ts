@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Empresa } from '../modelos/empresa.model';
@@ -24,7 +24,7 @@ export class EmpresasService {
 
   // Método para obtener todas las empresas
   getEmpresas(): Observable<Empresa[]> {
-    return this.http.get<Empresa[]>(`${this.baseUrl}`).pipe( // Corrige la URL si es necesario
+    return this.http.get<Empresa[]>(`${this.baseUrl}`).pipe(
       catchError((error) => {
         console.error('Error obteniendo las empresas:', error);
         return throwError(() => new Error('Error obteniendo las empresas'));
@@ -81,6 +81,17 @@ export class EmpresasService {
       catchError((error) => {
         console.error('Error obteniendo las empresas con filtro:', error);
         return throwError(() => new Error('Error obteniendo las empresas con filtro'));
+      })
+    );
+  }
+
+  // NUEVO: Método para obtener empresas por ID del módulo
+  getEmpresasByModuloId(moduloId: string): Observable<Empresa[]> {
+    const url = `${this.baseUrl}/modulo/${moduloId}`; // Asegúrate de que la ruta corresponda a tu API
+    return this.http.get<Empresa[]>(url).pipe(
+      catchError((error) => {
+        console.error('Error obteniendo empresas por ID de módulo:', error);
+        return throwError(() => new Error('Error obteniendo empresas por ID de módulo'));
       })
     );
   }

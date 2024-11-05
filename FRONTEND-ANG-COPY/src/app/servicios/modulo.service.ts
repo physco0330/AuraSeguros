@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Modulo } from '../modelos/modulo.model';
+import { Empresa } from '../modelos/empresa.model'; // Asegúrate de tener este modelo
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,7 @@ export class ModuloService {
   }
 
   updateModulo(modulo: Modulo): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${modulo.id_modulo}`, modulo).pipe( // Cambiado a id_modulo
+    return this.http.put(`${this.baseUrl}/${modulo.id_modulo}`, modulo).pipe(
       catchError((error) => {
         console.error('Error actualizando el módulo:', error);
         return throwError(() => new Error('Error actualizando el módulo'));
@@ -64,6 +65,17 @@ export class ModuloService {
       catchError((error) => {
         console.error('Error obteniendo los módulos con filtro:', error);
         return throwError(() => new Error('Error obteniendo los módulos con filtro'));
+      })
+    );
+  }
+
+  // Método para obtener empresas filtradas por ID del módulo
+  getEmpresasByModuloId(moduloId: string): Observable<Empresa[]> {
+    const url = `${this.baseUrl}/${moduloId}/empresas`; // Ajusta la URL según tu API
+    return this.http.get<Empresa[]>(url).pipe(
+      catchError((error) => {
+        console.error('Error obteniendo las empresas por ID de módulo:', error);
+        return throwError(() => new Error('Error obteniendo las empresas por ID de módulo'));
       })
     );
   }
