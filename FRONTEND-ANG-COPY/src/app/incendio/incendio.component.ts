@@ -10,6 +10,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } 
 import { debounceTime } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
 import { Empresa } from '../modelos/empresa.model'; // Asegúrate de que esta ruta sea correcta
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-incendio',
@@ -77,7 +78,9 @@ export class IncendioComponent implements OnInit {
     private router: Router, // Servicio de enrutamiento para navegación
     private fb: FormBuilder, // Constructor de formularios reactivos
     private empresasService: EmpresasService, // Servicio para gestionar las empresas
+    private location: Location, // Añadir el servicio Location
     private route: ActivatedRoute // Servicio para obtener parámetros de la ruta
+
   ) {}
 
   ngOnInit(): void {
@@ -328,10 +331,11 @@ agregarBien(): void {
 
 
 
-  // Método para redirigir al módulo anterior
+  // Método modificado para regresar a la página anterior
   volverAModulo(): void {
-    this.router.navigate(['/empresas']);
+    this.location.back(); // Regresa a la página anterior en el historial
   }
+
 
 
   // Método para filtrar bienes por varios campos
