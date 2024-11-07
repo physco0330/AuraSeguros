@@ -51,12 +51,17 @@ export class ModuloComponent implements OnInit {
   }
 
   navigateToEmpresas(modulo: Modulo): void {
-    this.router.navigate(['/empresas'], {
-      queryParams: {
-        id: modulo.id_modulo,
-        nombre: modulo.nombreModulo
-      }
-    });
+    if (modulo.id_modulo != null) {
+      // Navegar a la vista de empresas y pasar el ID y nombre del módulo como parámetros de consulta
+      this.router.navigate(['/empresas'], {
+        queryParams: {
+          id: modulo.id_modulo,
+          nombre: modulo.nombreModulo
+        }
+      });
+    } else {
+      console.error("El ID del módulo es nulo.");
+    }
   }
 
   loadModulos(): void {

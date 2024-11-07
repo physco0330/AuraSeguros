@@ -39,6 +39,7 @@ export class EmpresasComponent implements OnInit {
   showBack: boolean = false;
   hideBack: boolean = true;
 
+
   constructor(
     private empresasService: EmpresasService, // Servicio para manejar empresas
     private router: Router, // Servicio de enrutamiento
@@ -54,10 +55,24 @@ export class EmpresasComponent implements OnInit {
 
       console.log('Módulo ID:', this.moduloId);
       console.log('Módulo Nombre:', this.moduloNombre);
-    });
 
-    // Cargar las empresas al iniciar el componente
-    this.loadEmpresas();
+      // Si hay un id de módulo, cargar empresas filtradas por ese módulo
+      if (this.moduloId) {
+        this.loadEmpresasByModuloId(this.moduloId);
+      } else {
+        this.loadEmpresas();
+      }
+    });
+  }
+
+   // Nueva función para cargar empresas por el ID del módulo
+   loadEmpresasByModuloId(moduloId: string): void {
+    this.empresasService.getEmpresasByModuloId(moduloId).subscribe(data => {
+      this.empresas = data; // Actualiza la lista de empresas con los datos obtenidos
+      console.log("Empresas filtradas por módulo:", data); // Verifica en la consola
+    }, error => {
+      console.error("Error obteniendo empresas por módulo:", error);
+    });
   }
 
   // Método para redirigir al módulo anterior
@@ -195,7 +210,7 @@ guardarEmpresa(): void {
 }
 
 
-  // Cargar la lista de empresas desde la API
+  // Método para cargar todas las empresas
   loadEmpresas(): void {
     this.empresasService.getEmpresas().subscribe(data => {
       this.empresas = data; // Actualiza la lista de empresas con los datos obtenidos

@@ -9,7 +9,7 @@ import { Empresa } from '../modelos/empresa.model';
 })
 export class EmpresasService {
   private baseUrl = 'http://localhost:8080/api/empresas'; // URL base del backend para acceder a los servicios relacionados con empresas
-
+  private baseUrl2 = 'http://localhost:8080/api'; // URL base para otros servicios, como los módulos
   constructor(private http: HttpClient) {}
 
   // Método para guardar una nueva empresa utilizando FormData
@@ -63,7 +63,7 @@ export class EmpresasService {
     );
   }
 
-  // NUEVO: Método para obtener empresas por su correo
+  // NUEVO: Método para obtener empresas por correo
   getEmpresaByCorreo(correo: string): Observable<Empresa> {
     const url = `${this.baseUrl}/correo/${correo}`;
     return this.http.get<Empresa>(url).pipe(
@@ -87,7 +87,7 @@ export class EmpresasService {
 
   // NUEVO: Método para obtener empresas por ID del módulo
   getEmpresasByModuloId(moduloId: string): Observable<Empresa[]> {
-    const url = `${this.baseUrl}/modulo/${moduloId}`; // Asegúrate de que la ruta corresponda a tu API
+    const url = `${this.baseUrl2}/modulos/${moduloId}/empresas`; // Asegúrate de que la ruta corresponda a tu API
     return this.http.get<Empresa[]>(url).pipe(
       catchError((error) => {
         console.error('Error obteniendo empresas por ID de módulo:', error);
