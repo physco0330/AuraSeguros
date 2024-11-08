@@ -1,23 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { Empresa } from '../modelos/empresa.model';
 
 @Injectable({
-  providedIn: 'root' // El servicio está disponible en toda la aplicación
+  providedIn: 'root'
 })
 export class EmpresasService {
-  private baseUrl = 'http://localhost:8080/api/empresas'; // URL base del backend para acceder a los servicios relacionados con empresas
-  private baseUrl2 = 'http://localhost:8080/api'; // URL base para otros servicios, como los módulos
+  private baseUrl = 'http://localhost:8080/api/empresas'; // URL base del backend para empresas
+  private baseUrl2 = 'http://localhost:8080/api'; // URL base para la asociación de empresa-módulo
+
   constructor(private http: HttpClient) {}
 
-  // Método para guardar una nueva empresa utilizando FormData
-  saveEmpresa(empresa: FormData): Observable<any> {
-    return this.http.post<any>(this.baseUrl, empresa).pipe(
+  // Método para guardar una nueva empresa y luego asociarla al módulo en la tabla intermedia
+  saveEmpresa(empresa: FormData, idModulo: number): Observable<any> {
+    return this.http.post<Empresa>(this.baseUrl, empresa).pipe(
+      switchMap((nuevaEmpresa) => {
+        if (nuevaEmpresa.id_empresa) {
+          // Si la empresa se guarda correctamente, asociarla al módulo
+          return this.asociarEmpresaModulo(nuevaEmpresa.id_empresa, idModulo);
+        } else {
+          // Error si no se obtiene el ID de la empresa
+          return throwError(() => new Error('ID de empresa no definido.'));
+        }
+      }),
       catchError((error) => {
-        console.error('Error guardando la empresa:', error);
-        return throwError(() => new Error('Error guardando la empresa'));
+        console.error('Error guardando la empresa y asociándola al módulo:', error);
+        return throwError(() => new Error('Error al guardar la empresa y asociarla al módulo'));
+      })
+    );
+  }
+
+  // Método privado para asociar una empresa a un módulo en la tabla intermedia
+  private asociarEmpresaModulo(idEmpresa: number, idModulo: number): Observable<any> {
+    const url = `${this.baseUrl2}/empresas-modulos`; // Endpoint de la API para la asociación
+    return this.http.post<any>(url, { id_empresa: idEmpresa, id_modulo: idModulo }).pipe(
+      catchError((error) => {
+        console.error('Error al asociar empresa con módulo:', error);
+        return throwError(() => new Error('Error al asociar empresa con módulo'));
       })
     );
   }
@@ -54,7 +75,7 @@ export class EmpresasService {
 
   // Método para obtener una empresa por su nombre
   getEmpresaByNombre(nombre: string): Observable<Empresa> {
-    const url = `${this.baseUrl}/nombre/${nombre}`; // Asegúrate de que la URL coincida con tu backend
+    const url = `${this.baseUrl}/nombre/${nombre}`;
     return this.http.get<Empresa>(url).pipe(
       catchError((error) => {
         console.error('Error obteniendo la empresa por nombre:', error);
@@ -63,7 +84,7 @@ export class EmpresasService {
     );
   }
 
-  // NUEVO: Método para obtener empresas por correo
+  // Método para obtener empresas por correo
   getEmpresaByCorreo(correo: string): Observable<Empresa> {
     const url = `${this.baseUrl}/correo/${correo}`;
     return this.http.get<Empresa>(url).pipe(
@@ -74,9 +95,9 @@ export class EmpresasService {
     );
   }
 
-  // NUEVO: Método para obtener empresas según múltiples criterios
+  // Método para obtener empresas según múltiples criterios
   getEmpresasByFiltro(filtro: any): Observable<Empresa[]> {
-    const url = `${this.baseUrl}/buscar`; // Ruta para búsquedas avanzadas, ajusta según tu API
+    const url = `${this.baseUrl}/buscar`;
     return this.http.post<Empresa[]>(url, filtro).pipe(
       catchError((error) => {
         console.error('Error obteniendo las empresas con filtro:', error);
@@ -85,9 +106,9 @@ export class EmpresasService {
     );
   }
 
-  // NUEVO: Método para obtener empresas por ID del módulo
+  // Método para obtener empresas por ID del módulo
   getEmpresasByModuloId(moduloId: string): Observable<Empresa[]> {
-    const url = `${this.baseUrl2}/modulos/${moduloId}/empresas`; // Asegúrate de que la ruta corresponda a tu API
+    const url = `${this.baseUrl2}/modulos/${moduloId}/empresas`;
     return this.http.get<Empresa[]>(url).pipe(
       catchError((error) => {
         console.error('Error obteniendo empresas por ID de módulo:', error);

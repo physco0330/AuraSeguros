@@ -21,17 +21,22 @@ public class EmpresaModulo {
     private Modulo modulo;
 
     @Column(name = "fecha_asignacion", nullable = false)
-    private LocalDateTime fechaAsignacion = LocalDateTime.now();
+    private LocalDateTime fechaAsignacion;
 
-    // Constructor, getters y setters
+    // Constructor
     public EmpresaModulo() {}
 
     public EmpresaModulo(Empresa empresa, Modulo modulo) {
+        if (empresa == null || modulo == null) {
+            throw new IllegalArgumentException("La empresa o el módulo no pueden ser nulos");
+        }
         this.empresa = empresa;
         this.modulo = modulo;
         this.id = new EmpresaModuloId(empresa.getId_empresa(), modulo.getId_modulo());
+        this.fechaAsignacion = LocalDateTime.now(); // Aseguramos que la fecha de asignación esté siempre inicializada
     }
 
+    // Getters y Setters
     public EmpresaModuloId getId() {
         return id;
     }

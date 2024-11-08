@@ -1,7 +1,12 @@
 package com.seguro.seguro.services;
 
 import com.seguro.seguro.model.Empresa;
+import com.seguro.seguro.model.EmpresaModulo;
+import com.seguro.seguro.model.EmpresaModuloId;
+import com.seguro.seguro.model.Modulo;
 import com.seguro.seguro.repository.EmpresaRepository;
+import com.seguro.seguro.repository.EmpresaModuloRepository;
+import com.seguro.seguro.repository.ModuloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +26,12 @@ public class EmpresaService {
     @Autowired
     private EmpresaRepository empresaRepository;
 
+    @Autowired
+    private EmpresaModuloRepository empresaModuloRepository;  // Repositorio para la tabla intermedia
+
+    @Autowired
+    private ModuloRepository moduloRepository;  // Asegúrate de tener un repositorio para Modulo
+
     // Cargamos la ruta de almacenamiento de imágenes desde el archivo application.properties
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -28,7 +40,13 @@ public class EmpresaService {
     public Empresa crearEmpresa(String nombreEmpresa, String colorPalette,
                                 String nitEmpresa, String correoEmpresa,
                                 String contactoEmpresa, String numeroPoliza,
-                                MultipartFile logoEmpresa, Long idModulo) { // Añadir idModulo
+                                MultipartFile logoEmpresa, Long idModulo) {
+
+        // Validación de entrada
+        if (idModulo == null) {
+            throw new IllegalArgumentException("El id del módulo no puede ser nulo");
+        }
+
         Empresa empresa = new Empresa();
         empresa.setNombre_empresa(nombreEmpresa);
         empresa.setColor_palette(colorPalette);
@@ -38,6 +56,7 @@ public class EmpresaService {
         empresa.setNumero_poliza(numeroPoliza);
         empresa.setId_modulo(idModulo); // Asignar el id_modulo
 
+        // Procesamiento del logo si existe
         if (logoEmpresa != null && !logoEmpresa.isEmpty()) {
             try {
                 String fileName = System.currentTimeMillis() + "_" + logoEmpresa.getOriginalFilename();
@@ -48,11 +67,33 @@ public class EmpresaService {
 
                 empresa.setLogo_empresa(fileName);
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Error al cargar el logo de la empresa", e);
             }
         }
 
-        return empresaRepository.save(empresa);
+        // Guardamos la empresa
+        Empresa empresaGuardada = empresaRepository.save(empresa);
+
+        // Asociamos la empresa con el módulo en la tabla intermedia
+        Optional<Modulo> moduloOptional = moduloRepository.findById(idModulo);
+        if (moduloOptional.isPresent()) {
+            Modulo modulo = moduloOptional.get();
+
+            // Crear la relación en la tabla intermedia
+            EmpresaModuloId empresaModuloId = new EmpresaModuloId(empresaGuardada.getId_empresa(), modulo.getId_modulo());
+            EmpresaModulo empresaModulo = new EmpresaModulo();
+            empresaModulo.setId(empresaModuloId);
+            empresaModulo.setEmpresa(empresaGuardada);
+            empresaModulo.setModulo(modulo);
+            empresaModulo.setFechaAsignacion(LocalDateTime.now()); // Fecha de asignación automática
+
+            // Guardar la relación en la tabla intermedia
+            empresaModuloRepository.save(empresaModulo);
+        } else {
+            throw new RuntimeException("Módulo no encontrado con el ID: " + idModulo);
+        }
+
+        return empresaGuardada;
     }
 
     // Método para obtener todas las empresas
@@ -62,7 +103,7 @@ public class EmpresaService {
 
     // Método para obtener una empresa por su ID
     public Empresa obtenerEmpresa(Long id) {
-        return empresaRepository.findById(id).orElse(null);
+        return empresaRepository.findById(id).orElseThrow(() -> new RuntimeException("Empresa no encontrada con el ID: " + id));
     }
 
     // Método para eliminar una empresa por su ID
@@ -70,11 +111,11 @@ public class EmpresaService {
         if (empresaRepository.existsById(id)) {
             empresaRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Empresa no encontrada");
+            throw new RuntimeException("Empresa no encontrada con el ID: " + id);
         }
     }
 
-    // Método para actualizar una empresa existente (sin nombre_tabla)
+    // Método para actualizar una empresa existente
     public Empresa actualizarEmpresa(Empresa empresa) {
         // Verifica si la empresa existe antes de actualizarla
         Optional<Empresa> empresaExistente = empresaRepository.findById(empresa.getId_empresa());

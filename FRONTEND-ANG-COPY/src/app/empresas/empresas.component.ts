@@ -65,15 +65,20 @@ export class EmpresasComponent implements OnInit {
     });
   }
 
-   // Nueva función para cargar empresas por el ID del módulo
-   loadEmpresasByModuloId(moduloId: string): void {
+  loadEmpresasByModuloId(moduloId: string): void {
     this.empresasService.getEmpresasByModuloId(moduloId).subscribe(data => {
-      this.empresas = data; // Actualiza la lista de empresas con los datos obtenidos
-      console.log("Empresas filtradas por módulo:", data); // Verifica en la consola
+      if (Array.isArray(data)) {
+        this.empresas = data; // Actualiza la lista de empresas
+        console.log("Empresas filtradas por módulo:", data); // Verifica en la consola
+      } else {
+        console.error("La respuesta no es un array de empresas", data);
+      }
     }, error => {
       console.error("Error obteniendo empresas por módulo:", error);
+      alert('No se han cargado las empresas correctamente'); // Muestra un mensaje de error
     });
   }
+
 
   // Método para redirigir al módulo anterior
   volverAModulo(): void {
@@ -164,50 +169,55 @@ navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
     }
   }
 
-// Guardar una nueva empresa en la base de datos
-guardarEmpresa(): void {
-  // Validar que todos los campos requeridos estén llenos
-  if (this.nombreEmpresa && this.colorCard && this.nitEmpresa && this.correoEmpresa && this.contactoEmpresa && this.numeroPoliza) {
-    const nombreLimpio = this.nombreEmpresa.replace(/\s+/g, '').toLowerCase(); // Elimina espacios y convierte a minúsculas
-    const empresaExistente = this.empresas.find(empresa =>
-      empresa.nombre_empresa.replace(/\s+/g, '').toLowerCase() === nombreLimpio // Verifica si la empresa ya existe
-    );
+  guardarEmpresa(): void {
+    // Verificar si this.empresas está disponible y es un array
+    if (this.empresas && Array.isArray(this.empresas)) {
+      // Validar que todos los campos requeridos estén llenos
+      if (this.nombreEmpresa && this.colorCard && this.nitEmpresa && this.correoEmpresa && this.contactoEmpresa && this.numeroPoliza) {
+        const nombreLimpio = this.nombreEmpresa.replace(/\s+/g, '').toLowerCase(); // Elimina espacios y convierte a minúsculas
+        const empresaExistente = this.empresas.find(empresa =>
+          empresa.nombre_empresa.replace(/\s+/g, '').toLowerCase() === nombreLimpio // Verifica si la empresa ya existe
+        );
 
-    if (empresaExistente) {
-      alert('Ya existe una empresa con ese nombre. Por favor, elige otro nombre.'); // Mensaje de error si existe
-      return;
-    }
+        if (empresaExistente) {
+          alert('Ya existe una empresa con ese nombre. Por favor, elige otro nombre.'); // Mensaje de error si existe
+          return;
+        }
 
-    // Crear un nuevo FormData para enviar los datos de la empresa
-    const formData = new FormData();
-    formData.append('nombre_empresa', this.nombreEmpresa.trim()); // Añade el nombre de la empresa
-    formData.append('nit_empresa', this.nitEmpresa); // Añade el NIT de la empresa
-    formData.append('correo_empresa', this.correoEmpresa); // Añade el correo empresarial
-    formData.append('contacto_empresa', this.contactoEmpresa); // Añade el contacto empresarial
-    formData.append('numero_poliza', this.numeroPoliza); // Añade el número de póliza
-    formData.append('color_palette', this.colorCard); // Añade la paleta de colores
+        // Crear un nuevo FormData para enviar los datos de la empresa
+        const formData = new FormData();
+        formData.append('nombre_empresa', this.nombreEmpresa.trim()); // Añade el nombre de la empresa
+        formData.append('nit_empresa', this.nitEmpresa); // Añade el NIT de la empresa
+        formData.append('correo_empresa', this.correoEmpresa); // Añade el correo empresarial
+        formData.append('contacto_empresa', this.contactoEmpresa); // Añade el contacto empresarial
+        formData.append('numero_poliza', this.numeroPoliza); // Añade el número de póliza
+        formData.append('color_palette', this.colorCard); // Añade la paleta de colores
 
-    // Añade el ID del módulo a los datos de la empresa
-    if (this.moduloId) {
-      formData.append('id_modulo', this.moduloId); // Añade el id del módulo
-    }
+        // Convierte el id_modulo de string a number antes de agregarlo al formData
+        if (this.moduloId) {
+          formData.append('id_modulo', String(Number(this.moduloId))); // Convierte a number
+        }
 
-    // Llamada al servicio para guardar la empresa
-    this.empresasService.saveEmpresa(formData).subscribe(
-      response => {
-        console.log('Empresa guardada', response); // Muestra la respuesta en consola
-        this.closeModal(); // Cierra el modal después de guardar
-        this.loadEmpresas(); // Recarga la lista de empresas
-        alert('Guardado exitoso'); // Muestra un mensaje de éxito
-      },
-      error => {
-        console.error('Error guardando la empresa:', error); // Muestra el error en la consola
+        // Llamada al servicio para guardar la empresa
+        this.empresasService.saveEmpresa(formData, Number(this.moduloId)).subscribe(
+          response => {
+            console.log('Empresa guardada', response); // Muestra la respuesta en consola
+            this.closeModal(); // Cierra el modal después de guardar
+            this.loadEmpresas(); // Recarga la lista de empresas
+            alert('Guardado exitoso'); // Muestra un mensaje de éxito
+          },
+          error => {
+            console.error('Error guardando la empresa:', error); // Muestra el error en la consola
+          }
+        );
+      } else {
+        alert('Todos los campos son obligatorios'); // Mensaje de error si faltan campos
       }
-    );
-  } else {
-    alert('Todos los campos son obligatorios'); // Mensaje de error si faltan campos
+    } else {
+      console.error('No se han cargado las empresas correctamente.');
+    }
   }
-}
+
 
 
   // Método para cargar todas las empresas

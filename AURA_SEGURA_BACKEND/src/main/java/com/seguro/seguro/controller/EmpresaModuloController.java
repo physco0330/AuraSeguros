@@ -1,6 +1,7 @@
 package com.seguro.seguro.controller;
 
 import com.seguro.seguro.model.Empresa;
+import com.seguro.seguro.model.EmpresaModulo;
 import com.seguro.seguro.services.EmpresaModuloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +28,14 @@ public class EmpresaModuloController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(empresas);
+    }
+
+    // Nuevo Endpoint para guardar la relación entre empresa y módulo
+    @PostMapping("/modulos/{idModulo}/empresas/{idEmpresa}")
+    public ResponseEntity<EmpresaModulo> agregarEmpresaAModulo(
+            @PathVariable Long idModulo,
+            @PathVariable Long idEmpresa) {
+        EmpresaModulo empresaModulo = empresaModuloService.guardarEmpresaModulo(idEmpresa, idModulo);
+        return ResponseEntity.ok(empresaModulo);
     }
 }
