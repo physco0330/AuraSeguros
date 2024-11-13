@@ -110,33 +110,33 @@ public class BienesService implements BienesServiceImp {
 
                 // Crear una nueva entidad BienesEntity y asignar los valores del CSV
                 BienesEntity bien = new BienesEntity();
-                bien.setCodigo(data[0]);                         // Ajusta los índices según tu archivo CSV
-                bien.setArticuloBienes(data[1]);
-                bien.setProcesoEstaciones(data[2]);
-                bien.setCantidad(Integer.parseInt(data[3]));    // Asegúrate de que el índice sea correcto
-                bien.setDescripcionArticulo(data[4]);
-                bien.setDescripcionMovimiento(data[5]);
-                bien.setEstado(data[6]);
-                bien.setRiesgo(data[7]);
-                bien.setFechaIngreso(data[8]);
-                bien.setFechaModificacion(data[9]);
-                bien.setVrUnitario2023(new BigDecimal(data[10])); // Asegúrate de que el índice sea correcto
-                bien.setVrAsegurado(new BigDecimal(data[11]));
-                bien.setPorcentajeIva(new BigDecimal(data[12]));
-                bien.setIvaVariable(new BigDecimal(data[13]));
-                bien.setVrAsegurable(new BigDecimal(data[14]));
-                bien.setTasaGeneral(new BigDecimal(data[15]));
-                bien.setPrima(new BigDecimal(data[16]));
-                bien.setTasaIva(new BigDecimal(data[17]));
-                bien.setPrimaIvaAnual(new BigDecimal(data[18]));
-                bien.setPrimaAnualTotal(new BigDecimal(data[19]));
-                bien.setBeneficiarioAdicional(data[20]);
-                bien.setNumeroEndoso(data[21]);
-                bien.setValorEndoso(new BigDecimal(data[22]));
-                bien.setVigenciaEndoso(data[23]);
-                bien.setBanco(data[24]);
-                bien.setNitBanco(data[25]);
-                bien.setIdEmpresa(Long.parseLong(data[26]));     // Asegúrate de que el índice sea correcto
+                bien.setCodigo(data[1]);                         // Ajusta los índices según tu archivo CSV
+                bien.setArticuloBienes(data[2]);
+                bien.setProcesoEstaciones(data[3]);
+                bien.setCantidad(Integer.parseInt(data[4]));    // Asegúrate de que el índice sea correcto
+                bien.setDescripcionArticulo(data[5]);
+                bien.setDescripcionMovimiento(data[6]);
+                bien.setEstado(data[7]);
+                bien.setRiesgo(data[8]);
+                bien.setFechaIngreso(data[9]);
+                bien.setFechaModificacion(data[10]);
+                bien.setVrUnitario2023(new BigDecimal(data[11])); // Asegúrate de que el índice sea correcto
+                bien.setVrAsegurado(new BigDecimal(data[12]));
+                bien.setPorcentajeIva(new BigDecimal(data[13]));
+                bien.setIvaVariable(new BigDecimal(data[14]));
+                bien.setVrAsegurable(new BigDecimal(data[15]));
+                bien.setTasaGeneral(new BigDecimal(data[16]));
+                bien.setPrima(new BigDecimal(data[17]));
+                bien.setTasaIva(new BigDecimal(data[18]));
+                bien.setPrimaIvaAnual(new BigDecimal(data[19]));
+                bien.setPrimaAnualTotal(new BigDecimal(data[20]));
+                bien.setBeneficiarioAdicional(data[21]);
+                bien.setNumeroEndoso(data[22]);
+                bien.setValorEndoso(new BigDecimal(data[23]));
+                bien.setVigenciaEndoso(data[24]);
+                bien.setBanco(data[25]);
+                bien.setNitBanco(data[26]);
+                bien.setIdEmpresa(Long.parseLong(data[27]));     // Asegúrate de que el índice sea correcto
 
                 bienesList.add(bien);
                 }

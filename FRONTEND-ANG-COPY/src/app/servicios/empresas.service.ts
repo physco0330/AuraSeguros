@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { Empresa } from '../modelos/empresa.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmpresasService {
   private baseUrl = 'http://localhost:8080/api/empresas'; // URL base del backend para empresas
@@ -13,35 +13,43 @@ export class EmpresasService {
 
   constructor(private http: HttpClient) {}
 
-  // Método para guardar una nueva empresa y luego asociarla al módulo en la tabla intermedia
-  saveEmpresa(empresa: FormData, idModulo: number): Observable<any> {
-    return this.http.post<Empresa>(this.baseUrl, empresa).pipe(
-      switchMap((nuevaEmpresa) => {
-        if (nuevaEmpresa.id_empresa) {
-          // Si la empresa se guarda correctamente, asociarla al módulo
-          return this.asociarEmpresaModulo(nuevaEmpresa.id_empresa, idModulo);
-        } else {
-          // Error si no se obtiene el ID de la empresa
-          return throwError(() => new Error('ID de empresa no definido.'));
-        }
-      }),
-      catchError((error) => {
-        console.error('Error guardando la empresa y asociándola al módulo:', error);
-        return throwError(() => new Error('Error al guardar la empresa y asociarla al módulo'));
-      })
-    );
-  }
+ // Método para guardar una nueva empresa
+saveEmpresa(empresa: FormData): Observable<any> {
+  return this.http.post<Empresa>(this.baseUrl, empresa).pipe(
+    map((nuevaEmpresa) => {
+      if (nuevaEmpresa.id_empresa) {
+        // Devuelve la empresa recién creada si tiene un ID válido
+        return nuevaEmpresa;
+      } else {
+        // Error si no se obtiene el ID de la empresa
+        throw new Error('ID de empresa no definido.');
+      }
+    }),
+    catchError((error) => {
+      console.error('Error guardando la empresa:', error);
+      return throwError(() => new Error('Error al guardar la empresa'));
+    })
+  );
+}
 
-  // Método privado para asociar una empresa a un módulo en la tabla intermedia
-  private asociarEmpresaModulo(idEmpresa: number, idModulo: number): Observable<any> {
-    const url = `${this.baseUrl2}/empresas-modulos`; // Endpoint de la API para la asociación
-    return this.http.post<any>(url, { id_empresa: idEmpresa, id_modulo: idModulo }).pipe(
-      catchError((error) => {
-        console.error('Error al asociar empresa con módulo:', error);
-        return throwError(() => new Error('Error al asociar empresa con módulo'));
-      })
-    );
-  }
+
+ /* // Método privado para asociar una empresa a un módulo en la tabla intermedia
+  private asociarEmpresaModulo(
+    idEmpresa: number,
+    idModulo: number
+  ): Observable<any> {
+    const url = `${this.baseUrl2}/modulos`; // Endpoint de la API para la asociación
+    return this.http
+      .post<any>(url, { id_empresa: idEmpresa, id_modulo: idModulo })
+      .pipe(
+        catchError((error) => {
+          console.error('Error al asociar empresa con módulo:', error);
+          return throwError(
+            () => new Error('Error al asociar empresa con módulo')
+          );
+        })
+      );
+  } */
 
   // Método para obtener todas las empresas
   getEmpresas(): Observable<Empresa[]> {
@@ -79,7 +87,9 @@ export class EmpresasService {
     return this.http.get<Empresa>(url).pipe(
       catchError((error) => {
         console.error('Error obteniendo la empresa por nombre:', error);
-        return throwError(() => new Error('Error obteniendo la empresa por nombre'));
+        return throwError(
+          () => new Error('Error obteniendo la empresa por nombre')
+        );
       })
     );
   }
@@ -90,7 +100,9 @@ export class EmpresasService {
     return this.http.get<Empresa>(url).pipe(
       catchError((error) => {
         console.error('Error obteniendo la empresa por correo:', error);
-        return throwError(() => new Error('Error obteniendo la empresa por correo'));
+        return throwError(
+          () => new Error('Error obteniendo la empresa por correo')
+        );
       })
     );
   }
@@ -101,7 +113,9 @@ export class EmpresasService {
     return this.http.post<Empresa[]>(url, filtro).pipe(
       catchError((error) => {
         console.error('Error obteniendo las empresas con filtro:', error);
-        return throwError(() => new Error('Error obteniendo las empresas con filtro'));
+        return throwError(
+          () => new Error('Error obteniendo las empresas con filtro')
+        );
       })
     );
   }
@@ -112,7 +126,9 @@ export class EmpresasService {
     return this.http.get<Empresa[]>(url).pipe(
       catchError((error) => {
         console.error('Error obteniendo empresas por ID de módulo:', error);
-        return throwError(() => new Error('Error obteniendo empresas por ID de módulo'));
+        return throwError(
+          () => new Error('Error obteniendo empresas por ID de módulo')
+        );
       })
     );
   }

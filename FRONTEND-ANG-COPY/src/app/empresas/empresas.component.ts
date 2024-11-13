@@ -199,11 +199,11 @@ navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
         }
 
         // Llamada al servicio para guardar la empresa
-        this.empresasService.saveEmpresa(formData, Number(this.moduloId)).subscribe(
+        this.empresasService.saveEmpresa(formData).subscribe(
           response => {
             console.log('Empresa guardada', response); // Muestra la respuesta en consola
             this.closeModal(); // Cierra el modal después de guardar
-            this.loadEmpresas(); // Recarga la lista de empresas
+     /*       this.loadEmpresas(); // Recarga la lista de empresas */
             alert('Guardado exitoso'); // Muestra un mensaje de éxito
           },
           error => {
