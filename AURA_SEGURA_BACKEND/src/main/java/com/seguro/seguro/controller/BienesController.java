@@ -88,11 +88,13 @@ public class BienesController {
         return new ResponseEntity<>(bienes, HttpStatus.OK);
     }
 
-    // Nuevo endpoint para cargar archivo CSV
+    // Endpoint para cargar el archivo CSV con el idEmpresa desde la URL
     @PostMapping("/upload-csv")
-    public ResponseEntity<String> uploadCSV(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadCSV(@RequestParam("file") MultipartFile file,
+                                            @RequestParam("idEmpresa") Long idEmpresa) {
         try {
-            bienesService.processCSV(file); // Llama al método de servicio para procesar el archivo
+            // Llama al método de servicio y pasa idEmpresa como parámetro
+            bienesService.processCSV(file, idEmpresa);
             return new ResponseEntity<>("Archivo CSV subido y procesado con éxito", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al procesar el archivo CSV: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

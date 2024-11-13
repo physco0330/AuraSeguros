@@ -115,16 +115,19 @@ export class BienesService {
     );
   }
 
-  // Método para subir un archivo CSV
-subirArchivoCSV(archivo: FormData): Observable<any> {
-  const url = `${this.baseUrl}/upload-csv`; // Ajusta esta URL según el endpoint del backend
-  return this.http.post(url, archivo).pipe(
-    catchError((error) => {
-      console.error('Error al subir el archivo CSV:', error);
-      return throwError(() => new Error('Error al subir el archivo CSV'));
-    })
-  );
-}
+  subirArchivoCSV(archivo: FormData, idEmpresa: number): Observable<any> {
+    const url = `${this.baseUrl}/upload-csv`; // Ajusta esta URL según el endpoint del backend
+
+    // Añadir idEmpresa al FormData
+    archivo.append('idEmpresa', idEmpresa.toString());
+
+    return this.http.post(url, archivo).pipe(
+      catchError((error) => {
+        console.error('Error al subir el archivo CSV:', error);
+        return throwError(() => new Error('Error al subir el archivo CSV'));
+      })
+    );
+  }
 
 
   // Nuevo método para obtener el historial por código

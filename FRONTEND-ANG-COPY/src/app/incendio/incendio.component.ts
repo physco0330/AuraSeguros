@@ -195,6 +195,7 @@ getEmpresa(nombre: string): void {
     });
   }
 
+
   subirArchivo(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
@@ -202,18 +203,37 @@ getEmpresa(nombre: string): void {
       const formData = new FormData();
       formData.append('file', file);
 
-      // Aquí llamamos al servicio para subir el archivo
-      this.bienesService.subirArchivoCSV(formData).subscribe(
-        (response) => {
-          // Lógica después de la subida exitosa
-          alert('Datos subidos con éxito');
-        },
-        (error) => {
-          console.error('Error al subir archivo:', error);
+      // Obtener el idEmpresa desde la URL (suponiendo que está en la URL como parámetro de consulta)
+      const idEmpresaString = this.route.snapshot.queryParamMap.get('idEmpresa');
+
+      if (idEmpresaString) {
+        // Convertir idEmpresa a number (asegurarse de que es un número válido)
+        const idEmpresa = Number(idEmpresaString);
+
+        if (!isNaN(idEmpresa)) {
+          // Agregar el idEmpresa como número al FormData
+          formData.append('idEmpresa', idEmpresa.toString());  // Convertir a string para agregar a FormData
+
+          // Llamamos al servicio para subir el archivo
+          this.bienesService.subirArchivoCSV(formData, idEmpresa).subscribe(
+            (response) => {
+              // Lógica después de la subida exitosa
+              alert('Datos subidos con éxito');
+            },
+            (error) => {
+              console.error('Error al subir archivo:', error);
+            }
+          );
+        } else {
+          console.error('El idEmpresa no es un número válido:', idEmpresaString);
         }
-      );
+      } else {
+        console.error('No se encontró idEmpresa en la URL');
+      }
     }
   }
+
+
 
 
   // Método para cargar todos los bienes desde el servicio

@@ -90,9 +90,8 @@ public class BienesService implements BienesServiceImp {
         return bienesRepository.findByNombreEmpresa(nombreEmpresa);
     }
 
-    // Método para procesar el archivo CSV y almacenar bienes en la base de datos
     @Override
-    public void processCSV(MultipartFile file) throws Exception {
+    public void processCSV(MultipartFile file, Long idEmpresa) throws Exception {
         List<BienesEntity> bienesList = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
@@ -100,51 +99,95 @@ public class BienesService implements BienesServiceImp {
             boolean firstLine = true;
 
             while ((line = reader.readLine()) != null) {
+                // Limpiar la línea de posibles espacios en blanco o saltos de línea
+                line = line.trim();
+
                 // Saltar la primera línea si es un encabezado
                 if (firstLine) {
                     firstLine = false;
                     continue;
                 }
 
+                // Verificar si la línea está vacía o malformada
+                if (line.isEmpty() || line.contains(",,") || line.trim().equals("")) {
+                    System.out.println("Línea vacía o malformada: " + line); // Depuración
+                    continue; // Salta esta iteración y pasa a la siguiente línea
+                }
+
+                // Dividir la línea en partes
                 String[] data = line.split(",");
+
+                // Verificar que la línea tenga el número esperado de columnas (27 en tu caso)
+                if (data.length < 27) {
+                    System.out.println("Error en la línea, número de columnas insuficiente: " + line); // Depuración
+                    continue;
+                }
 
                 // Crear una nueva entidad BienesEntity y asignar los valores del CSV
                 BienesEntity bien = new BienesEntity();
-                bien.setCodigo(data[1]);                         // Ajusta los índices según tu archivo CSV
-                bien.setArticuloBienes(data[2]);
-                bien.setProcesoEstaciones(data[3]);
-                bien.setCantidad(Integer.parseInt(data[4]));    // Asegúrate de que el índice sea correcto
-                bien.setDescripcionArticulo(data[5]);
-                bien.setDescripcionMovimiento(data[6]);
-                bien.setEstado(data[7]);
-                bien.setRiesgo(data[8]);
-                bien.setFechaIngreso(data[9]);
-                bien.setFechaModificacion(data[10]);
-                bien.setVrUnitario2023(new BigDecimal(data[11])); // Asegúrate de que el índice sea correcto
-                bien.setVrAsegurado(new BigDecimal(data[12]));
-                bien.setPorcentajeIva(new BigDecimal(data[13]));
-                bien.setIvaVariable(new BigDecimal(data[14]));
-                bien.setVrAsegurable(new BigDecimal(data[15]));
-                bien.setTasaGeneral(new BigDecimal(data[16]));
-                bien.setPrima(new BigDecimal(data[17]));
-                bien.setTasaIva(new BigDecimal(data[18]));
-                bien.setPrimaIvaAnual(new BigDecimal(data[19]));
-                bien.setPrimaAnualTotal(new BigDecimal(data[20]));
-                bien.setBeneficiarioAdicional(data[21]);
-                bien.setNumeroEndoso(data[22]);
-                bien.setValorEndoso(new BigDecimal(data[23]));
-                bien.setVigenciaEndoso(data[24]);
-                bien.setBanco(data[25]);
-                bien.setNitBanco(data[26]);
-                bien.setIdEmpresa(Long.parseLong(data[27]));     // Asegúrate de que el índice sea correcto
+                try {
+                    bien.setCodigo(data[1]);                         // Ajusta los índices según tu archivo CSV
+                    bien.setArticuloBienes(data[2]);
+                    bien.setProcesoEstaciones(data[3]);
+                    bien.setCantidad("NA".equals(data[4]) ? null : safeParseInt(data[4]));  // Manejo de "NA" en cantidad
+                    bien.setDescripcionArticulo(data[5]);
+                    bien.setDescripcionMovimiento(data[6]);
+                    bien.setEstado(data[7]);
+                    bien.setRiesgo(data[8]);
+                    bien.setFechaIngreso(data[9]);
+                    bien.setFechaModificacion(data[10]);
+                    bien.setVrUnitario2023("NA".equals(data[11]) ? null : safeParseBigDecimal(data[11])); // Manejar "NA" en valores numéricos
+                    bien.setVrAsegurado("NA".equals(data[12]) ? null : safeParseBigDecimal(data[12]));
+                    bien.setPorcentajeIva("NA".equals(data[13]) ? null : safeParseBigDecimal(data[13]));
+                    bien.setIvaVariable("NA".equals(data[14]) ? null : safeParseBigDecimal(data[14]));
+                    bien.setVrAsegurable("NA".equals(data[15]) ? null : safeParseBigDecimal(data[15]));
+                    bien.setTasaGeneral("NA".equals(data[16]) ? null : safeParseBigDecimal(data[16]));
+                    bien.setPrima("NA".equals(data[17]) ? null : safeParseBigDecimal(data[17]));
+                    bien.setTasaIva("NA".equals(data[18]) ? null : safeParseBigDecimal(data[18]));
+                    bien.setPrimaIvaAnual("NA".equals(data[19]) ? null : safeParseBigDecimal(data[19]));
+                    bien.setPrimaAnualTotal("NA".equals(data[20]) ? null : safeParseBigDecimal(data[20]));
+                    bien.setBeneficiarioAdicional(data[21]);
+                    bien.setNumeroEndoso(data[22]);
+                    bien.setValorEndoso("NA".equals(data[23]) ? null : safeParseBigDecimal(data[23]));
+                    bien.setVigenciaEndoso(data[24]);
+                    bien.setBanco(data[25]);
+                    bien.setNitBanco(data[26]);
 
-                bienesList.add(bien);
+                    // Asignar el idEmpresa
+                    bien.setIdEmpresa(idEmpresa); // Aquí asignas el idEmpresa al bien
+
+                    bienesList.add(bien); // Agregar a la lista de bienes
+                } catch (Exception e) {
+                    System.out.println("Error al procesar la línea: " + line + " - " + e.getMessage());
+                    continue; // O lanzar un error si prefieres detener el proceso
                 }
+            }
 
-                // Guardar todos los bienes en la base de datos
-            bienesRepository.saveAll(bienesList);
+            // Verificar si la lista no está vacía antes de guardar
+            if (!bienesList.isEmpty()) {
+                System.out.println("Cantidad de bienes a guardar: " + bienesList.size());
+                bienesRepository.saveAll(bienesList);
+            }
+
         } catch (Exception e) {
-            throw new Exception("Error al procesar el archivo CSV: " + e.getMessage());
+            throw new Exception("Error al procesar el archivo CSV: " + e.getMessage(), e);
+        }
+    }
+
+    // Funciones auxiliares para manejar la conversión de datos numéricos de forma segura
+    private Integer safeParseInt(String value) {
+        try {
+            return "NA".equals(value) ? null : Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return null; // Retorna null si el valor no es numérico
+        }
+    }
+
+    private BigDecimal safeParseBigDecimal(String value) {
+        try {
+            return "NA".equals(value) ? null : new BigDecimal(value);
+        } catch (NumberFormatException e) {
+            return null; // Retorna null si el valor no es numérico
         }
     }
 }

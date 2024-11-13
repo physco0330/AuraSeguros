@@ -29,5 +29,5 @@ public interface BienesServiceImp {
     List<BienesEntity> buscarlistaxfecha(String articulo, String idRiesgo);
 
     // Nuevo método para procesar un archivo CSV
-    void processCSV(MultipartFile file) throws Exception;
+    void processCSV(MultipartFile file, Long idEmpresa) throws Exception;
 }
