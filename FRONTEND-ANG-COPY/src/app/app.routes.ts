@@ -9,10 +9,13 @@ import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.componen
 import { EditarBienComponent } from './editar-bien2/editar-bien2.component';
 import { VisualizarBienComponent } from './visualizar-bien/visualizar-bien.component';
 import { EmpresasComponent } from './empresas/empresas.component';
+import { LoginComponent } from './login/login.component';
 
 
 
 export const routes: Routes = [
+
+  { path: 'login', component: LoginComponent },
   // Ruta para la página principal
   { path: 'inicio', component: HomeComponent },
 
