@@ -1,4 +1,12 @@
- <div class="home">
+<!-- app.component.html -->
+
+<!-- Mostrar login fullscreen solo si estás en la ruta /login -->
+<div *ngIf="isLoginRoute" class="login-wrapper">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- Layout normal para el resto de rutas -->
+<div *ngIf="!isLoginRoute" class="home">
   <app-header></app-header>
   <app-sidebar (sidebarToggled)="onSidebarToggle($event)"></app-sidebar>
   <main class="main-content" [class.expanded]="isSidebarCollapsed">

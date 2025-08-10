@@ -48,8 +48,8 @@ export const routes: Routes = [
 { path: 'empresas', component: EmpresasComponent },
 
   // Ruta por defecto para manejar URLs no encontradas
-  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
-  { path: '**', redirectTo: '/inicio' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({

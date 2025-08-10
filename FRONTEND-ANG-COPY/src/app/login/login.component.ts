@@ -2,21 +2,21 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'] // cambiar a .scss
+  styleUrls: ['./login.component.scss']
 })
-
 export class LoginComponent {
-  correoUsuario: string = '';
-  contrasena: string = '';
-  mensaje: string = '';
+  correoUsuario = '';
+  contrasena = '';
+  mensaje = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   onLogin() {
     const url = 'http://localhost:8080/api/auth/login';
@@ -29,13 +29,16 @@ export class LoginComponent {
       next: (data: any) => {
         this.mensaje = `✅ Bienvenido ${data.nombreUsuario}`;
         console.log('Usuario logueado:', data);
-        // Aquí podrías guardar el token o usuario en localStorage
-        // localStorage.setItem('usuario', JSON.stringify(data));
+        this.router.navigate(['/inicio']);
       },
       error: (error) => {
         console.error('Error en login:', error);
         this.mensaje = '❌ Credenciales inválidas o error en el servidor';
       }
     });
+  }
+
+  goToHome() {
+    this.router.navigate(['/inicio']);
   }
 }
