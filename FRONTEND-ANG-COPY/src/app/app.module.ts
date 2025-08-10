@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {CommonModule} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BienesComponent } from './bienes/bienes.component';
@@ -14,10 +15,12 @@ import { CambiarContraComponent } from './cambiar-contra/cambiar-contra.componen
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { EmpresasComponent } from './empresas/empresas.component';
 import { LoginComponent } from './login/login.component'; // ⬅️ NUEVO
+import { RegistroComponent } from './registro/registro.component'; // ⬅️ NUEVO
 
 @NgModule({
   declarations: [],
   imports: [
+    CommonModule,
     NgModule,
     BienesComponent,
     HomeComponent,
@@ -32,7 +35,9 @@ import { LoginComponent } from './login/login.component'; // ⬅️ NUEVO
     CambiarContraComponent,
     MatSidenavModule,
     EmpresasComponent,
-    LoginComponent // ⬅️ IMPORTAR AQUÍ
+    LoginComponent, // ⬅️ IMPORTAR AQUÍ
+    RegistroComponent,
+
   ],
   providers: [
     provideHttpClient(withFetch())

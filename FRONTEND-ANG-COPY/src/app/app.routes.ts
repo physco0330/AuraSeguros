@@ -10,10 +10,13 @@ import { EditarBienComponent } from './editar-bien2/editar-bien2.component';
 import { VisualizarBienComponent } from './visualizar-bien/visualizar-bien.component';
 import { EmpresasComponent } from './empresas/empresas.component';
 import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/registro.component';
 
 
 
 export const routes: Routes = [
+
+  { path: 'registro', component: RegistroComponent },
 
   { path: 'login', component: LoginComponent },
   // Ruta para la página principal
