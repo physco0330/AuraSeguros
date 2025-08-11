@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';  // <-- Importa HttpClient
 import { Observable } from 'rxjs';
 
 export interface RegistroData {
-  nombre: string;
-  email: string;
-  password: string;
+  nombreUsuario: string;
+  correoUsuario: string;
+  contrasena: string;
   // agrega más campos si tienes en el formulario
 }
 
@@ -14,7 +14,7 @@ export interface RegistroData {
 })
 export class RegistroService {
 
-  private apiUrl = 'http://localhost:8080/api/auth/registro'; // Cambia esta URL por la de tu backend
+  private apiUrl = 'http://localhost:8080/api/usuarios'; // Cambia esta URL por la de tu backend
 
   constructor(private http: HttpClient) { }  // Inyecta HttpClient
 
