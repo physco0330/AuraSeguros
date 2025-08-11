@@ -2,15 +2,12 @@
   <!-- Contenedor principal del componente Incendio -->
   <div class="header-container mb-4">
     <!-- Título del componente -->
-    <h2 class="text-center">Incendio</h2>
+
     <div class="button-container">
       <!-- Botón para volver al módulo anterior -->
       <button class="btn btn-primary volver-btn" (click)="volverAModulo()">Volver a empresas</button>
 
       <div style="position: relative;">
-<!-- Botón para subir archivo CSV -->
-<input type="file" accept=".csv" (change)="subirArchivo($event)" style="display: none;" #fileInput>
-<button class="csv-btn" (click)="fileInput.click()">Subir CSV</button>
 
 <!-- Pantalla de carga -->
 <div *ngIf="isLoading" class="loading-overlay">
@@ -55,13 +52,6 @@
 <!-- Mostrar datos de la empresa -->
 <div *ngIf="empresa" class="info-card-back">
   <h1>{{ empresa.nombre_empresa }}</h1>
-</div>
-
-
-
-<!-- Si no hay datos de la empresa -->
-<div *ngIf="!empresa" class="alert alert-info">
-  No se encontró la información de la empresa.
 </div>
 
 

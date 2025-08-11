@@ -15,6 +15,7 @@ export class SidebarComponent {
   isCollapsed = false;
   showModal = false;
   @Output() sidebarToggled = new EventEmitter<boolean>();
+
   constructor(private router: Router) {}
 
   toggleSidebar() {
@@ -28,7 +29,8 @@ export class SidebarComponent {
 
   confirmLogout() {
     this.showModal = false; // Cerrar el modal
-    window.location.href = 'https://aurasseguros.com'; // Redirigir a la página de cierre de sesión en la misma pestaña
+    localStorage.removeItem('token'); // Limpiar datos de sesión
+    this.router.navigate(['/login']); // Redirigir a la página de login dentro de Angular
   }
 
   cancelLogout() {
