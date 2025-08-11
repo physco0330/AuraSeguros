@@ -16,11 +16,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { EmpresasComponent } from './empresas/empresas.component';
 import { LoginComponent } from './login/login.component'; // ⬅️ NUEVO
 import { RegistroComponent } from './registro/registro.component'; // ⬅️ NUEVO
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    
     NgModule,
     BienesComponent,
     HomeComponent,
@@ -35,6 +38,7 @@ import { RegistroComponent } from './registro/registro.component'; // ⬅️ NUE
     CambiarContraComponent,
     MatSidenavModule,
     EmpresasComponent,
+    HttpClientModule,
     LoginComponent, // ⬅️ IMPORTAR AQUÍ
     RegistroComponent,
 

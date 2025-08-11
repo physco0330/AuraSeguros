@@ -20,4 +20,17 @@ public class UsuarioService {
         }
         return Optional.empty();
     }
+
+    // Nuevo método para registrar usuario
+    public Usuario registrar(Usuario nuevoUsuario) {
+        // Verificar si el correo ya está registrado
+        if (usuarioRepository.existsByCorreoUsuario(nuevoUsuario.getCorreoUsuario())) {
+            throw new RuntimeException("El correo ya está registrado");
+        }
+
+        // Aquí puedes agregar lógica para encriptar la contraseña antes de guardar
+        // Por simplicidad, lo guardamos tal cual
+
+        return usuarioRepository.save(nuevoUsuario);
+    }
 }

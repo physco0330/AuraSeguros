@@ -28,4 +28,15 @@ public class AuthController {
             return ResponseEntity.status(401).body("Credenciales inválidas");
         }
     }
+
+    // Nuevo endpoint para registro de usuario
+    @PostMapping("/registro")
+    public ResponseEntity<?> registrarUsuario(@RequestBody Usuario nuevoUsuario) {
+        try {
+            Usuario usuarioGuardado = usuarioService.registrar(nuevoUsuario);
+            return ResponseEntity.ok(usuarioGuardado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al registrar usuario: " + e.getMessage());
+        }
+    }
 }

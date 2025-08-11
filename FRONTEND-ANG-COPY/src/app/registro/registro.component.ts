@@ -2,35 +2,39 @@ import { Component } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { RegistroService, RegistroData } from '../servicios/registro.service';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss'],
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule]  // Quitar RegistroService de aquí
 })
 export class RegistroComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private registroService: RegistroService) {}
 
   onSubmit(registroForm: NgForm) {
     if (!registroForm.valid) {
       return; // Si el formulario es inválido, no hace nada
     }
 
-    console.log('Formulario válido, datos:', registroForm.value);
+    const datos: RegistroData = registroForm.value;
 
-    // Aquí llamarías a tu servicio para registrar en el backend
-
-    // Redirigir al login después del registro
-    this.router.navigate(['/login']);
-
-    // Resetear el formulario
-    registroForm.reset();
+    this.registroService.registrarUsuario(datos).subscribe({
+      next: (res) => {
+        console.log('Registro exitoso:', res);
+        this.router.navigate(['/login']);
+        registroForm.reset();
+      },
+      error: (err) => {
+        console.error('Error en el registro:', err);
+        // Aquí puedes mostrar un mensaje de error en la UI
+      }
+    });
   }
 
-  // 👇 Nuevo método para redirigir desde el enlace
   goToLogin() {
     this.router.navigate(['/login']);
   }
