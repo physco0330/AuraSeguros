@@ -22,8 +22,9 @@ public class Usuario {
     private String contrasena;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "rol_usuario", nullable = false)
+    @Column(name = "rol_usuario")
     private RolUsuario rolUsuario;
+
 
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;

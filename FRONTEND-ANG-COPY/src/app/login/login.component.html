@@ -24,4 +24,9 @@
   </form>
 
   <p *ngIf="mensaje">{{ mensaje }}</p>
+
+  <p class="link-registro">
+    ¿No tienes cuenta?
+    <a href="#" (click)="goToRegistro(); $event.preventDefault()">Regístrate aquí</a>
+  </p>
 </div>

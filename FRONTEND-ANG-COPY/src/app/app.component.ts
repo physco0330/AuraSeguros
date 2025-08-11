@@ -43,11 +43,11 @@ export class AppComponent {
 
   constructor(private router: Router) {
     this.router.events.subscribe(() => {
-      this.isLoginRoute = this.router.url === '/login';
+      this.isLoginRoute = this.router.url === '/login' || this.router.url === '/registro';
     });
   }
 
   onSidebarToggle(collapsed: boolean) {
     this.isSidebarCollapsed = collapsed;
-  }
+  } 
 }

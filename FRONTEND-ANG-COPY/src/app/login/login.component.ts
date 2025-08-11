@@ -38,6 +38,11 @@ export class LoginComponent {
     });
   }
 
+    // 👇 Método para ir al registro
+  goToRegistro() {
+    this.router.navigate(['/registro']);
+  }
+
   goToHome() {
     this.router.navigate(['/inicio']);
   }

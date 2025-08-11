@@ -1,57 +1,442 @@
-form {
-  max-width: 400px;
-  margin: 30px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fafafa;
-  font-family: Arial, sans-serif;
+// Variables y mixins (basados en el portal AURAS)
+$transition-duration: 0.6s;
+$transition-timing: cubic-bezier(0.25, 0.1, 0.25, 1);
+$login-transition-duration: 0.3s;
+
+$primary-color: #000000d9;
+$secondary-color: #216280;
+$accent-color: #2a7ba0;
+$background-color: #fff;
+$text-color: #333333;
+$border-color: lighten($primary-color, 50%);
+$error-color: #e74c3c;
+$success-color: #27ae60;
+$input-focus-color: $secondary-color;
+
+// Gradientes modernos
+$primary-gradient: linear-gradient(135deg, $secondary-color 0%, $accent-color 100%);
+$background-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+$card-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%);
+
+@mixin transition($properties: all, $duration: $login-transition-duration) {
+  transition: $properties $duration $transition-timing;
 }
 
-div {
-  margin-bottom: 15px;
+@mixin responsive-font($min, $pref, $max) {
+  font-size: clamp($min, $pref, $max);
 }
 
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: bold;
-  color: #333;
+@mixin input-focus-effect {
+  border-color: $input-focus-color;
+  box-shadow: 0 0 0 3px rgba($input-focus-color, 0.1);
+  transform: translateY(-2px);
 }
 
-input {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+@mixin card-hover-effect {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba($primary-color, 0.15);
+}
+
+// Estilos del contenedor principal del login
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background: $background-gradient;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow: hidden;
+
+  // Efecto de fondo animado
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($secondary-color, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+    z-index: 0;
+  }
+
+  // Card principal del login
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  // Título principal
+  h2 {
+    @include responsive-font(2rem, 4vw, 2.5rem);
+    color: $primary-color;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(74, 126, 129, 0.3);
+    @include transition();
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: $primary-gradient;
+      border-radius: 2px;
+      animation: expandLine 0.8s ease-out 0.5s both;
+    }
+  }
+
+  // Formulario principal
+  form {
+    background: $card-gradient;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 
+      0 8px 32px rgba($primary-color, 0.1),
+      0 2px 8px rgba($primary-color, 0.05);
+    @include transition(all, 0.4s);
+    position: relative;
+
+    &:hover {
+      @include card-hover-effect();
+    }
+
+    // Efecto de brillo sutil
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+      border-radius: 16px 16px 0 0;
+    }
+  }
+
+  // Labels
+  label {
+    display: block;
+    @include responsive-font(0.9rem, 2vw, 1rem);
+    color: $text-color;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    @include transition();
+    position: relative;
+    
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    // Indicador requerido
+    &::after {
+      content: '*';
+      color: $error-color;
+      margin-left: 4px;
+      opacity: 0.7;
+    }
+  }
+
+  // Inputs
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    @include responsive-font(1rem, 2.5vw, 1.1rem);
+    background-color: rgba($background-color, 0.9);
+    color: $text-color;
+    @include transition();
+    position: relative;
+
+    &::placeholder {
+      color: lighten($text-color, 30%);
+      @include transition(opacity);
+    }
+
+    &:focus {
+      outline: none;
+      @include input-focus-effect();
+
+      &::placeholder {
+        opacity: 0.5;
+      }
+
+      + label {
+        color: $input-focus-color;
+      }
+    }
+
+    &:valid {
+      border-color: $success-color;
+      
+      &:focus {
+        border-color: $success-color;
+        box-shadow: 0 0 0 3px rgba($success-color, 0.1);
+      }
+    }
+
+    &:invalid:not(:placeholder-shown) {
+      border-color: $error-color;
+      
+      &:focus {
+        border-color: $error-color;
+        box-shadow: 0 0 0 3px rgba($error-color, 0.1);
+      }
+    }
+  }
+
+  // Botón de envío
+  button[type="submit"] {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: $primary-gradient;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    @include responsive-font(1.1rem, 2.5vw, 1.2rem);
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 2rem;
+    @include transition();
+    position: relative;
+    overflow: hidden;
+
+    // Efecto de brillo
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      @include transition(left, 0.6s);
+    }
+
+    &:hover {
+      background: linear-gradient(135deg, $accent-color 0%, darken($secondary-color, 10%) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba($secondary-color, 0.3);
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 15px rgba($secondary-color, 0.2);
+    }
+
+    &:disabled {
+      background: lighten($border-color, 20%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  // Mensajes de estado
+  p {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+    @include responsive-font(0.9rem, 2vw, 1rem);
+    text-align: center;
+    @include transition();
+    position: relative;
+    
+    // Por defecto (mensaje de error)
+    background-color: rgba($error-color, 0.1);
+    color: $error-color;
+    border: 1px solid rgba($error-color, 0.2);
+
+    // Mensaje de éxito (si se añade clase .success)
+    &.success {
+      background-color: rgba($success-color, 0.1);
+      color: $success-color;
+      border-color: rgba($success-color, 0.2);
+    }
+
+    // Mensaje informativo (si se añade clase .info)
+    &.info {
+      background-color: rgba($secondary-color, 0.1);
+      color: $secondary-color;
+      border-color: rgba($secondary-color, 0.2);
+    }
+
+    // Animación de entrada
+    animation: slideInUp 0.4s ease-out;
+  }
+}
+
+// Animaciones
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes expandLine {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 60px;
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Media queries responsivos
+@media (max-width: 768px) {
+  .login-container {
+    padding: 1rem 0.5rem;
+
+    form {
+      padding: 2rem 1.5rem;
+      max-width: 100%;
+      margin: 0 1rem;
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    form {
+      padding: 1.5rem 1rem;
+      border-radius: 12px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      padding: 0.875rem 1rem;
+    }
+
+    button[type="submit"] {
+      padding: 0.875rem 1.5rem;
+      margin-top: 1.5rem;
+    }
+  }
+}
+
+// Estados de carga (opcional - para cuando se implemente)
+.login-container.loading {
+  button[type="submit"] {
+    position: relative;
+    color: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+// Variante oscura (opcional)
+.login-container.dark-theme {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+
+  h2 {
+    color: #ecf0f1;
+  }
+
+  form {
+    background: linear-gradient(135deg, rgba(52, 73, 94, 0.9) 0%, rgba(44, 62, 80, 0.8) 100%);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  label {
+    color: #bdc3c7;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    background-color: rgba(52, 73, 94, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ecf0f1;
+
+    &::placeholder {
+      color: #95a5a6;
+    }
+
+    &:focus {
+      background-color: rgba(52, 73, 94, 0.7);
+    }
+  }
+}
+
+
+
+.link-registro {
+  margin-top: 10px;
   font-size: 14px;
-  box-sizing: border-box;
-}
+  text-align: center;
 
-input:focus {
-  border-color: #3f51b5;
-  outline: none;
-  box-shadow: 0 0 5px rgba(63,81,181,0.5);
-}
+  a {
+    color: #007bff;
+    text-decoration: none;
 
-small {
-  color: #d32f2f;
-  font-size: 12px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #3f51b5;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #303f9f;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

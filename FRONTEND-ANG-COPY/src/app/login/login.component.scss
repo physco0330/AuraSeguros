@@ -423,3 +423,23 @@ $card-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 2
     }
   }
 }
+
+
+
+.link-registro {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+
+
