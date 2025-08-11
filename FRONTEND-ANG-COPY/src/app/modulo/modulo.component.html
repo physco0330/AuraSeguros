@@ -1,73 +1,114 @@
 <div class="modulo-container">
-  <!-- Contenedor principal de módulos que agrupa todos los elementos visuales y funcionales del módulo -->
-
+  <!-- Contenedor principal de módulos -->
   <div class="welcome-message">
     <h2 class="welcome-title">Módulos</h2>
-    <!-- Título que da la bienvenida y describe la sección de módulos -->
   </div>
 
   <div class="search-container">
     <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar módulo..." />
-    <!-- Barra de búsqueda para filtrar los módulos. Utiliza ngModel para enlazar la variable searchTerm al input y actualizar los resultados en tiempo real -->
   </div>
 
-  <button class="btn-add-small" (click)="openModal()">Agregar Módulo</button>
-  <!-- Botón que al hacer clic abre un modal para agregar un nuevo módulo -->
+  <!-- Botón visible solo si el rol es admin -->
+  <button
+    class="btn-add-small"
+    (click)="openModal()"
+    *ngIf="token?.rolUsuario === 'admin'"
+  >
+    Agregar Módulo
+  </button>
 
-  <!-- Tarjeta mejorada para "Incendio" -->
-  <div class="info-card info-card-incendio" [routerLink]="['/empresas']" routerLinkActive="active">
-    <div class="color-bar" style="background-color: #216280;"></div> <!-- Franja azul -->
-    <div class="card-content"> <!-- Contenido de la tarjeta -->
+  <!-- Tarjeta fija para "Incendio" -->
+  <div
+    class="info-card info-card-incendio"
+    [routerLink]="['/empresas']"
+    routerLinkActive="active"
+  >
+    <div class="color-bar" style="background-color: #216280;"></div>
+    <div class="card-content">
       <h4>Incendio</h4>
-      <hr>
-      <p>Este módulo brinda información relacionada con incidentes sobre incendios.
-        Aquí podrás moverte libremente entre las empresas y realizar los cambios necesarios dentro de las tablas selectas.</p>
+      <hr />
+      <p>
+        Este módulo brinda información relacionada con incidentes sobre
+        incendios. Aquí podrás moverte libremente entre las empresas y realizar
+        los cambios necesarios dentro de las tablas selectas.
+      </p>
     </div>
   </div>
 
-  <!-- Tarjetas de módulos existentes filtradas por la función filteredModulos() -->
-  <div class="info-card-incendio" *ngFor="let modulo of filteredModulos()" (click)="navigateToEmpresas(modulo)">
-    <div class="color-bar" [style.background-color]="modulo.colorModulo"></div> <!-- Franja de color -->
-    <div class="card-content"> <!-- Contenido de la tarjeta -->
+  <!-- Lista de módulos -->
+  <div
+    class="info-card-incendio"
+    *ngFor="let modulo of filteredModulos()"
+    (click)="navigateToEmpresas(modulo)"
+  >
+    <div
+      class="color-bar"
+      [style.background-color]="modulo.colorModulo"
+    ></div>
+    <div class="card-content">
       <div class="action-buttons">
-        <button class="btn-editar" (click)="editModulo(modulo); $event.stopPropagation()">
-          <mat-icon>edit</mat-icon> <!-- Icono de edición -->
+        <button
+          class="btn-editar"
+          (click)="editModulo(modulo); $event.stopPropagation()"
+        >
+          <mat-icon>edit</mat-icon>
         </button>
-        <button class="btn-eliminar" (click)="deleteModulo(modulo.id_modulo); $event.stopPropagation()">
-          <mat-icon>delete</mat-icon> <!-- Icono de eliminar -->
+        <button
+          class="btn-eliminar"
+          (click)="deleteModulo(modulo.id_modulo); $event.stopPropagation()"
+        >
+          <mat-icon>delete</mat-icon>
         </button>
       </div>
       <h4>{{ modulo.nombreModulo }}</h4>
-      <hr>
+      <hr />
       <p>{{ modulo.descripcionModulo }}</p>
     </div>
   </div>
 
-  <!-- Modal de creación de módulos, visible solo si isModalOpen es verdadero -->
+  <!-- Modal -->
   <div class="modal" *ngIf="isModalOpen">
     <div class="modal-content">
       <h3>Agregar Módulo</h3>
       <form (ngSubmit)="onSubmit()">
         <div>
           <label for="nombreModulo">Nombre del Módulo:</label>
-          <input type="text" id="nombreModulo" [(ngModel)]="nuevoModulo.nombreModulo" name="nombreModulo" required />
-          <!-- Campo de entrada para el nombre del nuevo módulo. Utiliza ngModel para enlazar la propiedad nombreModulo -->
+          <input
+            type="text"
+            id="nombreModulo"
+            [(ngModel)]="nuevoModulo.nombreModulo"
+            name="nombreModulo"
+            required
+          />
         </div>
         <div>
           <label for="descripcionModulo">Descripción:</label>
-          <textarea id="descripcionModulo" [(ngModel)]="nuevoModulo.descripcionModulo" name="descripcionModulo" required></textarea>
-          <!-- Área de texto para la descripción del nuevo módulo -->
+          <textarea
+            id="descripcionModulo"
+            [(ngModel)]="nuevoModulo.descripcionModulo"
+            name="descripcionModulo"
+            required
+          ></textarea>
         </div>
         <div>
           <label for="colorModulo">Color del Módulo:</label>
-          <input type="color" id="colorModulo" [(ngModel)]="nuevoModulo.colorModulo" name="colorModulo" required />
-          <!-- Campo para seleccionar el color del módulo -->
+          <input
+            type="color"
+            id="colorModulo"
+            [(ngModel)]="nuevoModulo.colorModulo"
+            name="colorModulo"
+            required
+          />
         </div>
         <div class="button-container">
-          <button type="button" class="btn-cancelar" (click)="closeModal()">Cancelar</button>
-          <!-- Botón para cerrar el modal sin guardar cambios -->
+          <button
+            type="button"
+            class="btn-cancelar"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
           <button type="submit" class="btn-guardar">Guardar</button>
-          <!-- Botón para enviar el formulario y guardar el nuevo módulo -->
         </div>
       </form>
     </div>

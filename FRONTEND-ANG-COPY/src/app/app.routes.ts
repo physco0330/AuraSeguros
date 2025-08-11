@@ -10,6 +10,7 @@ import { EditarBienComponent } from './editar-bien2/editar-bien2.component';
 import { VisualizarBienComponent } from './visualizar-bien/visualizar-bien.component';
 import { EmpresasComponent } from './empresas/empresas.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 import { RegistroComponent } from './registro/registro.component';
 
 
@@ -23,7 +24,7 @@ export const routes: Routes = [
   { path: 'inicio', component: HomeComponent },
 
   // Ruta para el componente Modulo
-  { path: 'modulo', component: ModuloComponent },
+    { path: 'modulo', component: ModuloComponent, canActivate: [AuthGuard] },
 
   // Ruta para el componente Ajuste
   { path: 'ajustes', component: AjusteComponent },
@@ -45,7 +46,7 @@ export const routes: Routes = [
   { path: 'cambiar-contra', component: CambiarContraComponent },
 
 // Ruta para la página principal
-{ path: 'empresas', component: EmpresasComponent },
+{ path: 'empresas', component: EmpresasComponent, canActivate: [AuthGuard]  },
 
   // Ruta por defecto para manejar URLs no encontradas
   { path: '', redirectTo: '/login', pathMatch: 'full' },

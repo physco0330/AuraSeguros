@@ -10,7 +10,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router'; // Importar ActivatedRoute
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-modulo',
@@ -28,31 +28,37 @@ export class ModuloComponent implements OnInit {
   nuevoModulo: Modulo = { id_modulo: null, nombreModulo: '', descripcionModulo: '', colorModulo: '#ffffff' };
   searchTerm: string = '';
 
+  token: any = null; // ✅ Se añade para controlar el rol del usuario
+
   constructor(
     private empresasService: EmpresasService,
     private moduloService: ModuloService,
     private router: Router,
     private http: HttpClient,
-    private route: ActivatedRoute // Inyectar ActivatedRoute
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // ✅ Cargar token desde localStorage
+    const tokenString = localStorage.getItem('token');
+    if (tokenString) {
+      this.token = JSON.parse(tokenString);
+    }
+
     this.loadModulos();
 
-    // Cargar empresas solo si hay un id_modulo en los parámetros de consulta
     this.route.queryParams.subscribe(params => {
-      const moduloId = params['id']; // Obtener el ID del módulo de los parámetros
+      const moduloId = params['id'];
       if (moduloId) {
-        this.loadEmpresasByModuloId(moduloId); // Cargar empresas filtradas
+        this.loadEmpresasByModuloId(moduloId);
       } else {
-        this.loadEmpresas(); // Cargar todas las empresas si no hay un ID
+        this.loadEmpresas();
       }
     });
   }
 
   navigateToEmpresas(modulo: Modulo): void {
     if (modulo.id_modulo != null) {
-      // Navegar a la vista de empresas y pasar el ID y nombre del módulo como parámetros de consulta
       this.router.navigate(['/empresas'], {
         queryParams: {
           id: modulo.id_modulo,
@@ -76,7 +82,6 @@ export class ModuloComponent implements OnInit {
     });
   }
 
-  // Nuevo método para cargar empresas filtradas por ID del módulo
   loadEmpresasByModuloId(moduloId: string): void {
     this.empresasService.getEmpresasByModuloId(moduloId).subscribe(data => {
       this.empresas = data;
