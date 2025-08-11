@@ -42,6 +42,8 @@ export class IncendioComponent implements OnInit {
    showBack: boolean = false;
    hideBack: boolean = true;
    isLoading = false; // Agrega esta propiedad para manejar el estado de carga
+   token: any = null;
+
 
   // Definición de los campos del formulario con sus propiedades
   formFields = [
@@ -83,26 +85,34 @@ export class IncendioComponent implements OnInit {
 
   ) {}
 
-  ngOnInit(): void {
-    // Obtener el nombre de la empresa desde los parámetros de la ruta
-    const nombreEmpresa = this.route.snapshot.paramMap.get('nombreEmpresa'); // Ruta del tipo /empresa/:nombreEmpresa
-    const idEmpresa = this.route.snapshot.queryParamMap.get('idEmpresa'); // Obtener idEmpresa como parámetro de consulta, si es necesario
+ngOnInit(): void {
+  // Obtener token y rol del localStorage
+  const tokenString = localStorage.getItem('token');
+  if (tokenString) {
+    this.token = JSON.parse(tokenString);
+  }
 
-    if (nombreEmpresa) {
-      // Obtener la información de la empresa usando su nombre
-      this.getEmpresa(nombreEmpresa);
+  // Obtener el nombre de la empresa desde los parámetros de la ruta
+  const nombreEmpresa = this.route.snapshot.paramMap.get('nombreEmpresa'); // Ruta del tipo /empresa/:nombreEmpresa
+  const idEmpresa = this.route.snapshot.queryParamMap.get('idEmpresa'); // Obtener idEmpresa como parámetro de consulta, si es necesario
 
-      // Si también necesitas trabajar con idEmpresa, puedes validarlo aquí
-      if (idEmpresa) {
-        console.log('ID de la empresa:', idEmpresa);
-      }
+  if (nombreEmpresa) {
+    // Obtener la información de la empresa usando su nombre
+    this.getEmpresa(nombreEmpresa);
 
-      // Usar el servicio para buscar los bienes por nombre de la empresa
-      this.bienesService.buscarPorNombreEmpresa(nombreEmpresa).subscribe((data) => {
-        this.bienes = data;
-        console.log('Bienes obtenidos:', this.bienes); // Para asegurarte que los bienes se están obteniendo
-      });
+    // Si también necesitas trabajar con idEmpresa, puedes validarlo aquí
+    if (idEmpresa) {
+      console.log('ID de la empresa:', idEmpresa);
     }
+
+    // Usar el servicio para buscar los bienes por nombre de la empresa
+    this.bienesService.buscarPorNombreEmpresa(nombreEmpresa).subscribe((data) => {
+      this.bienes = data;
+      console.log('Bienes obtenidos:', this.bienes); // Para asegurarte que los bienes se están obteniendo
+    });
+  }
+
+  // resto de tu código...
 
     // Inicialización del formulario con todos los campos deshabilitados
     this.formBien = this.fb.group({

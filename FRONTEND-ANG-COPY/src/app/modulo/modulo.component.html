@@ -47,14 +47,17 @@
     ></div>
     <div class="card-content">
       <div class="action-buttons">
+        <!-- Botones solo para admin -->
         <button
           class="btn-editar"
+          *ngIf="token?.rolUsuario === 'admin'"
           (click)="editModulo(modulo); $event.stopPropagation()"
         >
           <mat-icon>edit</mat-icon>
         </button>
         <button
           class="btn-eliminar"
+          *ngIf="token?.rolUsuario === 'admin'"
           (click)="deleteModulo(modulo.id_modulo); $event.stopPropagation()"
         >
           <mat-icon>delete</mat-icon>

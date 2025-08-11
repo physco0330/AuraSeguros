@@ -25,15 +25,22 @@ export class AjusteComponent implements OnInit {
 
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
-  ngOnInit() {
-    // Aquí deberías cargar los datos del usuario desde un servicio
+ngOnInit() {
+  // Leer usuario del localStorage
+  const usuarioGuardado = localStorage.getItem('usuario');
+  if (usuarioGuardado) {
+    this.usuario = JSON.parse(usuarioGuardado);
+  } else {
+    // Valores por defecto en caso de que no haya usuario en localStorage
     this.usuario = {
-      nombre: 'Nombre de Usuario',
-      correo: 'correo@ejemplo.com',
-      telefono: '123456789',
+      nombreUsuario: 'Nombre de Usuario',
+      correoUsuario: 'correo@ejemplo.com',
+      rolUsuario: 'viewer',
       fotoPerfil: 'assets/default-profile.jpg'
     };
   }
+}
+
 
   cambiarSeccion(seccion: string) {
     this.seccionActiva = seccion;

@@ -8,38 +8,36 @@
       <button class="btn btn-primary volver-btn" (click)="volverAModulo()">Volver a empresas</button>
 
       <div style="position: relative;">
+        <!-- Pantalla de carga -->
+        <div *ngIf="isLoading" class="loading-overlay">
+          <p>Cargando datos, por favor espera...</p>
+        </div>
 
-<!-- Pantalla de carga -->
-<div *ngIf="isLoading" class="loading-overlay">
-  <p>Cargando datos, por favor espera...</p>
-</div>
-
-
-        <!-- Botón para mostrar el formulario de agregar un bien -->
-        <button class="btn btn-primary btn-add" (click)="mostrarFormularioAgregar()">
+        <!-- Botón para mostrar el formulario de agregar un bien (solo admin) -->
+        <button *ngIf="token?.rolUsuario === 'admin'" class="btn btn-primary btn-add" (click)="mostrarFormularioAgregar()">
           <span class="icon">+</span> Agregar bien
         </button>
       </div>
     </div>
   </div>
 
-<!-- Formulario de agregar un bien, visible solo cuando mostrarFormulario es verdadero -->
-<form *ngIf="mostrarFormulario" [formGroup]="formBien" (ngSubmit)="agregarBien()" class="mb-4">
-  <div class="row">
-    <div class="col-md-4 mb-3" *ngFor="let field of formFields">
-      <label [for]="field.name" class="form-label">{{ field.label }}</label>
-      <input
-        [type]="field.type"
-        class="form-control"
-        [id]="field.name"
-        [formControlName]="field.name"
-        [placeholder]="field.placeholder" />
-      <!-- Mensaje de error si el campo es inválido y ha sido tocado -->
-      <div *ngIf="formBien.get(field.name)?.invalid && formBien.get(field.name)?.touched">
-        <small *ngIf="formBien.get(field.name)?.errors?.['required']">Este campo es obligatorio.</small>
+  <!-- Formulario de agregar un bien, visible solo cuando mostrarFormulario es verdadero -->
+  <form *ngIf="mostrarFormulario" [formGroup]="formBien" (ngSubmit)="agregarBien()" class="mb-4">
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let field of formFields">
+        <label [for]="field.name" class="form-label">{{ field.label }}</label>
+        <input
+          [type]="field.type"
+          class="form-control"
+          [id]="field.name"
+          [formControlName]="field.name"
+          [placeholder]="field.placeholder" />
+        <!-- Mensaje de error si el campo es inválido y ha sido tocado -->
+        <div *ngIf="formBien.get(field.name)?.invalid && formBien.get(field.name)?.touched">
+          <small *ngIf="formBien.get(field.name)?.errors?.['required']">Este campo es obligatorio.</small>
+        </div>
       </div>
     </div>
-  </div>
 
     <!-- Botones de guardar y cancelar -->
     <button type="submit" class="btn btn-success">Guardar</button>
@@ -49,11 +47,10 @@
   <!-- Campo de filtro para buscar en múltiples campos -->
   <input type="text" class="search-container" placeholder="Buscar..." (input)="filtrarArticulos($event)" />
 
-<!-- Mostrar datos de la empresa -->
-<div *ngIf="empresa" class="info-card-back">
-  <h1>{{ empresa.nombre_empresa }}</h1>
-</div>
-
+  <!-- Mostrar datos de la empresa -->
+  <div *ngIf="empresa" class="info-card-back">
+    <h1>{{ empresa.nombre_empresa }}</h1>
+  </div>
 
   <!-- Tarjeta contenedora de la tabla -->
   <div class="card shadow-sm">
@@ -98,13 +95,13 @@
             <tr *ngFor="let bien of bienesFiltrados">
               <!-- Columna para los botones de acción -->
               <td class="text-center">
-                <!-- Botón de eliminar -->
-                <button class="btn btn-sm btn-danger btn-icon" title="Eliminar" (click)="eliminarBien(bien.codigo)">
+                <!-- Botón de eliminar (solo admin) -->
+                <button *ngIf="token?.rolUsuario === 'admin'" class="btn btn-sm btn-danger btn-icon" title="Eliminar" (click)="eliminarBien(bien.codigo)">
                   <mat-icon>delete</mat-icon>
                 </button>
 
-                <!-- Botón de editar -->
-                <button class="btn btn-sm btn-info btn-icon" title="Editar" (click)="editarBien(bien.codigo)">
+                <!-- Botón de editar (solo admin) -->
+                <button *ngIf="token?.rolUsuario === 'admin'" class="btn btn-sm btn-info btn-icon" title="Editar" (click)="editarBien(bien.codigo)">
                   <mat-icon>edit</mat-icon>
                 </button>
               </td>

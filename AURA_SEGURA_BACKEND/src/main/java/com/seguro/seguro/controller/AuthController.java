@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")  // <--- Agrega esta línea
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -29,7 +30,6 @@ public class AuthController {
         }
     }
 
-    // Nuevo endpoint para registro de usuario
     @PostMapping("/registro")
     public ResponseEntity<?> registrarUsuario(@RequestBody Usuario nuevoUsuario) {
         try {

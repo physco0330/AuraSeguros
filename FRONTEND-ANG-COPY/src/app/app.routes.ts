@@ -13,44 +13,34 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RegistroComponent } from './registro/registro.component';
 
-
-
 export const routes: Routes = [
 
-  { path: 'registro', component: RegistroComponent },
+  { path: 'registro', component: RegistroComponent },  // pública
 
-  { path: 'login', component: LoginComponent },
-  // Ruta para la página principal
-  { path: 'inicio', component: HomeComponent },
+  { path: 'login', component: LoginComponent },  // pública
 
-  // Ruta para el componente Modulo
-    { path: 'modulo', component: ModuloComponent, canActivate: [AuthGuard] },
+  { path: 'inicio', component: HomeComponent, canActivate: [AuthGuard] },
 
-  // Ruta para el componente Ajuste
-  { path: 'ajustes', component: AjusteComponent },
+  { path: 'modulo', component: ModuloComponent, canActivate: [AuthGuard] },
 
-  // Ruta para el componente Bienes
-  { path: 'bienes', component: BienesComponent },
+  { path: 'ajustes', component: AjusteComponent, canActivate: [AuthGuard] },
 
-  // Ruta para el componente Incendio
-  { path: 'incendio/:nombreEmpresa', component: IncendioComponent },
+  { path: 'bienes', component: BienesComponent, canActivate: [AuthGuard] },
 
-  // Ruta para el componente EditarBien
-  { path: 'editar-bien/:codigo', component: EditarBienComponent },
+  { path: 'incendio/:nombreEmpresa', component: IncendioComponent, canActivate: [AuthGuard] },
 
+  { path: 'editar-bien/:codigo', component: EditarBienComponent, canActivate: [AuthGuard] },
 
-  { path: 'visualizar-bien/:codigo', component: VisualizarBienComponent },
+  { path: 'visualizar-bien/:codigo', component: VisualizarBienComponent, canActivate: [AuthGuard] },
 
+  { path: 'cambiar-contra', component: CambiarContraComponent, canActivate: [AuthGuard] },
 
-  // Ruta para el componente CambiarContra
-  { path: 'cambiar-contra', component: CambiarContraComponent },
+  { path: 'empresas', component: EmpresasComponent, canActivate: [AuthGuard] },
 
-// Ruta para la página principal
-{ path: 'empresas', component: EmpresasComponent, canActivate: [AuthGuard]  },
-
-  // Ruta por defecto para manejar URLs no encontradas
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+
   { path: '**', redirectTo: '/login' }
+
 ];
 
 @NgModule({

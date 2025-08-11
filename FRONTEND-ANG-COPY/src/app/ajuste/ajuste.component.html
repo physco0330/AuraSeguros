@@ -1,118 +1,25 @@
 <div class="ajuste-container">
- 
-  <div class="contenedor-ajuste" > 
+  <div class="contenedor-ajuste">
     <h2 class="welcome-title">Perfil de Usuario</h2>
     <div class="contenedor">
-      <!-- Barra lateral izquierda: Perfil y Navegación -->
+      <!-- Barra lateral izquierda: Perfil y Navegación simplificada -->
       <div class="barra-lateral">
         <div class="perfil">
           <img src="assets/logo-auras_150.png" alt="Foto de Perfil" class="foto-perfil">
-          <input type="file" (change)="onFileSelected($event)" accept="image/*" id="fileInput" style="display: none;">
-          <button (click)="triggerFileInput()" class="btn-cambiar-foto">Cambiar foto</button>
-          <h2 class="nombre-usuario">{{usuario.nombre || 'Auras Seguros'}}</h2>
-          <p>{{usuario.correo || 'correo@ejemplo.com'}}</p>
+          <h2 class="nombre-usuario">{{ usuario.nombreUsuario || 'Auras Seguros' }}</h2>
+          <p>{{ usuario.correoUsuario || 'correo@ejemplo.com' }}</p>
         </div>
         <hr>
-        <nav class="menu-navegacion">
-          <ul>
-            <li><a (click)="cambiarSeccion('informacion-personal')" [class.active]="seccionActiva === 'informacion-personal'">Información Personal</a></li>
-            <li><a (click)="cambiarSeccion('editar-perfil')" [class.active]="seccionActiva === 'editar-perfil'">Editar Perfil</a></li>
-            <li><a (click)="cambiarSeccion('cambiar-contrasena')" [class.active]="seccionActiva === 'cambiar-contrasena'">Cambiar Contraseña</a></li>
-          </ul>
-        </nav>
       </div>
       
-      <!-- Contenido principal -->
+      <!-- Contenido principal: solo información personal -->
       <div class="contenido-principal">
-        <section *ngIf="seccionActiva === 'informacion-personal'">
+        <section>
           <h3>Información Personal</h3>
           <hr>
-          <p><strong>Nombre:</strong> {{usuario.nombre}}</p>
-          <p><strong>Correo:</strong> {{usuario.correo}}</p>
-          <p><strong>Teléfono:</strong> {{usuario.telefono}}</p>
-          <p><strong>Rol:</strong> {{usuario.rol}}</p>
-        </section>
-        
-        <section *ngIf="seccionActiva === 'editar-perfil'">
-          <h3>Editar Perfil</h3>
-          <hr>
-          <form (ngSubmit)="actualizarPerfil()">
-            <div class="form-group">
-              <label for="nombre">Nombre:</label>
-              <input type="text" id="nombre" [(ngModel)]="usuario.nombre" name="nombre">
-            </div>
-            <div class="form-group">
-              <label for="telefono">Teléfono:</label>
-              <input type="tel" id="telefono" [(ngModel)]="usuario.telefono" name="telefono">
-            </div>
-            <div class="form-group">
-              <label for="correo">Correo:</label>
-              <input type="email" id="correo" [(ngModel)]="usuario.correo" name="correo">
-            </div>
-            <button type="submit" class="btn-actualizar">Actualizar Perfil</button>
-          </form>
-        </section>
-
-        <section *ngIf="seccionActiva === 'cambiar-contrasena'">
-          <h3>Cambiar Contraseña</h3>
-          <hr>
-          <form (ngSubmit)="cambiarContrasena()" #passwordForm="ngForm">
-            <div class="form-group">
-              <label for="current-password">Contraseña Actual</label>
-              <div class="password-wrapper">
-                <input
-                  type="{{ showCurrentPassword ? 'text' : 'password' }}"
-                  id="current-password"
-                  name="currentPassword"
-                  [(ngModel)]="contrasenaActual"
-                  required
-                />
-                <button type="button" (click)="togglePasswordVisibility('current')">
-                  <mat-icon>{{ showCurrentPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-                </button>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="new-password">Nueva Contraseña</label>
-              <div class="password-wrapper">
-                <input
-                  type="{{ showNewPassword ? 'text' : 'password' }}"
-                  id="new-password"
-                  name="newPassword"
-                  [(ngModel)]="nuevaContrasena"
-                  required
-                  minlength="8"
-                  [pattern]="newPasswordPattern"
-                />
-                <button type="button" (click)="togglePasswordVisibility('new')">
-                  <mat-icon>{{ showNewPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-                </button>
-              </div>
-              <small *ngIf="passwordForm.form.controls['newPassword']?.errors?.['pattern']">
-                La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.
-              </small>
-            </div>
-
-            <div class="form-group">
-              <label for="confirm-password">Confirmar Nueva Contraseña</label>
-              <div class="password-wrapper">
-                <input
-                  type="{{ showConfirmPassword ? 'text' : 'password' }}"
-                  id="confirm-password"
-                  name="confirmPassword"
-                  [(ngModel)]="confirmarContrasena"
-                  required
-                  [pattern]="newPasswordPattern"
-                />
-                <button type="button" (click)="togglePasswordVisibility('confirm')">
-                  <mat-icon>{{ showConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-                </button>
-              </div>
-            </div>
-
-            <button type="submit" class="btn-actualizar" [disabled]="!passwordForm.form.valid">Cambiar Contraseña</button>
-          </form>
+          <p><strong>Nombre:</strong> {{ usuario.nombreUsuario }}</p>
+          <p><strong>Correo:</strong> {{ usuario.correoUsuario }}</p>
+          <p><strong>Rol:</strong> {{ usuario.rolUsuario }}</p>
         </section>
       </div>
     </div>

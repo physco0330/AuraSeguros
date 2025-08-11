@@ -39,6 +39,8 @@ export class EmpresasComponent implements OnInit {
   showBack: boolean = false;
   hideBack: boolean = true;
 
+  // Nueva propiedad para almacenar el token (usuario con rol)
+  token: any = null;
 
   constructor(
     private empresasService: EmpresasService, // Servicio para manejar empresas
@@ -48,6 +50,12 @@ export class EmpresasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Cargar token (usuario) desde localStorage para control de roles
+    const tokenString = localStorage.getItem('token');
+    if (tokenString) {
+      this.token = JSON.parse(tokenString);
+    }
+
     // Capturar los parámetros de la URL al iniciar el componente
     this.route.queryParams.subscribe(params => {
       this.moduloId = params['id'] ? params['id'] : null;
@@ -79,28 +87,22 @@ export class EmpresasComponent implements OnInit {
     });
   }
 
-
   // Método para redirigir al módulo anterior
   volverAModulo(): void {
     this.router.navigate(['/modulo']);
   }
 
-// * Navega al componente 'incendio' y pasa el nombre de la empresa como un parámetro de ruta.
+  // Navega al componente 'incendio' y pasa el nombre de la empresa como un parámetro de ruta.
+  navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
+    this.router.navigate(['/incendio', nombreEmpresa], {
+      queryParams: { idEmpresa: idEmpresa }
+    });
+  }
 
-
-navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
-  this.router.navigate(['/incendio', nombreEmpresa], {
-    queryParams: { idEmpresa: idEmpresa }
-  });
-}
-
-
-
- // Método toggleCard
- toggleCard(empresa: Empresa): void {
-  empresa.isFlipped = !empresa.isFlipped; // Cambia el estado de la tarjeta
-}
-
+  // Método toggleCard
+  toggleCard(empresa: Empresa): void {
+    empresa.isFlipped = !empresa.isFlipped; // Cambia el estado de la tarjeta
+  }
 
   // Abrir el modal para agregar una nueva empresa
   openModal(): void {
@@ -203,7 +205,7 @@ navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
           response => {
             console.log('Empresa guardada', response); // Muestra la respuesta en consola
             this.closeModal(); // Cierra el modal después de guardar
-     /*       this.loadEmpresas(); // Recarga la lista de empresas */
+            /* this.loadEmpresas(); // Recarga la lista de empresas */
             alert('Guardado exitoso'); // Muestra un mensaje de éxito
           },
           error => {
@@ -217,8 +219,6 @@ navigateToIncendio(nombreEmpresa: string, idEmpresa: number) {
       console.error('No se han cargado las empresas correctamente.');
     }
   }
-
-
 
   // Método para cargar todas las empresas
   loadEmpresas(): void {

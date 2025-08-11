@@ -23,17 +23,20 @@ export class SidebarComponent {
     this.sidebarToggled.emit(this.isCollapsed);
   }
 
+  // Mostrar modal para confirmar cierre de sesión
   onLogout() {
-    this.showModal = true; // Mostrar el modal cuando se haga clic en "Cerrar sesión"
+    this.showModal = true;
   }
 
+  // Confirmar cierre de sesión: borrar token y redirigir a login
   confirmLogout() {
-    this.showModal = false; // Cerrar el modal
-    localStorage.removeItem('token'); // Limpiar datos de sesión
-    this.router.navigate(['/login']); // Redirigir a la página de login dentro de Angular
+    this.showModal = false;
+    localStorage.removeItem('token');  // Aquí eliminas el token para seguridad
+    this.router.navigate(['/login']);
   }
 
+  // Cancelar cierre de sesión: cerrar modal sin hacer nada
   cancelLogout() {
-    this.showModal = false; // Cerrar el modal sin hacer nada
+    this.showModal = false;
   }
 }

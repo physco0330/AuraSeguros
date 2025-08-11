@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,9 +26,9 @@ public class EmpresaController {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    // Método para crear una nueva empresa, acepta multipart/form-data
+    // Crear empresa con multipart/form-data
     @PostMapping(consumes = {"multipart/form-data"})
-    public Empresa crearEmpresa(
+    public ResponseEntity<?> crearEmpresa(
             @RequestParam("nombre_empresa") String nombreEmpresa,
             @RequestParam("color_palette") String colorPalette,
             @RequestParam("nit_empresa") String nitEmpresa,
@@ -35,52 +36,73 @@ public class EmpresaController {
             @RequestParam("contacto_empresa") String contactoEmpresa,
             @RequestParam("numero_poliza") String numeroPoliza,
             @RequestParam(value = "logo_empresa", required = false) MultipartFile logoEmpresa,
-            @RequestParam("id_modulo") Long idModulo) { // El id_modulo sigue como parámetro
-
-        // Llama al servicio para procesar el archivo y guardar la información en la base de datos
-        return empresaService.crearEmpresa(nombreEmpresa, colorPalette, nitEmpresa,
-                correoEmpresa, contactoEmpresa, numeroPoliza, logoEmpresa, idModulo);
+            @RequestParam("id_modulo") Long idModulo) {
+        try {
+            Empresa empresaCreada = empresaService.crearEmpresa(nombreEmpresa, colorPalette, nitEmpresa,
+                    correoEmpresa, contactoEmpresa, numeroPoliza, logoEmpresa, idModulo);
+            return new ResponseEntity<>(empresaCreada, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear empresa: " + e.getMessage());
+        }
     }
 
-    // Método para obtener todas las empresas
+    // Obtener todas las empresas
     @GetMapping
-    public List<Empresa> obtenerEmpresas() {
-        return empresaService.obtenerEmpresas();
+    public ResponseEntity<List<Empresa>> obtenerEmpresas() {
+        List<Empresa> empresas = empresaService.obtenerEmpresas();
+        return ResponseEntity.ok(empresas);
     }
 
-    // Método para obtener una empresa por su ID
+    // Obtener empresa por ID
     @GetMapping("/{id}")
-    public Empresa obtenerEmpresa(@PathVariable Long id) {
-        return empresaService.obtenerEmpresa(id);
+    public ResponseEntity<?> obtenerEmpresa(@PathVariable Long id) {
+        try {
+            Empresa empresa = empresaService.obtenerEmpresa(id);
+            return ResponseEntity.ok(empresa);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada con ID: " + id);
+        }
     }
 
-    // Endpoint para obtener el logo de la empresa por su nombre
+    // Obtener logo por nombre archivo
     @GetMapping("/logos/{fileName:.+}")
     public ResponseEntity<Resource> obtenerLogoEmpresa(@PathVariable String fileName) {
         try {
             Path filePath = Paths.get(uploadDir).resolve(fileName);
             Resource resource = new UrlResource(filePath.toUri());
 
+            if (!resource.exists() || !resource.isReadable()) {
+                return ResponseEntity.notFound().build();
+            }
+
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                     .body(resource);
         } catch (Exception e) {
-            return ResponseEntity.status(404).body(null);  // Manejar el error en caso de que el archivo no exista
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    // Endpoint para actualizar una empresa
+    // Actualizar empresa
     @PutMapping("/{id}")
-    public ResponseEntity<Empresa> actualizarEmpresa(@PathVariable Long id, @RequestBody Empresa empresa) {
-        empresa.setId_empresa(id);
-        Empresa empresaActualizada = empresaService.actualizarEmpresa(empresa);
-        return ResponseEntity.ok(empresaActualizada);
+    public ResponseEntity<?> actualizarEmpresa(@PathVariable Long id, @RequestBody Empresa empresa) {
+        try {
+            empresa.setId_empresa(id);
+            Empresa empresaActualizada = empresaService.actualizarEmpresa(empresa);
+            return ResponseEntity.ok(empresaActualizada);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error al actualizar empresa: " + e.getMessage());
+        }
     }
 
-    // Endpoint para eliminar una empresa
+    // Eliminar empresa
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarEmpresa(@PathVariable Long id) {
-        empresaService.eliminarEmpresa(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> eliminarEmpresa(@PathVariable Long id) {
+        try {
+            empresaService.eliminarEmpresa(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error al eliminar empresa: " + e.getMessage());
+        }
     }
 }

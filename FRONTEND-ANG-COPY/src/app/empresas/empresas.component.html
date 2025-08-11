@@ -11,9 +11,10 @@
   <div class="search-container">
     <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar empresa..." />
   </div>
+<!-- Botón azul para abrir modal de "Agregar Empresa" solo para admin -->
+<button *ngIf="token?.rolUsuario === 'admin'" class="btn-add" (click)="openModal()">Agregar Empresa</button>
 
-  <!-- Botón azul para abrir modal de "Agregar Empresa" -->
-  <button class="btn-add" (click)="openModal()">Agregar Empresa</button>
+
 
   <!-- Contenedor de tarjetas -->
   <div class="info-container">
@@ -21,20 +22,28 @@
       <div class="info-card"
            [ngClass]="{ 'flipped': empresa.isShowingBack }"
            [ngStyle]="{'background-color': empresa.color_palette}"
-           *ngIf="empresa.id_empresa !== undefined" (click)="navigateToIncendio(empresa.nombre_empresa, empresa.id_empresa)"> <!-- Cambiado aquí -->
+           *ngIf="empresa.id_empresa !== undefined" (click)="navigateToIncendio(empresa.nombre_empresa, empresa.id_empresa)">
 
         <!-- Parte delantera de la tarjeta -->
         <div class="info-card-front" *ngIf="!empresa.isShowingBack">
           <p class="empresa-nombre">{{ empresa.nombre_empresa }}</p>
 
           <div class="action-buttons">
-            <button class="btn-delete" title="Eliminar"
-                    (click)="openConfirmDeleteModal(empresa); $event.stopPropagation()">
+            <button 
+              class="btn-delete" 
+              title="Eliminar"
+              *ngIf="token?.rolUsuario === 'admin'"
+              (click)="openConfirmDeleteModal(empresa); $event.stopPropagation()"
+            >
               <mat-icon>delete</mat-icon>
             </button>
 
-            <button class="btn-edit" title="Editar"
-                    (click)="openEditModal(empresa); $event.stopPropagation()">
+            <button 
+              class="btn-edit" 
+              title="Editar"
+              *ngIf="token?.rolUsuario === 'admin'"
+              (click)="openEditModal(empresa); $event.stopPropagation()"
+            >
               <mat-icon>edit</mat-icon>
             </button>
 
@@ -48,75 +57,72 @@
           </div>
         </div>
 
-    <!-- Parte trasera de la tarjeta -->
-<div class="info-card-back" *ngIf="empresa.isShowingBack">
-  <p style="font-weight: bold; color: #000000;">NIT: {{ empresa.nit_empresa }}</p>
-  <p style="font-weight: bold; color: #000000;">Correo: {{ empresa.correo_empresa }}</p>
-  <p style="font-weight: bold; color: #000000;">Contacto: {{ empresa.contacto_empresa }}</p>
-  <p style="font-weight: bold; color: #000000;">Número de Póliza: {{ empresa.numero_poliza }}</p>
+        <!-- Parte trasera de la tarjeta -->
+        <div class="info-card-back" *ngIf="empresa.isShowingBack">
+          <p style="font-weight: bold; color: #000000;">NIT: {{ empresa.nit_empresa }}</p>
+          <p style="font-weight: bold; color: #000000;">Correo: {{ empresa.correo_empresa }}</p>
+          <p style="font-weight: bold; color: #000000;">Contacto: {{ empresa.contacto_empresa }}</p>
+          <p style="font-weight: bold; color: #000000;">Número de Póliza: {{ empresa.numero_poliza }}</p>
 
-  <!-- Botón "back" con stopPropagation para evitar que se propague el evento hacia la tarjeta -->
-  <button class="btn-back" type="button" (click)="empresa.isShowingBack = false; $event.stopPropagation()">
-    <mat-icon>keyboard_backspace</mat-icon>
-  </button>
-</div>
-
+          <!-- Botón "back" con stopPropagation para evitar que se propague el evento hacia la tarjeta -->
+          <button class="btn-back" type="button" (click)="empresa.isShowingBack = false; $event.stopPropagation()">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+        </div>
 
       </div>
     </div>
   </div>
 
-<!-- Modal para agregar empresa -->
-<div *ngIf="isModalOpen" class="modal">
-  <div class="modal-content">
-    <h2 class="modal-title" style="text-align: center; color: #388dac;">Agregar Nueva Empresa</h2>
-    <form (ngSubmit)="guardarEmpresa()">
-      <div class="form-group">
-        <label for="nombreEmpresa">Nombre de la empresa</label>
-        <input type="text" id="nombreEmpresa" [(ngModel)]="nombreEmpresa" name="nombreEmpresa" required />
-      </div>
+  <!-- Modal para agregar empresa -->
+  <div *ngIf="isModalOpen" class="modal">
+    <div class="modal-content">
+      <h2 class="modal-title" style="text-align: center; color: #388dac;">Agregar Nueva Empresa</h2>
+      <form (ngSubmit)="guardarEmpresa()">
+        <div class="form-group">
+          <label for="nombreEmpresa">Nombre de la empresa</label>
+          <input type="text" id="nombreEmpresa" [(ngModel)]="nombreEmpresa" name="nombreEmpresa" required />
+        </div>
 
-      <div class="form-group">
-        <label for="nitEmpresa">NIT de la empresa</label>
-        <input type="text" id="nitEmpresa" [(ngModel)]="nitEmpresa" name="nitEmpresa" required />
-      </div>
+        <div class="form-group">
+          <label for="nitEmpresa">NIT de la empresa</label>
+          <input type="text" id="nitEmpresa" [(ngModel)]="nitEmpresa" name="nitEmpresa" required />
+        </div>
 
-      <div class="form-group">
-        <label for="correoEmpresa">Correo empresarial</label>
-        <input type="email" id="correoEmpresa" [(ngModel)]="correoEmpresa" name="correoEmpresa" required />
-      </div>
+        <div class="form-group">
+          <label for="correoEmpresa">Correo empresarial</label>
+          <input type="email" id="correoEmpresa" [(ngModel)]="correoEmpresa" name="correoEmpresa" required />
+        </div>
 
-      <div class="form-group">
-        <label for="contactoEmpresa">Contacto</label>
-        <input type="text" id="contactoEmpresa" [(ngModel)]="contactoEmpresa" name="contactoEmpresa" required />
-      </div>
+        <div class="form-group">
+          <label for="contactoEmpresa">Contacto</label>
+          <input type="text" id="contactoEmpresa" [(ngModel)]="contactoEmpresa" name="contactoEmpresa" required />
+        </div>
 
-      <div class="form-group">
-        <label for="numeroPoliza">Número de póliza</label>
-        <input type="text" id="numeroPoliza" [(ngModel)]="numeroPoliza" name="numeroPoliza" required />
-      </div>
+        <div class="form-group">
+          <label for="numeroPoliza">Número de póliza</label>
+          <input type="text" id="numeroPoliza" [(ngModel)]="numeroPoliza" name="numeroPoliza" required />
+        </div>
 
-      <div class="form-group">
-        <label for="colorCard">Color de tarjeta</label>
-        <input type="color" id="colorCard" [(ngModel)]="colorCard" name="colorCard" required />
-      </div>
+        <div class="form-group">
+          <label for="colorCard">Color de tarjeta</label>
+          <input type="color" id="colorCard" [(ngModel)]="colorCard" name="colorCard" required />
+        </div>
 
-      <!-- Campo deshabilitado para mostrar el ID del módulo -->
-      <div class="form-group">
-        <label for="moduloId">ID del Módulo</label>
-        <input type="text" id="moduloId" [value]=" moduloId" disabled />
-      </div>
+        <!-- Campo deshabilitado para mostrar el ID del módulo -->
+        <div class="form-group">
+          <label for="moduloId">ID del Módulo</label>
+          <input type="text" id="moduloId" [value]=" moduloId" disabled />
+        </div>
 
-      <!-- Botones de Cancelar y Guardar -->
-      <div class="modal-buttons">
-        <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
-        <button type="submit" class="btn-save">Guardar</button>
-      </div>
-    </form>
+        <!-- Botones de Cancelar y Guardar -->
+        <div class="modal-buttons">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-save">Guardar</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
-
-
 
   <!-- Modal de confirmación de eliminación -->
   <div *ngIf="isConfirmDeleteModalOpen" class="confirm-delete-modal">

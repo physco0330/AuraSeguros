@@ -5,9 +5,11 @@ import com.seguro.seguro.model.EmpresaModulo;
 import com.seguro.seguro.model.EmpresaModuloId;
 import com.seguro.seguro.model.Modulo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,4 +27,10 @@ public interface EmpresaModuloRepository extends JpaRepository<EmpresaModulo, Em
 
     @Query("SELECT COUNT(em) FROM EmpresaModulo em WHERE em.modulo.id_modulo = :id_modulo")
     long countEmpresasByModuloId(@Param("id_modulo") Long id_modulo);
+
+    // Método para eliminar todas las relaciones de una empresa en empresa_modulo
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM EmpresaModulo em WHERE em.empresa.id_empresa = :id_empresa")
+    void deleteByEmpresaId(@Param("id_empresa") Long id_empresa);
 }
