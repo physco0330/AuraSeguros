@@ -23,81 +23,88 @@ public class BienesController {
     @Autowired
     private HistorialService historialService;
 
-    // Endpoint para obtener todos los bienes
+    // Obtener todos los bienes
     @GetMapping("/all")
     public ResponseEntity<List<BienesEntity>> getAllBienes() {
-        List<BienesEntity> bienes = bienesService.getAllBienes();
-        return new ResponseEntity<>(bienes, HttpStatus.OK);
+        return ResponseEntity.ok(bienesService.getAllBienes());
     }
 
+    // Obtener bienes por empresa
     @GetMapping("/empresa/{empresaId}")
     public ResponseEntity<List<BienesEntity>> getAllBienesByEmpresaId(@PathVariable Long empresaId) {
-        List<BienesEntity> bienes = bienesService.getAllBienesByEmpresaId(empresaId);
-        return new ResponseEntity<>(bienes, HttpStatus.OK);
+        return ResponseEntity.ok(bienesService.getAllBienesByEmpresaId(empresaId));
     }
 
-    // Endpoint para buscar bienes por artículo y riesgo
+    // Buscar bienes por artículo y riesgo
     @GetMapping("/buscarPorArticuloYRiesgo/{articulo}/{idriesgo}")
     public ResponseEntity<List<BienesEntity>> buscarPorArticuloYRiesgo(
             @PathVariable String articulo,
             @PathVariable String idriesgo) {
-        List<BienesEntity> bienes = bienesService.buscarlistaxfecha(articulo, idriesgo);
-        return new ResponseEntity<>(bienes, HttpStatus.OK);
+        return ResponseEntity.ok(bienesService.buscarlistaxfecha(articulo, idriesgo));
     }
 
-    // Endpoint para obtener bienes por código específico
+    // Obtener bienes por código
     @GetMapping("/codigo/{codigo}")
     public ResponseEntity<List<BienesEntity>> getBienesPorCodigo(@PathVariable String codigo) {
-        List<BienesEntity> bienes = bienesService.getBienesPorCodigo(codigo);
-        return new ResponseEntity<>(bienes, HttpStatus.OK);
+        return ResponseEntity.ok(bienesService.getBienesPorCodigo(codigo));
     }
 
-    // Endpoint para guardar un bien
+    // Guardar bien
     @PostMapping("/save")
     public ResponseEntity<BienesEntity> saveBien(@RequestBody BienesEntity bien) {
-        BienesEntity savedBien = bienesService.saveBien(bien);
-        return new ResponseEntity<>(savedBien, HttpStatus.CREATED);
+        return new ResponseEntity<>(bienesService.saveBien(bien), HttpStatus.CREATED);
     }
 
-    // Endpoint para actualizar un bien
+    // Actualizar bien
     @PutMapping("/update")
     public ResponseEntity<GenericResponseDto> updateBien(@RequestBody BienesEntity bien) {
         bienesService.updateBien(bien);
-        GenericResponseDto genericResponseDto = new GenericResponseDto("");
-        return new ResponseEntity<>(genericResponseDto, HttpStatus.OK);
+        return ResponseEntity.ok(new GenericResponseDto(""));
     }
 
-    // Endpoint para eliminar bienes por código
+    // Eliminar bien por código
     @DeleteMapping("/deletePorCodigo/{codigo}")
     public ResponseEntity<Void> deleteBienPorCodigo(@PathVariable String codigo) {
         bienesService.deleteBienPorCodigo(codigo);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
-    // Endpoint para obtener el historial de un bien por su código
+    // Historial de un bien por código
     @GetMapping("/historial/{codigo}")
     public ResponseEntity<List<HistorialEntity>> getHistorialPorCodigo(@PathVariable String codigo) {
-        List<HistorialEntity> historial = historialService.getHistorialPorCodigo(codigo);
-        return new ResponseEntity<>(historial, HttpStatus.OK);
+        return ResponseEntity.ok(historialService.getHistorialPorCodigo(codigo));
     }
 
-    // Endpoint para buscar bienes por nombre de empresa
+    // Historial donde adquirió seguro (filtra adquirio_seguro = true)
+    @GetMapping("/historial/seguros/{codigo}")
+    public ResponseEntity<List<HistorialEntity>> getHistorialSegurosPorCodigo(@PathVariable String codigo) {
+        return ResponseEntity.ok(historialService.getHistorialPorCodigoYAdquirioSeguro(codigo, true));
+    }
+
+    // Historial filtrado por tipo de seguro
+    @GetMapping("/historial/seguros/tipo/{codigo}/{tipo}")
+    public ResponseEntity<List<HistorialEntity>> getHistorialPorTipoSeguro(
+            @PathVariable String codigo,
+            @PathVariable String tipo) {
+        return ResponseEntity.ok(historialService.getHistorialPorCodigoYTipoSeguro(codigo, tipo));
+    }
+
+    // Buscar bienes por nombre de empresa
     @GetMapping("/buscarPorNombreEmpresa/{nombreEmpresa}")
     public ResponseEntity<List<BienesEntity>> buscarPorNombreEmpresa(@PathVariable String nombreEmpresa) {
-        List<BienesEntity> bienes = bienesService.buscarBienesPorNombreEmpresa(nombreEmpresa);
-        return new ResponseEntity<>(bienes, HttpStatus.OK);
+        return ResponseEntity.ok(bienesService.buscarBienesPorNombreEmpresa(nombreEmpresa));
     }
 
-    // Endpoint para cargar el archivo CSV con el idEmpresa desde la URL
+    // Subir CSV
     @PostMapping("/upload-csv")
     public ResponseEntity<String> uploadCSV(@RequestParam("file") MultipartFile file,
                                             @RequestParam("idEmpresa") Long idEmpresa) {
         try {
-            // Llama al método de servicio y pasa idEmpresa como parámetro
             bienesService.processCSV(file, idEmpresa);
-            return new ResponseEntity<>("Archivo CSV subido y procesado con éxito", HttpStatus.OK);
+            return ResponseEntity.ok("Archivo CSV subido y procesado con éxito");
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al procesar el archivo CSV: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar el archivo CSV: " + e.getMessage());
         }
     }
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -102,5 +103,18 @@ public class BienesEntity {
     private String nombreEmpresa;
 
     @Column(name = "id_empresa")
-    private Long idEmpresa; //  campo para idEmpresa
+    private Long idEmpresa;
+
+    // --- NUEVOS CAMPOS RELACIONADOS AL SEGURO ---
+    @Column(name = "fecha_inicio_seguro")
+    private Timestamp fechaInicioSeguro; // fecha adquisición
+
+    @Column(name = "fecha_fin_seguro")
+    private Timestamp fechaFinSeguro; // fecha finalización
+
+    @Column(name = "lugar_pago_seguro")
+    private String lugarPagoSeguro; // lugar o método de pago
+
+    @Column(name = "cantidad_adquisiciones_seguro")
+    private Integer cantidadAdquisicionesSeguro; // veces adquirido
 }
