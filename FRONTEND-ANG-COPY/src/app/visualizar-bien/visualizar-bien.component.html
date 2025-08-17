@@ -3,90 +3,146 @@
 <div class="container">
   <main class="main-content">
     <h2 class="mb-4">Detalles del Bien</h2>
+    <!-- Mostrar detalles del bien aquí -->
     <button (click)="regresar()" class="btn btn-primary mt-4">Regresar</button>
 
-    <!-- Detalles del Bien -->
     <div *ngIf="bienes.length > 0; else noData" class="card p-3">
       <div *ngFor="let bien of bienes" class="row mb-3">
-        <!-- Columna izquierda -->
         <div class="col-md-6">
-          <div class="mb-2"><strong>ID:</strong> <span>{{ bien.idBien }}</span></div>
-          <div class="mb-2"><strong>Código:</strong> <span>{{ bien.codigo }}</span></div>
-          <div class="mb-2"><strong>Artículo:</strong> <span>{{ bien.articuloBienes }}</span></div>
-          <div class="mb-2"><strong>Proceso:</strong> <span>{{ bien.procesoEstaciones }}</span></div>
-          <div class="mb-2"><strong>Cantidad:</strong> <span>{{ bien.cantidad }}</span></div>
-          <div class="mb-2"><strong>Descripción Artículo:</strong> <span>{{ bien.descripcionArticulo }}</span></div>
-          <div class="mb-2"><strong>Descripción Movimiento:</strong> <span>{{ bien.descripcionMovimiento }}</span></div>
-          <div class="mb-2"><strong>Estado:</strong> <span>{{ bien.estado }}</span></div>
+          <div class="mb-2">
+            <strong>ID:</strong>
+            <span>{{ bien.idBien }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Código:</strong>
+            <span>{{ bien.codigo }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Artículo:</strong>
+            <span>{{ bien.articuloBienes }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Proceso:</strong>
+            <span>{{ bien.procesoEstaciones }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Cantidad:</strong>
+            <span>{{ bien.cantidad }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Descripción Artículo:</strong>
+            <span>{{ bien.descripcionArticulo }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Descripción Movimiento:</strong>
+            <span>{{ bien.descripcionMovimiento }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Estado:</strong>
+            <span>{{ bien.estado }}</span>
+          </div>
         </div>
-
-        <!-- Columna derecha -->
         <div class="col-md-6">
-          <div class="mb-2"><strong>Riesgo:</strong> <span>{{ bien.riesgo }}</span></div>
-          <div class="mb-2"><strong>Fecha Ingreso:</strong> <span>{{ bien.fechaIngreso }}</span></div>
-          <div class="mb-2"><strong>Fecha Modificación:</strong> <span>{{ bien.fechaModificacion }}</span></div>
-          <div class="mb-2"><strong>Vr Unitario 2023:</strong> <span>{{ bien.vrUnitario2023 }}</span></div>
-          <div class="mb-2"><strong>Vr Asegurado:</strong> <span>{{ bien.vrAsegurado }}</span></div>
-          <div class="mb-2"><strong>Porcentaje IVA:</strong> <span>{{ bien.porcentajeIva }}</span></div>
-          <div class="mb-2"><strong>IVA Variable:</strong> <span>{{ bien.ivaVariable }}</span></div>
-          <div class="mb-2"><strong>Vr Asegurable:</strong> <span>{{ bien.vrAsegurable }}</span></div>
-          <div class="mb-2"><strong>Tasa General:</strong> <span>{{ bien.tasaGeneral }}</span></div>
-          <div class="mb-2"><strong>Prima:</strong> <span>{{ bien.prima }}</span></div>
-          <div class="mb-2"><strong>Tasa IVA:</strong> <span>{{ bien.tasaIva }}</span></div>
-          <div class="mb-2"><strong>Prima IVA Anual:</strong> <span>{{ bien.primaIvaAnual }}</span></div>
-          <div class="mb-2"><strong>Prima Anual Total:</strong> <span>{{ bien.primaAnualTotal }}</span></div>
-          <div class="mb-2"><strong>Beneficiario Adicional:</strong> <span>{{ bien.beneficiarioAdicional }}</span></div>
-          <div class="mb-2"><strong>Número Endoso:</strong> <span>{{ bien.numeroEndoso }}</span></div>
-          <div class="mb-2"><strong>Valor Endoso:</strong> <span>{{ bien.valorEndoso }}</span></div>
-          <div class="mb-2"><strong>Vigencia Endoso:</strong> <span>{{ bien.vigenciaEndoso }}</span></div>
-          <div class="mb-2"><strong>Banco:</strong> <span>{{ bien.banco }}</span></div>
-          <div class="mb-2"><strong>NIT Banco:</strong> <span>{{ bien.nitBanco }}</span></div>
+          <div class="mb-2">
+            <strong>Riesgo:</strong>
+            <span>{{ bien.riesgo }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Fecha Ingreso:</strong>
+            <span>{{ bien.fechaIngreso }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Fecha Modificación:</strong>
+            <span>{{ bien.fechaModificacion }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Vr Unitario 2023:</strong>
+            <span>{{ bien.vrUnitario2023 }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Vr Asegurado:</strong>
+            <span>{{ bien.vrAsegurado }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Porcentaje IVA:</strong>
+            <span>{{ bien.porcentajeIva }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>IVA Variable:</strong>
+            <span>{{ bien.ivaVariable }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Vr Asegurable:</strong>
+            <span>{{ bien.vrAsegurable }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Tasa General:</strong>
+            <span>{{ bien.tasaGeneral }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Prima:</strong>
+            <span>{{ bien.prima }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Tasa IVA:</strong>
+            <span>{{ bien.tasaIva }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Prima IVA Anual:</strong>
+            <span>{{ bien.primaIvaAnual }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Prima Anual Total:</strong>
+            <span>{{ bien.primaAnualTotal }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Beneficiario Adicional:</strong>
+            <span>{{ bien.beneficiarioAdicional }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Número Endoso:</strong>
+            <span>{{ bien.numeroEndoso }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Valor Endoso:</strong>
+            <span>{{ bien.valorEndoso }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Vigencia Endoso:</strong>
+            <span>{{ bien.vigenciaEndoso }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>Banco:</strong>
+            <span>{{ bien.banco }}</span>
+          </div>
+          <div class="mb-2">
+            <strong>NIT Banco:</strong>
+            <span>{{ bien.nitBanco }}</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Historial de Seguros -->
-    <div *ngIf="historial.length > 0; else noHistorialSeguros" class="mt-4">
-      <h3>Historial de Seguros</h3>
-      <table class="table table-bordered">
+    <!-- Sección para mostrar el historial -->
+    <div *ngIf="historial.length > 0; else noHistorial" class="mt-4">
+      <h3>Historial de Modificaciones</h3>
+      <table class="table table-striped">
         <thead>
           <tr>
-            <th>Fecha Adquisición</th>
-            <th>Fecha Finalización</th>
-            <th>Método de Pago</th>
-            <th>Monto</th>
-            <th>Estado</th>
+            <th>Fecha Modificación</th>
+            <th>Usuario</th>
+            <th>Descripción</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let seguro of historial">
-            <td>{{ seguro.fechaInicio | date }}</td>
-            <td>{{ seguro.fechaFin | date }}</td>
-            <td>{{ seguro.metodoPago }}</td>
-            <td>{{ seguro.monto | currency:'COP' }}</td>
-            <td>
-              <span [ngClass]="{
-                'badge bg-success': seguro.estado === 'activo',
-                'badge bg-danger': seguro.estado === 'vencido',
-                'badge bg-warning text-dark': seguro.estado === 'pendiente'
-              }">
-                {{ seguro.estado | titlecase }}
-              </span>
-            </td>
+          <tr *ngFor="let item of historial">
+            <td>{{ item.fechaModificacion | date }}</td>
+            <td>{{ item.usuario }}</td>
+            <td>{{ item.descripcionModificacion }}</td>
           </tr>
         </tbody>
       </table>
-      <p><strong>Veces que ha adquirido el seguro:</strong> {{ historial.length }}</p>
     </div>
-
-    <ng-template #noHistorialSeguros>
-      <div class="alert alert-info mt-4" role="alert">
-        No hay historial de seguros para este bien.
-      </div>
-    </ng-template>
-
-    
-
     <ng-template #noHistorial>
       <div class="alert alert-info mt-4" role="alert">
         No hay historial disponible para el bien con código {{ codigo }}.

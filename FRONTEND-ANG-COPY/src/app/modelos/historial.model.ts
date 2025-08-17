@@ -1,10 +1,10 @@
-// src/app/modelos/historial-seguro.model.ts
+// src/app/modelos/historial.model.ts
+
 export interface Historial {
-  id: number;
-  codigo: string;
-  fechaInicio: string;
-  fechaFin: string;
-  metodoPago: string;
-  monto: number;
-  estado: 'activo' | 'vencido' | 'pendiente';
+  id: number;    // Identificador único del historial
+  codigo: string;    // Código del bien relacionado con el historial
+  fechaModificacion: string;    // Fecha de la modificación
+  usuario: string;    // Usuario que realizó la modificación
+  descripcionModificacion: string;    // Descripción de la modificación
+  cambios: string;    // Cambios en formato JSON o texto
 }

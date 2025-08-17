@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "historial") // Cambia si el nombre de la tabla es otro
 public class HistorialEntity {
 
     @Id
@@ -31,28 +30,10 @@ public class HistorialEntity {
     @Column(name = "usuario")
     private String usuario;
 
-    @Column(name = "descripcion")
+
+    @Column(name = "descripcion")  // Asegúrate de que esta columna exista en la base de datos
     private String descripcion;
 
     @Column(name = "cambios", columnDefinition = "json")
-    private String cambios; // Cambios en formato JSON
-
-    // --- Campos adicionales para historial de seguros ---
-    @Column(name = "numero_poliza")
-    private String numeroPoliza;
-
-    @Column(name = "aseguradora")
-    private String aseguradora;
-
-    @Column(name = "fecha_inicio_seguro")
-    private Timestamp fechaInicioSeguro;
-
-    @Column(name = "fecha_fin_seguro")
-    private Timestamp fechaFinSeguro;
-
-    @Column(name = "valor_asegurado")
-    private Double valorAsegurado;
-
-    @Column(name = "estado_seguro")
-    private String estadoSeguro; // Ejemplo: vigente, vencido, cancelado
+    private String cambios;  // Almacenar los cambios en formato JSON
 }
