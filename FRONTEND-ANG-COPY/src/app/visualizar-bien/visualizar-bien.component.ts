@@ -3,8 +3,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BienesService } from '../servicios/bienes.service';
+import { HistorialSegurosService } from '../servicios/historial-seguros.service';
 import { Bien } from '../modelos/bien.model';
-import { Historial } from '../modelos/historial.model'; 
+import { Historial } from '../modelos/historial.model';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
 
@@ -16,13 +17,14 @@ import { Location } from '@angular/common';
   styleUrls: ['./visualizar-bien.component.scss']
 })
 export class VisualizarBienComponent implements OnInit {
-  bienes: Bien[] = []; 
-  historial: Historial[] = []; 
-  codigo: string | null = ''; 
+  bienes: Bien[] = [];
+  historialSeguros: Historial[] = []; // Aquí guardamos los seguros mapeados al modelo Historial
+  codigo: string | null = '';
 
   constructor(
     private route: ActivatedRoute,
     private bienesService: BienesService,
+    private historialSegurosService: HistorialSegurosService,
     private location: Location
   ) {}
 
@@ -31,25 +33,22 @@ export class VisualizarBienComponent implements OnInit {
     console.log('Código recibido:', this.codigo);
 
     if (this.codigo) {
+      // Cargar datos del bien
       this.bienesService.getBienPorCodigo(this.codigo).subscribe(
         (data: Bien | Bien[]) => {
-          // Normaliza: si viene un solo objeto lo convierte en array
           this.bienes = Array.isArray(data) ? data : [data];
           console.log('Bienes recibidos:', this.bienes);
         },
-        error => {
-          console.error('Error al obtener el bien:', error);
-        }
+        error => console.error('Error al obtener el bien:', error)
       );
 
-      this.bienesService.getHistorialByCodigo(this.codigo).subscribe(
-        (data: Historial[] | null) => {
-          this.historial = data || []; 
-          console.log('Historial recibido:', this.historial);
+      // Cargar historial de seguros mapeado a Historial
+      this.historialSegurosService.getHistorialByCodigo(this.codigo).subscribe(
+        (data: Historial[]) => {
+          this.historialSeguros = data;
+          console.log('Historial de seguros recibido:', this.historialSeguros);
         },
-        error => {
-          console.error('Error al obtener el historial:', error);
-        }
+        error => console.error('Error al obtener el historial de seguros:', error)
       );
     }
   }

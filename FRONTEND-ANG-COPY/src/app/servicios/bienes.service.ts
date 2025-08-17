@@ -2,19 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Bien } from '../modelos/bien.model'; // Importar modelo Bien
-import { Historial } from '../modelos/historial.model'; // Importar modelo Historial
+import { Bien } from '../modelos/bien.model'; 
+import { Historial } from '../modelos/historial.model'; 
 
 @Injectable({
-  providedIn: 'root' // El servicio está disponible en toda la aplicación
+  providedIn: 'root'
 })
 export class BienesService {
-  // URL base del backend para acceder a los servicios relacionados con bienes
   private baseUrl = 'http://localhost:8080/bien';
 
   constructor(private http: HttpClient) {}
 
-  // Método para buscar bienes por nombre de empresa
+  // 🔎 Buscar bienes por empresa
   buscarPorNombreEmpresa(nombreEmpresa: string): Observable<Bien[]> {
     return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${nombreEmpresa}`).pipe(
       catchError((error) => {
@@ -24,18 +23,15 @@ export class BienesService {
     );
   }
 
-  // Método para obtener bienes por empresa
   getBienesByEmpresa(nombre: string): Observable<Bien[]> {
-    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${nombre}`); // Cambié apiUrl a baseUrl
+    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${nombre}`);
   }
 
   getBienesByEmpresaId(empresaId: number): Observable<Bien[]> {
-    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${empresaId}`); // Cambié apiUrl a baseUrl
+    return this.http.get<Bien[]>(`${this.baseUrl}/empresa/${empresaId}`);
   }
 
-
-
-  // Método para obtener bienes por código
+  // 🔎 Buscar bien por código
   getBienPorCodigo(codigo: string): Observable<Bien[]> {
     return this.http.get<Bien[]>(`${this.baseUrl}/codigo/${codigo}`).pipe(
       catchError((error) => {
@@ -45,7 +41,7 @@ export class BienesService {
     );
   }
 
-  // Método para obtener todos los bienes
+  // 📋 Obtener todos los bienes
   getBienes(): Observable<Bien[]> {
     return this.http.get<Bien[]>(`${this.baseUrl}/all`).pipe(
       catchError((error) => {
@@ -55,7 +51,7 @@ export class BienesService {
     );
   }
 
-  // Método para buscar bienes por artículo e idriesgo
+  // 🔎 Buscar bienes por artículo e idriesgo
   buscarBienes(articulo: string, idriesgo: string): Observable<Bien[]> {
     return this.http.get<Bien[]>(`${this.baseUrl}/listaxfecha/${articulo}/${idriesgo}`).pipe(
       catchError((error) => {
@@ -65,36 +61,32 @@ export class BienesService {
     );
   }
 
-  // Método para guardar un bien
+  // 💾 Guardar un bien nuevo con relación a empresa
   saveBien(bien: Bien, idEmpresa: number): Observable<Bien> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-    // Agregar el ID de la empresa como parámetro de consulta
     const url = `${this.baseUrl}/save?idEmpresa=${idEmpresa}`;
-
     return this.http.post<Bien>(url, bien, { headers }).pipe(
       catchError((error) => {
         console.error('Error guardando el bien:', error);
         return throwError(() => new Error('Error guardando el bien'));
       })
     );
-}
+  }
 
-
-  // Método para actualizar un bien
+  // ✏️ Actualizar un bien
   updateBien(bienToUpdate: Bien): Observable<string> {
-    console.log('Updating bien:', bienToUpdate); // Añade esta línea para depurar
+    console.log('Updating bien:', bienToUpdate);
     return this.http.put<{ message: string }>(`${this.baseUrl}/update`, bienToUpdate)
       .pipe(
-        map(response => response.message), // Extrae el mensaje de la respuesta
+        map(response => response.message),
         catchError(error => {
-          console.error('Error actualizando bien:', error); // Registra el objeto de error
-          return throwError(error);
+          console.error('Error actualizando bien:', error);
+          return throwError(() => new Error('Error actualizando bien'));
         })
       );
   }
 
-  // Método para eliminar un bien por su código
+  // 🗑️ Eliminar un bien
   deleteBien(codigo: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/deletePorCodigo/${codigo}`).pipe(
       catchError((error) => {
@@ -104,7 +96,7 @@ export class BienesService {
     );
   }
 
-  // Método para agregar un nuevo bien
+  // ➕ Agregar un nuevo bien
   agregarBien(nuevoBien: Bien): Observable<Bien> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<Bien>(`${this.baseUrl}/add`, nuevoBien, { headers }).pipe(
@@ -115,10 +107,9 @@ export class BienesService {
     );
   }
 
+  // 📂 Subir CSV con bienes
   subirArchivoCSV(archivo: FormData, idEmpresa: number): Observable<any> {
-    const url = `${this.baseUrl}/upload-csv`; // Ajusta esta URL según el endpoint del backend
-
-    // Añadir idEmpresa al FormData
+    const url = `${this.baseUrl}/upload-csv`;
     archivo.append('idEmpresa', idEmpresa.toString());
 
     return this.http.post(url, archivo).pipe(
@@ -129,16 +120,23 @@ export class BienesService {
     );
   }
 
-
-  // Nuevo método para obtener el historial por código
+  // 📜 Historial de modificaciones (bienes)
   getHistorialByCodigo(codigo: string): Observable<Historial[]> {
-    return this.http.get<Historial[]>(`http://localhost:8080/bien/historial/${codigo}`).pipe(
+    return this.http.get<Historial[]>(`${this.baseUrl}/historial/${codigo}`).pipe(
       catchError((error) => {
         console.error('Error obteniendo el historial por código:', error);
         return throwError(() => new Error('Error obteniendo el historial por código'));
       })
+    );  
+  }
+
+  // 📜 Historial de seguros
+  getHistorialSegurosByCodigo(codigo: string): Observable<Historial[]> {
+    return this.http.get<Historial[]>(`${this.baseUrl}/historial-seguros/${codigo}`).pipe(
+      catchError((error) => {
+        console.error('Error obteniendo el historial de seguros por código:', error);
+        return throwError(() => new Error('Error obteniendo el historial de seguros por código'));
+      })
     );
   }
 }
-
-

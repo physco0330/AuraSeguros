@@ -1,10 +1,12 @@
 // src/app/modelos/historial.model.ts
 
 export interface Historial {
-  id: number;                       // Identificador único del historial
-  codigo: string;                   // Código del bien relacionado con el historial
-  fechaModificacion: Date | string; // Fecha de la modificación (puede venir como string o como Date)
-  usuario: string;                  // Usuario que realizó la modificación
-  descripcionModificacion: string;  // Descripción de la modificación
-  cambios?: any;                    // Cambios en formato JSON o texto (opcional para mayor flexibilidad)
+  idHistorial: number;                 // Identificador único del historial
+  idBien: number;                      // ID del bien relacionado
+  codigo: string;                      // Código del bien
+  fechaModificacion: Date | string;    // Fecha de la modificación
+  descripcion: string;                 // Descripción de la modificación
+  fechaInicioSeguro?: Date | string;   // Fecha de inicio del seguro (opcional)
+  fechaFinSeguro?: Date | string;      // Fecha de fin del seguro (opcional)
+  estadoSeguro?: string;               // Estado del seguro (opcional)
 }
