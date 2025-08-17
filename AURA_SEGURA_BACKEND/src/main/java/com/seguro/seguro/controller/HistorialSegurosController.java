@@ -33,4 +33,17 @@ public class HistorialSegurosController {
     public HistorialSegurosEntity crearHistorial(@RequestBody HistorialSegurosEntity historial) {
         return historialSegurosService.guardarHistorial(historial);
     }
+
+    // Actualizar historial existente
+    @PutMapping("/{id}")
+    public HistorialSegurosEntity actualizarHistorial(@PathVariable Long id,
+                                                      @RequestBody HistorialSegurosEntity historial) {
+        return historialSegurosService.actualizarHistorial(id, historial);
+    }
+
+    // Eliminar historial por id
+    @DeleteMapping("/{id}")
+    public void eliminarHistorial(@PathVariable Long id) {
+        historialSegurosService.eliminarHistorial(id);
+    }
 }

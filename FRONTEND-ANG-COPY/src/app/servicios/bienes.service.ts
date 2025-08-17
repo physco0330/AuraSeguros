@@ -127,7 +127,7 @@ export class BienesService {
         console.error('Error obteniendo el historial por código:', error);
         return throwError(() => new Error('Error obteniendo el historial por código'));
       })
-    );  
+    );
   }
 
   // 📜 Historial de seguros
