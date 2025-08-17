@@ -2,6 +2,7 @@ package com.seguro.seguro.controller;
 
 import com.seguro.seguro.model.HistorialSegurosEntity;
 import com.seguro.seguro.services.HistorialSegurosService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,32 +19,48 @@ public class HistorialSegurosController {
 
     // Obtener historial por código
     @GetMapping("/codigo/{codigo}")
-    public List<HistorialSegurosEntity> getHistorialByCodigo(@PathVariable String codigo) {
-        return historialSegurosService.obtenerPorCodigo(codigo);
+    public ResponseEntity<List<HistorialSegurosEntity>> getHistorialByCodigo(@PathVariable String codigo) {
+        List<HistorialSegurosEntity> lista = historialSegurosService.obtenerPorCodigo(codigo);
+        return ResponseEntity.ok(lista);
     }
 
     // Obtener historial por idBien
     @GetMapping("/bien/{idBien}")
-    public List<HistorialSegurosEntity> getHistorialByIdBien(@PathVariable Long idBien) {
-        return historialSegurosService.obtenerPorIdBien(idBien);
+    public ResponseEntity<List<HistorialSegurosEntity>> getHistorialByIdBien(@PathVariable Long idBien) {
+        List<HistorialSegurosEntity> lista = historialSegurosService.obtenerPorIdBien(idBien);
+        return ResponseEntity.ok(lista);
     }
 
     // Crear un nuevo historial
     @PostMapping
-    public HistorialSegurosEntity crearHistorial(@RequestBody HistorialSegurosEntity historial) {
-        return historialSegurosService.guardarHistorial(historial);
+    public ResponseEntity<HistorialSegurosEntity> crearHistorial(@RequestBody HistorialSegurosEntity historial) {
+        HistorialSegurosEntity guardado = historialSegurosService.guardarHistorial(historial);
+        return ResponseEntity.ok(guardado);
     }
 
     // Actualizar historial existente
     @PutMapping("/{id}")
-    public HistorialSegurosEntity actualizarHistorial(@PathVariable Long id,
-                                                      @RequestBody HistorialSegurosEntity historial) {
-        return historialSegurosService.actualizarHistorial(id, historial);
+    public ResponseEntity<HistorialSegurosEntity> actualizarHistorial(@PathVariable Long id,
+                                                                      @RequestBody HistorialSegurosEntity historial) {
+        try {
+            HistorialSegurosEntity actualizado = historialSegurosService.actualizarHistorial(id, historial);
+            return ResponseEntity.ok(actualizado);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);
+        }
     }
 
     // Eliminar historial por id
     @DeleteMapping("/{id}")
-    public void eliminarHistorial(@PathVariable Long id) {
-        historialSegurosService.eliminarHistorial(id);
+    public ResponseEntity<String> eliminarHistorial(@PathVariable Long id) {
+        try {
+            historialSegurosService.eliminarHistorial(id);
+            return ResponseEntity.ok("Historial eliminado correctamente");
+        } catch (Exception e) {
+            e.printStackTrace(); // log en consola del backend
+            return ResponseEntity.status(500)
+                    .body("Error eliminando historial: " + e.getMessage());
+        }
     }
 }

@@ -45,6 +45,21 @@
       <button class="btn btn-success mb-2" (click)="agregarHistorial()">Agregar Historial</button>
     </div>
 
+    <!-- Filtro por fechas -->
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <label>Fecha Inicio</label>
+        <input type="date" [(ngModel)]="fechaFiltroInicio" class="form-control" />
+      </div>
+      <div class="col-md-3">
+        <label>Fecha Fin</label>
+        <input type="date" [(ngModel)]="fechaFiltroFin" class="form-control" />
+      </div>
+      <div class="col-md-3 d-flex align-items-end">
+        <button class="btn btn-primary" (click)="filtrarPorFechas()">Filtrar</button>
+      </div>
+    </div>
+
     <!-- Historial de seguros -->
     <div *ngIf="historialSeguros.length > 0; else noSeguros" class="mt-4">
       <h3>Historial de Seguros</h3>
@@ -66,40 +81,35 @@
             <td>{{ seguro.estadoSeguro }}</td>
             <td *ngIf="token?.rolUsuario === 'admin'">
               <button class="btn btn-warning btn-sm" (click)="abrirEditarHistorial(seguro)">Editar</button>
-              <button class="btn btn-danger btn-sm" (click)="abrirConfirmDeleteHistorial(seguro)">Eliminar</button>
+<button class="btn btn-danger btn-sm" (click)="eliminarHistorial(seguro)">Eliminar</button>
             </td>
           </tr>
         </tbody>
       </table>
 
-     <!-- Formulario de edición -->
-<!-- Formulario de edición -->
-<div *ngIf="historialEdit" class="card p-3 mt-3">
-  <h4>Editando Historial</h4>
+      <!-- Formulario de edición -->
+      <div *ngIf="historialEdit" class="card p-3 mt-3">
+        <h4>Editando Historial</h4>
 
-  <label>Descripción:</label>
-  <input [(ngModel)]="historialEdit.descripcion" class="form-control mb-2" />
+        <label>Descripción:</label>
+        <input [(ngModel)]="historialEdit.descripcion" class="form-control mb-2" />
 
-  <label>Fecha Inicio:</label>
-  <input type="date" [(ngModel)]="historialEdit.fechaInicioSeguro" class="form-control mb-2" />
+        <label>Fecha Inicio:</label>
+        <input type="date" [(ngModel)]="historialEdit.fechaInicioSeguro" class="form-control mb-2" />
 
-  <label>Fecha Fin:</label>
-  <input type="date" [(ngModel)]="historialEdit.fechaFinSeguro" class="form-control mb-2" />
+        <label>Fecha Fin:</label>
+        <input type="date" [(ngModel)]="historialEdit.fechaFinSeguro" class="form-control mb-2" />
 
-  <label>Estado:</label>
-  <select [(ngModel)]="historialEdit.estadoSeguro" class="form-select mb-2">
-    <option value="Activo">Activo</option>
-    <option value="Vencido">Vencido</option>
-  </select>
+        <label>Estado:</label>
+        <select [(ngModel)]="historialEdit.estadoSeguro" class="form-select mb-2">
+          <option value="Activo">Activo</option>
+          <option value="Vencido">Vencido</option>
+        </select>
 
-  <div class="mt-2">
-    <button class="btn btn-primary me-2" (click)="guardarEdicionHistorial()">Guardar</button>
-    <button class="btn btn-secondary" (click)="cancelarEdicionHistorial()">Cancelar</button>
-  </div>
-
-
-        <button class="btn btn-primary me-2" (click)="guardarEdicionHistorial()">Guardar</button>
-        <button class="btn btn-secondary" (click)="cancelarEdicionHistorial()">Cancelar</button>
+        <div class="mt-2">
+          <button class="btn btn-primary me-2" (click)="guardarEdicionHistorial()">Guardar</button>
+          <button class="btn btn-secondary" (click)="cancelarEdicionHistorial()">Cancelar</button>
+        </div>
       </div>
 
       <div class="mt-3">
@@ -118,6 +128,5 @@
         No hay historial disponible para el bien.
       </div>
     </ng-template>
-
   </main>
 </div>

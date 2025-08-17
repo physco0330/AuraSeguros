@@ -18,12 +18,13 @@ import { FormsModule } from '@angular/forms';
 export class VisualizarBienComponent implements OnInit {
   bienes: Bien[] = [];
   historialSeguros: Historial[] = [];
+  historialSegurosOriginal: Historial[] = []; // copia original para filtros
   codigo: string = '';
   token: any = null;
 
-  // Para confirmación de eliminación
-  isConfirmDeleteHistorialOpen = false;
-  historialAEliminar: Historial | null = null;
+  // Filtros por fechas
+  fechaFiltroInicio: string | null = null;
+  fechaFiltroFin: string | null = null;
 
   // Para edición
   editingHistorialId: number | null = null;
@@ -62,13 +63,39 @@ export class VisualizarBienComponent implements OnInit {
   cargarHistorial() {
     if (!this.codigo) return;
     this.historialSegurosService.getHistorialByCodigo(this.codigo).subscribe(
-      data => this.historialSeguros = data,
+      data => {
+        this.historialSeguros = data;
+        this.historialSegurosOriginal = [...data]; // guardamos copia para filtrar
+      },
       error => console.error('Error cargando historial:', error)
     );
   }
 
-  regresar(): void {
-    this.location.back();
+  // -----------------------------
+  // Filtrado por fechas
+  // -----------------------------
+  filtrarPorFechas() {
+    if (!this.fechaFiltroInicio && !this.fechaFiltroFin) {
+      this.historialSeguros = [...this.historialSegurosOriginal];
+      return;
+    }
+
+    const inicio = this.fechaFiltroInicio ? new Date(this.fechaFiltroInicio) : null;
+    const fin = this.fechaFiltroFin ? new Date(this.fechaFiltroFin) : null;
+
+    this.historialSeguros = this.historialSegurosOriginal.filter(seguro => {
+      const fechaInicioSeguro = new Date(seguro.fechaInicioSeguro);
+
+      if (inicio && fin) {
+        return fechaInicioSeguro >= inicio && fechaInicioSeguro <= fin;
+      } else if (inicio) {
+        return fechaInicioSeguro >= inicio;
+      } else if (fin) {
+        return fechaInicioSeguro <= fin;
+      }
+
+      return true;
+    });
   }
 
   // -----------------------------
@@ -96,6 +123,7 @@ export class VisualizarBienComponent implements OnInit {
     this.historialSegurosService.crearHistorial(nuevo).subscribe(
       guardado => {
         this.historialSeguros.push(guardado);
+        this.historialSegurosOriginal.push(guardado); // también en la copia original
         alert('Historial agregado correctamente.');
       },
       error => {
@@ -105,12 +133,9 @@ export class VisualizarBienComponent implements OnInit {
     );
   }
 
-  // -----------------------------
-  // Edición de historial
-  // -----------------------------
   abrirEditarHistorial(seguro: Historial) {
     this.editingHistorialId = seguro.idHistorial || null;
-    this.historialEdit = { ...seguro }; // copia para editar sin modificar la tabla
+    this.historialEdit = { ...seguro };
   }
 
   guardarEdicionHistorial() {
@@ -126,9 +151,12 @@ export class VisualizarBienComponent implements OnInit {
     this.historialSegurosService.actualizarHistorial(this.historialEdit.idHistorial, historialParaBackend)
       .subscribe({
         next: () => {
-          // actualizar la tabla local
           const index = this.historialSeguros.findIndex(h => h.idHistorial === this.historialEdit?.idHistorial);
           if (index >= 0 && this.historialEdit) this.historialSeguros[index] = { ...this.historialEdit };
+
+          const indexOriginal = this.historialSegurosOriginal.findIndex(h => h.idHistorial === this.historialEdit?.idHistorial);
+          if (indexOriginal >= 0 && this.historialEdit) this.historialSegurosOriginal[indexOriginal] = { ...this.historialEdit };
+
           this.cancelarEdicionHistorial();
           alert('Historial actualizado correctamente.');
         },
@@ -145,32 +173,29 @@ export class VisualizarBienComponent implements OnInit {
   }
 
   // -----------------------------
-  // Eliminación de historial
+  // Eliminar historial con confirmación simple
   // -----------------------------
-  abrirConfirmDeleteHistorial(seguro: Historial) {
-    this.historialAEliminar = seguro;
-    this.isConfirmDeleteHistorialOpen = true;
-  }
+  eliminarHistorial(seguro: Historial) {
+    if (!seguro?.idHistorial) return;
 
-  cerrarConfirmDeleteHistorial() {
-    this.historialAEliminar = null;
-    this.isConfirmDeleteHistorialOpen = false;
-  }
+    const confirmacion = confirm('¿Estás seguro de eliminar este historial?');
 
-  confirmarEliminarHistorial() {
-    if (!this.historialAEliminar?.idHistorial) return;
+    if (!confirmacion) return;
 
-    const id = this.historialAEliminar.idHistorial;
-    this.historialSegurosService.eliminarHistorial(id).subscribe({
+    this.historialSegurosService.eliminarHistorial(seguro.idHistorial).subscribe({
       next: () => {
-        this.historialSeguros = this.historialSeguros.filter(h => h.idHistorial !== id);
+        this.historialSeguros = this.historialSeguros.filter(h => h.idHistorial !== seguro.idHistorial);
+        this.historialSegurosOriginal = this.historialSegurosOriginal.filter(h => h.idHistorial !== seguro.idHistorial);
         alert('Historial eliminado correctamente.');
-        this.cerrarConfirmDeleteHistorial();
       },
       error: (err) => {
         console.error('Error eliminando historial:', err);
         alert('Error eliminando historial. Revisa la consola para más detalles.');
       }
     });
+  }
+
+  regresar(): void {
+    this.location.back();
   }
 }
